@@ -1,0 +1,533 @@
+[
+    {
+        "pk": 1,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "uonbi.ac.ke",
+            "link": "http://www.uonbi.ac.ke/",
+            "name": "University of Nairobi"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "maseno.ac.ke",
+            "link": "http://maseno.ac.ke/",
+            "name": "Maseno University"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "ku.ac.ke",
+            "link": "http://www.ku.ac.ke/",
+            "name": "Kenyatta University"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mu.ac.ke",
+            "link": "http://www.mu.ac.ke/",
+            "name": "Moi University"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "egerton.ac.ke",
+            "link": "http://www.egerton.ac.ke/",
+            "name": "Egerton University"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "jkuat.ac.ke",
+            "link": "http://www.jkuat.ac.ke/",
+            "name": "Jomo Kenyatta University of Agriculture and Technology"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "strathmore.edu",
+            "link": "http://www.strathmore.edu/",
+            "name": "Strathmore University Nairobi"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "avu.org",
+            "link": "http://www.avu.org/",
+            "name": "African Virtual University"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "usiu.ac.ke",
+            "link": "http://www.usiu.ac.ke/",
+            "name": "United States International University"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "cuea.edu",
+            "link": "http://www.cuea.edu/",
+            "name": "Catholic University of Eastern Africa"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "easm.ac.ke",
+            "link": "http://www.easm.ac.ke/",
+            "name": "East Africa School of Management"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kemu.ac.ke",
+            "link": "http://www.kemu.ac.ke/",
+            "name": "Kenya Methodist University"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "daystar.ac.ke",
+            "link": "http://www.daystar.ac.ke/",
+            "name": "Daystar University"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "isk.ac.ke",
+            "link": "http://www.isk.ac.ke/",
+            "name": "International School of Kenya"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "anu.ac.ke",
+            "link": "http://www.anu.ac.ke/",
+            "name": "Africa Nazarene University"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "tangaza.org",
+            "link": "http://tangaza.org/",
+            "name": "Tangaza College"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kca.ac.ke",
+            "link": "http://www.kca.ac.ke/",
+            "name": "KCA University"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mmust.ac.ke",
+            "link": "http://www.mmust.ac.ke/",
+            "name": "Masinde Muliro University of Science and Technology"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "ueab.ac.ke",
+            "link": "http://ueab.ac.ke/",
+            "name": "University of Eastern Africa Baraton"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mku.ac.ke",
+            "link": "http://www.mku.ac.ke/",
+            "name": "Mount Kenya University"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kabarak.ac.ke",
+            "link": "http://www.kabarak.ac.ke/",
+            "name": "Kabarak University"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "africaInternational.edu",
+            "link": "http://www.africaInternational.edu/",
+            "name": "Africa International University (Nairobi Evangelical Graduate School of Theology)"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kim.ac.ke",
+            "link": "http://www.kim.ac.ke/",
+            "name": "Kenia Institute of Management"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kmtc.ac.ke",
+            "link": "http://www.kmtc.ac.ke/",
+            "name": "Kenya Medical Training College"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "iu.ac.ke",
+            "link": "http://www.iu.ac.ke/",
+            "name": "Inoorero University (Kenya School of Professional Studies)"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kwust.ac.ke",
+            "link": "http://www.kwust.ac.ke/",
+            "name": "Kiriri Women's University of Science & Technology"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mmu.ac.ke",
+            "link": "http://www.mmu.ac.ke/",
+            "name": "Multimedia University College of Kenya"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mias.edu",
+            "link": "http://www.mias.edu/",
+            "name": "Maryknoll Institute of African Studies Nairobi"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "stpaulslimuru.ac.ke",
+            "link": "http://www.stpaulslimuru.ac.ke/",
+            "name": "(1) Saint Paul\u2019s University Limuru"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "gluk.ac.ke",
+            "link": "http://www.gluk.ac.ke/",
+            "name": "Great Lakes University ofKisumu"
+        }
+    },
+    {
+        "pk": 31,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "scott.ac.ke",
+            "link": "http://www.scott.ac.ke/",
+            "name": "Scott Theological College"
+        }
+    },
+    {
+        "pk": 32,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "cuc.ac.ke",
+            "link": "http://www.cuc.ac.ke/",
+            "name": "Chuka University"
+        }
+    },
+    {
+        "pk": 33,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "puea.ac.ke",
+            "link": "http://puea.ac.ke/",
+            "name": "Presbyterian University of East Africa"
+        }
+    },
+    {
+        "pk": 34,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "bondo-uni.ac.ke",
+            "link": "http://www.bondo-uni.ac.ke/",
+            "name": "Bondo University College"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "gretsauniversity.ac.ke",
+            "link": "http://www.gretsauniversity.ac.ke/",
+            "name": "Gretsa University"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "pacuniversity.ac.ke",
+            "link": "http://www.pacuniversity.ac.ke/",
+            "name": "Pan Africa Christian University"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "karatinauniversity.ac.ke",
+            "link": "http://www.karatinauniversity.ac.ke/",
+            "name": "Karatina University College"
+        }
+    },
+    {
+        "pk": 38,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kciti.edu",
+            "link": "http://www.kciti.edu/",
+            "name": "Kenya Christian Industrial Training Institute"
+        }
+    },
+    {
+        "pk": 39,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mua.ac.ke",
+            "link": "http://www.mua.ac.ke/",
+            "name": "Management University of Africa"
+        }
+    },
+    {
+        "pk": 40,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kisiiuniversity.ac.ke",
+            "link": "http://www.kisiiuniversity.ac.ke/",
+            "name": "Kisii University"
+        }
+    },
+    {
+        "pk": 41,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "laikipia.ac.ke",
+            "link": "http://laikipia.ac.ke/",
+            "name": "Laikipia University College"
+        }
+    },
+    {
+        "pk": 42,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "pu.ac.ke",
+            "link": "http://www.pu.ac.ke/",
+            "name": "Pwani University College"
+        }
+    },
+    {
+        "pk": 43,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "cooperative.ac.ke",
+            "link": "http://www.cooperative.ac.ke/",
+            "name": "Cooperative University Collegeof Kenya"
+        }
+    },
+    {
+        "pk": 44,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "nac.ac.ke",
+            "link": "http://www.nac.ac.ke/",
+            "name": "Nairobi Aviation College"
+        }
+    },
+    {
+        "pk": 45,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "ttuc.ac.ke",
+            "link": "http://ttuc.ac.ke/",
+            "name": "Taita Taveta University College"
+        }
+    },
+    {
+        "pk": 46,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "riarauniversity.ac.ke",
+            "link": "http://www.riarauniversity.ac.ke/",
+            "name": "Riara University"
+        }
+    },
+    {
+        "pk": 47,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "dkut.ac.ke",
+            "link": "http://dkut.ac.ke/",
+            "name": "Dedan Kimathi University of Technology (Kimathi University College of Technology)"
+        }
+    },
+    {
+        "pk": 48,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "tukenya.ac.ke",
+            "link": "http://www.tukenya.ac.ke/",
+            "name": "Technical University of Kenya"
+        }
+    },
+    {
+        "pk": 49,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "embucollege.com",
+            "link": "http://embucollege.com/",
+            "name": "Embu University College"
+        }
+    },
+    {
+        "pk": 50,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "tum.ac.ke",
+            "link": "http://tum.ac.ke/",
+            "name": "Technical University of Mombasa (Mombasa Polytechnic University College)"
+        }
+    },
+    {
+        "pk": 51,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "riccatti.ac.ke",
+            "link": "http://www.riccatti.ac.ke/",
+            "name": "Riccatti Business College"
+        }
+    },
+    {
+        "pk": 52,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "umma.ac.ke",
+            "link": "http://www.umma.ac.ke/",
+            "name": "Umma University"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "machakosuniversity.ac.ke",
+            "link": "http://www.machakosuniversity.ac.ke/",
+            "name": "Machakos University College"
+        }
+    },
+    {
+        "pk": 54,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kyuc.ac.ke",
+            "link": "http://www.kyuc.ac.ke/",
+            "name": "Kirinyaga University College"
+        }
+    },
+    {
+        "pk": 55,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kibabiiuniversity.ac.ke",
+            "link": "http://www.kibabiiuniversity.ac.ke/",
+            "name": "Kibabii University College"
+        }
+    },
+    {
+        "pk": 56,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "ruc.ac.ke",
+            "link": "http://www.ruc.ac.ke/",
+            "name": "Rongo University College"
+        }
+    },
+    {
+        "pk": 57,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "mruc.ac.ke",
+            "link": "http://www.mruc.ac.ke/",
+            "name": "Murang\u2019a University College"
+        }
+    },
+    {
+        "pk": 58,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kenya.ilu.edu",
+            "link": "http://kenya.ilu.edu/",
+            "name": "International Leadership University (Nairobi International School of Theology)"
+        }
+    },
+    {
+        "pk": 59,
+        "model": "scrapyapp.AcademicDomain",
+        "fields": {
+            "domain": "kheu.ac.ke",
+            "link": "http://www.kheu.ac.ke/",
+            "name": "Kenya Highlands Evangelical University(Kenya Highlands Bible College)"
+        }
+    }
+]

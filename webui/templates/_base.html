@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kenya Webspace{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+{#    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">#}
+    {% block stylesheets %}{% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Kenya Webspace</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="{% url 'project_list' %}">My Projects</a>
+                </li>
+                <li>
+                    <a href="{% url 'project_new' %}">Start Projects</a>
+                </li>
+                <li>
+                    <a href="{% url 'signup' %}">Sign up</a>
+                </li>
+                <li>
+                    <a href="{% url 'signin' %}">Signin</a>
+                </li>
+                <li>
+                    <a href="{% url 'signout' %}">Signout</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'user' %}">CurrentUser</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div>
+    {% block body %}{% endblock %}
+</div>
+<footer>
+
+</footer>
+<script src="/static/js/jquery-1.10.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+{% block scriptfiles %}{% endblock %}
+{% block scripts %}{% endblock %}
+</body>
+
+</html>

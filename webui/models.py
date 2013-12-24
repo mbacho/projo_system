@@ -1,0 +1,21 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+# Create your models here.
+
+
+class Project(models.Model):
+    """Project details"""
+    name = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User)
+
+
+class UserDets(models.Model):
+    """Stores user details"""
+    user = models.OneToOneField(User)
+
+
+class ProjectDomains(models.Model):
+    project = models.ForeignKey(Project)
+    domain = models.ForeignKey(AcademicDomains)
