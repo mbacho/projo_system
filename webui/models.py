@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+from scrapyapp.models import AcademicDomain
 
 
 class Project(models.Model):
@@ -18,4 +19,4 @@ class UserDets(models.Model):
 
 class ProjectDomains(models.Model):
     project = models.ForeignKey(Project)
-    domain = models.ForeignKey(AcademicDomains)
+    domain = models.ForeignKey(AcademicDomain)
