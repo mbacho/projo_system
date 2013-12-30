@@ -1,6 +1,6 @@
 Django==1.5.4
 MySQL-python==1.2.4
-Scrapy==0.20.1
+Scrapy==0.20.2
 Twisted==13.2.0
 cssselect==0.9.1
 lxml==3.2.4
