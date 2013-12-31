@@ -30,9 +30,14 @@ class Walker(CrawlSpider):
              process_links='process_links', process_request='process_request'),
     )
 
-    def __init__(self, startpage, domain, *args, **kwargs):
-        super(Walker, self).__init__(args, kwargs)
-        self.start_urls = [startpage]
+    def __init__(self, start, domain, *args, **kwargs):
+        super(Walker, self).__init__(*args, **kwargs)
+        if type(start) is not str or type(domain) is not str:
+            raise TypeError('invalid type given for startpage or domain')
+        if start == '' or domain =='':
+            raise ValueError('startpage or domain not provided')
+
+        self.start_urls = [start]
         self.allowed_domains = [domain]
 
 
