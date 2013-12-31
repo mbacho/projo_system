@@ -126,7 +126,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'johnnywalker',
     'webui',
-    # 'stats',
+    'stats',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

@@ -13,3 +13,20 @@ NEWSPIDER_MODULE = 'johnnywalker.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'johnnywalker (+http://www.yourdomain.com)'
+COOKIES_ENABLED = False
+
+from os.path import join, abspath
+
+path = abspath('.')
+FEED_URI = join(path, 'data', 'feed_data.jsonlines')
+FEED_FORMAT = 'jsonlines'
+ROBOTSTXT_OBEY = True
+# JOBDIR = 'jobs'
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+#USER_AGENT = 'scrapytut (the friendly scrapper)'
+TELNETCONSOLE_ENABLED = False
+WEBSERVICE_ENABLED = True
+#WEBSERVICE_RESOURCES = {'scrapytut.webservice.StatsResource':1,'scrapytut.webservice.EngineStatusResource':1,}
+#WEBSERVICE_PORT = 8081
+#WEBSERVICE_LOGFILE = 'logs/webservice_log'
