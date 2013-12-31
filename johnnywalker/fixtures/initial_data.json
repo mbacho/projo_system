@@ -1,7 +1,7 @@
 [
     {
         "pk": 1,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "uonbi.ac.ke",
             "link": "http://www.uonbi.ac.ke/",
@@ -10,7 +10,7 @@
     },
     {
         "pk": 2,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "maseno.ac.ke",
             "link": "http://maseno.ac.ke/",
@@ -19,7 +19,7 @@
     },
     {
         "pk": 3,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "ku.ac.ke",
             "link": "http://www.ku.ac.ke/",
@@ -28,7 +28,7 @@
     },
     {
         "pk": 4,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mu.ac.ke",
             "link": "http://www.mu.ac.ke/",
@@ -37,7 +37,7 @@
     },
     {
         "pk": 5,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "egerton.ac.ke",
             "link": "http://www.egerton.ac.ke/",
@@ -46,7 +46,7 @@
     },
     {
         "pk": 6,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "jkuat.ac.ke",
             "link": "http://www.jkuat.ac.ke/",
@@ -55,7 +55,7 @@
     },
     {
         "pk": 7,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "strathmore.edu",
             "link": "http://www.strathmore.edu/",
@@ -64,7 +64,7 @@
     },
     {
         "pk": 8,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "avu.org",
             "link": "http://www.avu.org/",
@@ -73,7 +73,7 @@
     },
     {
         "pk": 9,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "usiu.ac.ke",
             "link": "http://www.usiu.ac.ke/",
@@ -82,7 +82,7 @@
     },
     {
         "pk": 10,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "cuea.edu",
             "link": "http://www.cuea.edu/",
@@ -91,7 +91,7 @@
     },
     {
         "pk": 11,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "easm.ac.ke",
             "link": "http://www.easm.ac.ke/",
@@ -100,7 +100,7 @@
     },
     {
         "pk": 12,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kemu.ac.ke",
             "link": "http://www.kemu.ac.ke/",
@@ -109,7 +109,7 @@
     },
     {
         "pk": 13,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "daystar.ac.ke",
             "link": "http://www.daystar.ac.ke/",
@@ -118,7 +118,7 @@
     },
     {
         "pk": 14,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "isk.ac.ke",
             "link": "http://www.isk.ac.ke/",
@@ -127,7 +127,7 @@
     },
     {
         "pk": 15,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "anu.ac.ke",
             "link": "http://www.anu.ac.ke/",
@@ -136,7 +136,7 @@
     },
     {
         "pk": 16,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "tangaza.org",
             "link": "http://tangaza.org/",
@@ -145,7 +145,7 @@
     },
     {
         "pk": 17,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kca.ac.ke",
             "link": "http://www.kca.ac.ke/",
@@ -154,7 +154,7 @@
     },
     {
         "pk": 18,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mmust.ac.ke",
             "link": "http://www.mmust.ac.ke/",
@@ -163,7 +163,7 @@
     },
     {
         "pk": 19,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "ueab.ac.ke",
             "link": "http://ueab.ac.ke/",
@@ -172,7 +172,7 @@
     },
     {
         "pk": 20,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mku.ac.ke",
             "link": "http://www.mku.ac.ke/",
@@ -181,7 +181,7 @@
     },
     {
         "pk": 21,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kabarak.ac.ke",
             "link": "http://www.kabarak.ac.ke/",
@@ -190,7 +190,7 @@
     },
     {
         "pk": 22,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "africaInternational.edu",
             "link": "http://www.africaInternational.edu/",
@@ -199,7 +199,7 @@
     },
     {
         "pk": 23,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kim.ac.ke",
             "link": "http://www.kim.ac.ke/",
@@ -208,7 +208,7 @@
     },
     {
         "pk": 24,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kmtc.ac.ke",
             "link": "http://www.kmtc.ac.ke/",
@@ -217,7 +217,7 @@
     },
     {
         "pk": 25,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "iu.ac.ke",
             "link": "http://www.iu.ac.ke/",
@@ -226,7 +226,7 @@
     },
     {
         "pk": 26,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kwust.ac.ke",
             "link": "http://www.kwust.ac.ke/",
@@ -235,7 +235,7 @@
     },
     {
         "pk": 27,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mmu.ac.ke",
             "link": "http://www.mmu.ac.ke/",
@@ -244,7 +244,7 @@
     },
     {
         "pk": 28,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mias.edu",
             "link": "http://www.mias.edu/",
@@ -253,7 +253,7 @@
     },
     {
         "pk": 29,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "stpaulslimuru.ac.ke",
             "link": "http://www.stpaulslimuru.ac.ke/",
@@ -262,7 +262,7 @@
     },
     {
         "pk": 30,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "gluk.ac.ke",
             "link": "http://www.gluk.ac.ke/",
@@ -271,7 +271,7 @@
     },
     {
         "pk": 31,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "scott.ac.ke",
             "link": "http://www.scott.ac.ke/",
@@ -280,7 +280,7 @@
     },
     {
         "pk": 32,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "cuc.ac.ke",
             "link": "http://www.cuc.ac.ke/",
@@ -289,7 +289,7 @@
     },
     {
         "pk": 33,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "puea.ac.ke",
             "link": "http://puea.ac.ke/",
@@ -298,7 +298,7 @@
     },
     {
         "pk": 34,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "bondo-uni.ac.ke",
             "link": "http://www.bondo-uni.ac.ke/",
@@ -307,7 +307,7 @@
     },
     {
         "pk": 35,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "gretsauniversity.ac.ke",
             "link": "http://www.gretsauniversity.ac.ke/",
@@ -316,7 +316,7 @@
     },
     {
         "pk": 36,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "pacuniversity.ac.ke",
             "link": "http://www.pacuniversity.ac.ke/",
@@ -325,7 +325,7 @@
     },
     {
         "pk": 37,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "karatinauniversity.ac.ke",
             "link": "http://www.karatinauniversity.ac.ke/",
@@ -334,7 +334,7 @@
     },
     {
         "pk": 38,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kciti.edu",
             "link": "http://www.kciti.edu/",
@@ -343,7 +343,7 @@
     },
     {
         "pk": 39,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mua.ac.ke",
             "link": "http://www.mua.ac.ke/",
@@ -352,7 +352,7 @@
     },
     {
         "pk": 40,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kisiiuniversity.ac.ke",
             "link": "http://www.kisiiuniversity.ac.ke/",
@@ -361,7 +361,7 @@
     },
     {
         "pk": 41,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "laikipia.ac.ke",
             "link": "http://laikipia.ac.ke/",
@@ -370,7 +370,7 @@
     },
     {
         "pk": 42,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "pu.ac.ke",
             "link": "http://www.pu.ac.ke/",
@@ -379,7 +379,7 @@
     },
     {
         "pk": 43,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "cooperative.ac.ke",
             "link": "http://www.cooperative.ac.ke/",
@@ -388,7 +388,7 @@
     },
     {
         "pk": 44,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "nac.ac.ke",
             "link": "http://www.nac.ac.ke/",
@@ -397,7 +397,7 @@
     },
     {
         "pk": 45,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "ttuc.ac.ke",
             "link": "http://ttuc.ac.ke/",
@@ -406,7 +406,7 @@
     },
     {
         "pk": 46,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "riarauniversity.ac.ke",
             "link": "http://www.riarauniversity.ac.ke/",
@@ -415,7 +415,7 @@
     },
     {
         "pk": 47,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "dkut.ac.ke",
             "link": "http://dkut.ac.ke/",
@@ -424,7 +424,7 @@
     },
     {
         "pk": 48,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "tukenya.ac.ke",
             "link": "http://www.tukenya.ac.ke/",
@@ -433,7 +433,7 @@
     },
     {
         "pk": 49,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "embucollege.com",
             "link": "http://embucollege.com/",
@@ -442,7 +442,7 @@
     },
     {
         "pk": 50,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "tum.ac.ke",
             "link": "http://tum.ac.ke/",
@@ -451,7 +451,7 @@
     },
     {
         "pk": 51,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "riccatti.ac.ke",
             "link": "http://www.riccatti.ac.ke/",
@@ -460,7 +460,7 @@
     },
     {
         "pk": 52,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "umma.ac.ke",
             "link": "http://www.umma.ac.ke/",
@@ -469,7 +469,7 @@
     },
     {
         "pk": 53,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "machakosuniversity.ac.ke",
             "link": "http://www.machakosuniversity.ac.ke/",
@@ -478,7 +478,7 @@
     },
     {
         "pk": 54,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kyuc.ac.ke",
             "link": "http://www.kyuc.ac.ke/",
@@ -487,7 +487,7 @@
     },
     {
         "pk": 55,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kibabiiuniversity.ac.ke",
             "link": "http://www.kibabiiuniversity.ac.ke/",
@@ -496,7 +496,7 @@
     },
     {
         "pk": 56,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "ruc.ac.ke",
             "link": "http://www.ruc.ac.ke/",
@@ -505,7 +505,7 @@
     },
     {
         "pk": 57,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "mruc.ac.ke",
             "link": "http://www.mruc.ac.ke/",
@@ -514,7 +514,7 @@
     },
     {
         "pk": 58,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kenya.ilu.edu",
             "link": "http://kenya.ilu.edu/",
@@ -523,7 +523,7 @@
     },
     {
         "pk": 59,
-        "model": "scrapyapp.AcademicDomain",
+        "model": "johnnywalker.AcademicDomain",
         "fields": {
             "domain": "kheu.ac.ke",
             "link": "http://www.kheu.ac.ke/",
