@@ -1,5 +1,5 @@
 __author__ = 'barbossa'
-from johnnywalker.items import WalkerItem
+from ..items import WalkerItem
 from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 
 

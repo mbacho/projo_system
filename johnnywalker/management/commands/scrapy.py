@@ -1,10 +1,10 @@
 from __future__ import absolute_import
-from os.path import split
 from os import chdir
+from os.path import abspath
+from os.path import join
 
 from django.core.management.base import BaseCommand
 from scrapy.cmdline import execute
-import manage
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         self.execute()
 
     def handle(self, *args, **options):
-        scrapydir = split(manage.__file__)[0]  # abspath(join(__file__, '..', '..', '..', '..'))
+        scrapydir = abspath(join(__file__, '..', '..', '..', '..'))
         chdir(scrapydir)
         execute(self._argv[1:])
         self.stdout.write(str(args))

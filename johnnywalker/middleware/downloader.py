@@ -1,6 +1,6 @@
-from scrapy.contrib.downloadermiddleware.defaultheaders import DefaultHeadersMiddleware
-
 __author__ = 'barbossa'
+
+from scrapy.contrib.downloadermiddleware.defaultheaders import DefaultHeadersMiddleware
 
 
 class MyHeadersMiddleware(DefaultHeadersMiddleware):
@@ -62,5 +62,6 @@ class MyHeadersMiddleware(DefaultHeadersMiddleware):
          spider (BaseSpider object)  the spider for which this request is intended
 
     """
+
     def __init__(self, headers, *args, **kwargs):
         super(MyHeadersMiddleware, self).__init__(headers)

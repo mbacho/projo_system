@@ -1,7 +1,7 @@
 __author__ = 'barbossa'
 
 from django.forms import ModelForm
-from models import Project
+from .models import Project
 
 
 class ProjectEdit(ModelForm):

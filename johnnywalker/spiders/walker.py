@@ -8,7 +8,7 @@ from urlparse import urlsplit
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import CrawlSpider, Rule
 
-from johnnywalker.items import WalkerItem
+from ..items import WalkerItem
 
 
 class Walker(CrawlSpider):

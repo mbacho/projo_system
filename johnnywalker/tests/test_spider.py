@@ -1,8 +1,8 @@
 from unittest import TestCase
 from unittest import SkipTest
-from nose.tools import istest
+from . import istest
 from scrapy.link import Link
-from johnnywalker.spiders.walker import Walker
+from ..spiders.walker import Walker
 
 __author__ = 'barbossa'
 
