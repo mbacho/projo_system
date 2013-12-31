@@ -63,4 +63,4 @@ class MyHeadersMiddleware(DefaultHeadersMiddleware):
 
     """
     def __init__(self, headers, *args, **kwargs):
-        super(MyHeadersMiddleware, self).__init__(headers, *args, **kwargs)
+        super(MyHeadersMiddleware, self).__init__(headers)

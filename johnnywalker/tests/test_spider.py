@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest import SkipTest
 from nose.tools import istest
+from scrapy.link import Link
 from johnnywalker.spiders.walker import Walker
 
 __author__ = 'barbossa'
@@ -23,21 +24,42 @@ class TestWalker(TestCase):
 
     def test_process_links(self):
         links = [
-            {'good': 'http://localhost'},
-            {'bad': 'http://localhost/', 'good': 'http://localhost/'}
+            {'good': Link(url='http://localhost')},
+            {'bad': Link(url='http://localhost/'), 'good': Link(url='http://localhost/')}
         ]
-        for i in links:
-            poa, mbaya = i['good'], (i['bad'] if i.has_key('bad') else i['good'])
-            res = self.spider.process_links(mbaya)
-            self.assertEqual(poa, res)
+        res = self.spider.process_links([i['bad'] if i.has_key('bad') else i['good'] for i in links])
+        l = len(res)
+        for i in range(0, l, 1):
+            self.assertEqual(links[i]['good'].url, res[i].url)
 
+    def test_validations(self):
+        urls = [
+            {'url': 'http://localhost', 'valid': True},
+            {'url': 'http://google.com', 'valid': True},
+            {'url': 'google.com', 'valid': False},
+        ]
+        domains = [
+            {'domain': 'localhost', 'valid': True},
+            {'domain': 'google.com', 'valid': True},
+            {'domain': 'sci.uonbi.com', 'valid': True},
+        ]
+        for i in urls:
+            u, ans = i['url'], i['valid']
+            res = self.spider.is_valid_url(u)
+            self.assertTrue(res == ans, 'url validation error')
+
+        for i in domains:
+            d, ans = i['domain'], i['valid']
+            res = self.spider.is_valid_domain(d)
+            self.assertTrue(res == ans, 'domain validation error')
 
     def test_process_request(self):
         pass
 
     def test_user_agent(self):
-        raise SkipTest()
+        pass
 
     def test_parse_item(self):
         pass
+
 

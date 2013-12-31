@@ -16,6 +16,8 @@ class JsonLinesDomainPipeline(object):
 
     def process_item(self, item, spider):
         dump(dict(item), self.file)
+        self.file.write("\n")
+        self.file.flush()
         return item
 
 
@@ -24,7 +26,6 @@ class JsonLinesDomainPipeline(object):
         path = abspath(join(__file__, '..'))
         fname = join(path, 'data', "%s.jsonlines" % domain)
         self.file = open(fname, 'w')
-
 
     def close_spider(self, spider):
         if self.file is not None:
