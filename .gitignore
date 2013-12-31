@@ -1,3 +1,5 @@
 .idea
 *.pyo
 *.pyc
+webometrics.db
+
