@@ -10,21 +10,32 @@ BOT_NAME = 'johnnywalker'
 
 SPIDER_MODULES = ['johnnywalker.spiders']
 NEWSPIDER_MODULE = 'johnnywalker.spiders'
-
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'johnnywalker (+http://www.yourdomain.com)'
 COOKIES_ENABLED = False
-
-from os.path import join, abspath
-
-path = abspath('.')
-FEED_URI = join(path, 'data', 'feed_data.jsonlines')
-FEED_FORMAT = 'jsonlines'
 ROBOTSTXT_OBEY = True
+
+ITEM_PIPELINES = {
+    'johnnywalker.pipelines.HashDuplicateFilterPipeline':10,
+    'johnnywalker.pipelines.JsonLinesDomainPipeline': 20
+}
+
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.contrib.downloadermiddleware.defaultheaders.DefaultHeadersMiddleware': None,
+    'johnnywalker.middleware.downloader.MyHeadersMiddleware': 550,
+}
+
+SPIDER_MIDDLEWARES = {
+    'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware': None,
+    'johnnywalker.middleware.offsite.MyOffsiteMiddleware': 500
+}
+
+
+#from os.path import join, abspath
+#path = abspath('.')
+#FEED_URI = join(path, 'data', 'feed_data.jsonlines')
+#FEED_FORMAT = 'jsonlines'
+
 # JOBDIR = 'jobs'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrapytut (the friendly scrapper)'
 TELNETCONSOLE_ENABLED = False
 WEBSERVICE_ENABLED = True
 #WEBSERVICE_RESOURCES = {'scrapytut.webservice.StatsResource':1,'scrapytut.webservice.EngineStatusResource':1,}

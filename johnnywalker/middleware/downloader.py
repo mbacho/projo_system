@@ -2,13 +2,10 @@ from scrapy.contrib.downloadermiddleware.defaultheaders import DefaultHeadersMid
 
 __author__ = 'barbossa'
 
-class ChoosyDownloader(DefaultHeadersMiddleware):
 
-    def __init__(self):
-        pass
-
+class MyHeadersMiddleware(DefaultHeadersMiddleware):
+    """
     def process_request(request, spider):
-        """
         This method is called for each request that goes through the download middleware
         process_request() should either: return None, return a Response object, return a Request object, or raise IgnoreRequest
         If it returns None, Scrapy will continue processing this request, executing all other middlewares until,
@@ -26,11 +23,8 @@ class ChoosyDownloader(DefaultHeadersMiddleware):
         Parameters
         @param request (Request object)  the request being processed
          spider (BaseSpider object)  the spider for which this request is intended
-        """
-        pass
 
     def process_response(request, response, spider):
-        """
         process_response() should either: return a Response object, return a Request object or raise a
         IgnoreRequest exception
         If it returns a Response (it could be the same given response, or a brand-new one), that response will
@@ -44,11 +38,8 @@ class ChoosyDownloader(DefaultHeadersMiddleware):
          request (is a Request object)  the request that originated the response
          response (Response object)  the response being processed
          spider (BaseSpider object)  the spider for which this response is intended
-        """
-        pass
 
     def process_exception(request, exception, spider):
-        """
         Scrapy calls process_exception() when a download handler or a process_request() (from a
         downloader middleware) raises an exception (including an IgnoreRequest exception)
         process_exception() should return: either None, a Response object, or a Request object
@@ -69,5 +60,7 @@ class ChoosyDownloader(DefaultHeadersMiddleware):
          request (is a Request object)  the request that generated the exception
          exception (an Exception object)  the raised exception
          spider (BaseSpider object)  the spider for which this request is intended
-        """
-        pass
+
+    """
+    def __init__(self, headers, *args, **kwargs):
+        super(MyHeadersMiddleware, self).__init__(headers, *args, **kwargs)

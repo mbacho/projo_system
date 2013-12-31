@@ -5,8 +5,8 @@
 
 from scrapy.item import Item, Field
 
-class JohnnywalkerItem(Item):
 
+class WalkerItem(Item):
     status = Field()
     parent = Field()
     response_hash = Field() #used to identify similar page contents
@@ -14,4 +14,4 @@ class JohnnywalkerItem(Item):
     page = Field()
 
     def __unicode__(self):
-        return "{0}, {1}, {2}, {3}".format(self.type,self.status,self.page,self.response_hash)
+        return "{0}, {1}, {2}, {3}".format(self.type, self.status, self.page, self.response_hash)

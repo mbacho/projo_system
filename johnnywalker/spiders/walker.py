@@ -1,8 +1,10 @@
 from random import randrange
+from hashlib import sha256 as sh
 
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import CrawlSpider, Rule
 
+from johnnywalker.items import WalkerItem
 
 __author__ = 'barbossa'
 
@@ -22,7 +24,10 @@ class Walker(CrawlSpider):
         '3gp', 'asf', 'asx', 'avi', 'mov', 'mp4', 'mpg', 'qt', 'rm', 'swf', 'wmv', 'm4a', 'mpeg',
 
         # other
-        'css', 'exe', 'bat', 'bin', 'rss', 'zip', 'rar', 'xml'
+        'css', 'exe', 'bat', 'bin', 'rss', 'zip', 'rar', 'xml',
+
+        #script files
+        'js', 'css', 'vbs', 'cs',
     ]
 
     rules = (
@@ -34,7 +39,7 @@ class Walker(CrawlSpider):
         super(Walker, self).__init__(*args, **kwargs)
         if type(start) is not str or type(domain) is not str:
             raise TypeError('invalid type given for startpage or domain')
-        if start == '' or domain =='':
+        if start == '' or domain == '':
             raise ValueError('startpage or domain not provided')
 
         self.start_urls = [start]
@@ -42,7 +47,17 @@ class Walker(CrawlSpider):
 
 
     def parse_item(self, response):
-        pass
+        lnk = WalkerItem()
+        lnk['status'] = response.status
+        lnk['parent'] = response.request.headers.get('Referer', '')
+        lnk['response_hash'] = '' if response.status != 200 else sh(response.body).hexdigest()
+
+        type = response.headers['Content-Type']
+        if ';' in type:
+            type = type[:type.index(';')]
+        lnk['type'] = type
+        lnk['page'] = response.url
+        return lnk
 
     def process_results(self, response, results):
         """
@@ -51,7 +66,7 @@ class Walker(CrawlSpider):
         the item IDs. It receives a list of results and the response which originated those results. It must return a
         list of results (Items or Requests).
         """
-        pass
+        return results
 
     def process_links(self, links):
         """
@@ -63,7 +78,7 @@ class Walker(CrawlSpider):
         """
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
-        pass
+        return request
 
     @property
     def user_agent(self):
