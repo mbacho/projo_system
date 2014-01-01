@@ -1,5 +1,5 @@
 
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 from random import randrange
 from hashlib import sha256 as sh

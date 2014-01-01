@@ -1,4 +1,4 @@
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 from django.conf.urls import patterns, include, url
 

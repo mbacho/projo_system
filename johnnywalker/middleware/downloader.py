@@ -1,4 +1,4 @@
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 from scrapy.contrib.downloadermiddleware.defaultheaders import DefaultHeadersMiddleware
 

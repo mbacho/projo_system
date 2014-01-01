@@ -4,7 +4,7 @@ from . import istest
 from scrapy.link import Link
 from ..spiders.walker import Walker
 
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 
 class TestWalker(TestCase):

@@ -1,4 +1,4 @@
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 from ..items import WalkerItem
 from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 

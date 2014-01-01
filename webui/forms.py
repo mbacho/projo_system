@@ -1,4 +1,4 @@
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 from django.forms import ModelForm
 from .models import Project

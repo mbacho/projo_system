@@ -1,7 +1,7 @@
 """
 Complete Django settings for webometrics project.
 """
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 
 
 DEBUG = True
