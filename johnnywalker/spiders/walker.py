@@ -89,6 +89,10 @@ class Walker(CrawlSpider):
         """
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
+        #TODO : check filetype and change request to HEAD if type in RICHFILES
+        ext = request.url.split(".")[-1]
+        if ext in self.RICH_FILES:
+          request.method = 'HEAD'
         return request
 
     def is_valid_domain(self, domain):
