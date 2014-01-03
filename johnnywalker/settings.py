@@ -34,7 +34,7 @@ SPIDER_MIDDLEWARES = {
 #FEED_URI = join(path, 'data', 'feed_data.jsonlines')
 #FEED_FORMAT = 'jsonlines'
 
-# JOBDIR = 'jobs'
+JOBS_TOPDIR = 'jobs'
 
 TELNETCONSOLE_ENABLED = False
 WEBSERVICE_ENABLED = True

@@ -12,7 +12,7 @@ from ..items import WalkerItem
 
 class Walker(CrawlSpider):
     name = 'walker'
-    handle_httpstatus_list = [404]
+    handle_httpstatus_list = [404, 500]
     IGNORED_EXTS = [
         # images
         'mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif',
@@ -37,7 +37,7 @@ class Walker(CrawlSpider):
 
     rules = (
         Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS), callback='parse_item', follow=True,
-             process_links='process_links', process_request='process_request'),
+             process_request='process_request', ), #process_links='process_links', ),
     )
     start_urls = []
     allowed_domains = []
@@ -77,18 +77,9 @@ class Walker(CrawlSpider):
         """
         return results
 
-    def process_links(self, links):
-        """
-        called for each list of links extracted from each response using the specified link_extractor.
-        """
-        processed_links = []
-        for i in links:
-            split_link = urlsplit(i.url)
-            if split_link.netloc in self.allowed_domains:
-                processed_links.append(i)
-            else:
-                pass
-        return processed_links
+    # def process_links(self, links):
+    #     """called for each list of links extracted from each response using the specified link_extractor."""
+    #     return links
 
     def process_request(self, request):
         """
