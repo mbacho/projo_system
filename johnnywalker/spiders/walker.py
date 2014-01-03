@@ -1,4 +1,3 @@
-
 __author__ = 'mbacho'
 
 from random import randrange
@@ -32,6 +31,10 @@ class Walker(CrawlSpider):
         'js', 'css', 'vbs', 'cs',
     ]
 
+    RICH_FILES = [
+        'doc', 'docx', 'pdf', 'ps', 'eps'
+    ]
+
     rules = (
         Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS), callback='parse_item', follow=True,
              process_links='process_links', process_request='process_request'),
@@ -41,8 +44,10 @@ class Walker(CrawlSpider):
 
     def __init__(self, start, domain, *args, **kwargs):
         super(Walker, self).__init__(*args, **kwargs)
-        if type(start) is not str or type(domain) is not str:
-            raise TypeError('invalid type given for startpage or domain')
+        if (type(start) is not str) and (type(start) is not unicode):
+            raise TypeError('invalid type given for startpage')
+        if (type(domain) is not str) and (type(domain) is not unicode):
+            raise TypeError('invalid type given for domain')
         if start == '' or domain == '':
             raise ValueError('startpage or domain not provided')
 
@@ -92,7 +97,7 @@ class Walker(CrawlSpider):
         #TODO : check filetype and change request to HEAD if type in RICHFILES
         ext = request.url.split(".")[-1]
         if ext in self.RICH_FILES:
-          request.method = 'HEAD'
+            request.method = 'HEAD'
         return request
 
     def is_valid_domain(self, domain):
