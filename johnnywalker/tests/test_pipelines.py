@@ -32,7 +32,7 @@ from os import remove
 
 from scrapy.exceptions import DropItem
 
-from . import istest
+from core.tests import istest
 from johnnywalker.items import WalkerItem
 from johnnywalker.pipelines import JsonLinesDomainPipeline, HashDuplicateFilterPipeline
 from johnnywalker.spiders.walker import Walker
