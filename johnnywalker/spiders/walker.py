@@ -1,8 +1,10 @@
+from re import sub
+
 __author__ = 'mbacho'
 
 from random import randrange
 from hashlib import sha256 as sh
-from urlparse import urlsplit
+from urlparse import urlsplit, urlunsplit
 
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import CrawlSpider, Rule
@@ -32,12 +34,12 @@ class Walker(CrawlSpider):
     ]
 
     RICH_FILES = [
-        'doc', 'docx', 'pdf', 'ps', 'eps'
+        'doc', 'docx', 'pdf', 'ps', 'eps','txt'
     ]
 
     rules = (
         Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS), callback='parse_item', follow=True,
-             process_request='process_request', ), #process_links='process_links', ),
+             process_request='process_request', process_links='process_links', ),
     )
     start_urls = []
     allowed_domains = []
@@ -77,9 +79,14 @@ class Walker(CrawlSpider):
         """
         return results
 
-    # def process_links(self, links):
-    #     """called for each list of links extracted from each response using the specified link_extractor."""
-    #     return links
+    def process_links(self, links):
+        """called for each list of links extracted from each response using the specified link_extractor."""
+        #TODO : remove multiple '/'s in urls
+        for link in links:
+            split_link = urlsplit(link.url)
+            link.url = urlunsplit((split_link.scheme, split_link.netloc, sub(r'//+', '/', split_link.path),
+                                   split_link.query, split_link.fragment))
+        return links
 
     def process_request(self, request):
         """
