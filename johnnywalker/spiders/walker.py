@@ -81,7 +81,6 @@ class Walker(CrawlSpider):
 
     def process_links(self, links):
         """called for each list of links extracted from each response using the specified link_extractor."""
-        #TODO : remove multiple '/'s in urls
         for link in links:
             split_link = urlsplit(link.url)
             link.url = urlunsplit((split_link.scheme, split_link.netloc, sub(r'//+', '/', split_link.path),
@@ -92,7 +91,6 @@ class Walker(CrawlSpider):
         """
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
-        #TODO : check filetype and change request to HEAD if type in RICHFILES
         ext = request.url.split(".")[-1]
         if ext in self.RICH_FILES:
             request.method = 'HEAD'
