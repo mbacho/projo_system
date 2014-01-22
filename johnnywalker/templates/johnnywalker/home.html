@@ -4,8 +4,11 @@
     <div>
         <h3>Status</h3>
 
-        <p>Active spiders : {{ active_spiders }}</p>
+        <p>Projects : {{ active_spiders }}</p>
 
+        <p>Action status : {{ status }}</p>
+
+        <p>Jobs : {{ jobs }}</p>
     </div>
     <form method="post" action="{% url 'crawler_home' %}" class="form-inline">
         {% csrf_token %}
