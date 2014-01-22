@@ -13,4 +13,4 @@ class AcademicDomain(models.Model):
 
 class DomainAvoidUrl(models.Model):
     domain = models.ForeignKey(AcademicDomain)
-    url_pattern = models.CharField(unique=True, null=False, blank=False)
+    url_pattern = models.CharField(unique=True, null=False, blank=False,max_length=100)

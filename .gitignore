@@ -5,3 +5,9 @@ webometrics.db
 
 data
 johnnywalker/data/
+build/
+dbs/
+eggs/
+twistd.pid
+project.egg-info/
+setup.py

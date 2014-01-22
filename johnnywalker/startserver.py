@@ -28,14 +28,13 @@ project : webometrics
 """
 from os import system
 from os import chdir
-from os import getcwd
-from os.path import abspath, split
+from os.path import abspath, split, join
 
 
 def main():
     """Blocking method to start scrapyd server in correct folder and """
     #TODO: Change from system calls to twister framework e.g. which scrapyd | xargs cat
-    chdir(split(abspath(__file__))[0])
+    chdir(join(split(abspath(__file__))[0], '..'))
     system('scrapyd')
 
 

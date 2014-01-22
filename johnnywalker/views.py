@@ -1,85 +1,125 @@
 # Create your views here.
 from json import loads
+
 from urllib2 import urlopen
-from urlparse import urljoin
 
 from django.http import HttpResponse
-
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from scrapy.utils.jsonrpc import jsonrpc_client_call
-from twisted.internet import reactor
-from scrapy.crawler import Crawler
-from scrapy import signals
-from scrapy.utils.project import get_project_settings
+from django.utils.http import urlencode
 
 from johnnywalker.forms import StartCrawlForm
 
-from .spiders.walker import Walker
-
-from scrapy import log
 
 class ScrapydCommunicator(object):
-    host = 'localhost'
-    port = 6080
-    spidername = 'walker'
+    host = '127.0.0.1'
+    port = 6880
 
     def __init__(self):
         pass
 
-    def start_spider(self, startpage, domain):
-        """start <spider> - start/resume spider"""
-        return self.jsonrpc_call('crawler/engine', 'open_spider', self.spidername, start=startpage, domain=domain)
+    def _get_jsondata(self, apicall, method, arguments=None):
+        url = "http://{0}:{1}/{2}.json".format(self.host, self.port, apicall)
+        data_encoded = urlencode(arguments) if type(arguments) is dict else ""
+        if method in ['POST', 'post']:
+            return loads(urlopen(url, data_encoded).read())
+        else:
+            data = url + ("?" + data_encoded) if len(data_encoded) > 0 else ""
+            return loads(urlopen(url).read())
 
-    def pause_spider(self):
-        """stop <spider> - stop a running spider"""
-        return self.jsonrpc_call('crawler/engine', 'close_spider', self.spidername)
+    def listprojects(self):
+        """
+        GET
+        sample response: {"status": "ok", "projects": ["myproject", "otherproject"]}
+        """
+        return self._get_jsondata('listprojects', 'GET')
 
-    def stop_spider(self):
+    def addversion(self):
+        """
+        POST
+        - project (string, required) - the project name
+        - version (string, required) - the project version
+        - egg (file, required) - a Python egg containing the project's code
+
+        sample response : {"status": "ok", "spiders": 3}
+        """
         pass
 
-    def active_spiders(self):
-        return self.json_get('crawler/engine/open_spiders')
+    def schedule(self):
+        """
+        POST
+        - project (string, required) - the project name
+        - spider (string, required) - the spider name
+        - setting (string, optional) - a scrapy setting to use when running the spider
+        - any other parameter is passed as spider argument
 
-    def jsonrpc_call(self, path, method, *args, **kwargs):
-        url = self.get_wsurl(path)
-        result = jsonrpc_client_call(url, method, *args, **kwargs)
-        return result
+        sample response: {"status": "ok", "jobid": "6487ec79947edab326d6db28a2d86511e8247444"}
+        """
+        pass
 
-    def get_wsurl(self, path):
-        return urljoin("http://%s:%s/" % (self.host, self.port), path)
+    def cancel(self):
+        """
+        POST
+        - project (string, required) - the project name
+        - job (string, required) - the job id
+        sample response: {"status": "ok", "prevstate": "running"}
+        """
 
-    def json_get(self, path):
-        url = self.get_wsurl(path)
-        return loads(urlopen(url).read())
+    def listversions(self):
+        """
+        GET
+        - project (string, required) - the project name
+        sample response: {"status": "ok", "versions": ["r99", "r156"]}
+        """
+        pass
 
+    def listspiders(self):
+        """
+        GET
+        - project (string, required) - the project name
+        sample response: {"status": "ok", "spiders": ["spider1", "spider2", "spider3"]}
+        """
+        pass
 
-def create_spider(startpage, domain):
-    spider = Walker(startpage, domain)
-    settings = get_project_settings()
-    crawler = Crawler(settings)
-    crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
-    crawler.configure()
-    crawler.crawl(spider)
-    crawler.start()
-    log.start()
-    reactor.run()
-    return spider
+    def listjobs(self):
+        """
+        GET
+        - project (string, required) - the project name
+        sample response: {"status": "ok",
+        "pending": [{"id": "78391cc0fcaf11e1b0090800272a6d06", "spider": "spider1"}],
+        "running": [{"id": "422e608f9f28cef127b3d5ef93fe9399", "spider": "spider2", "start_time": "2012-09-1
+        "finished": [{"id": "2f16646cfcaf11e1b0090800272a6d06", "spider": "spider3", "start_time": "2012-09-
+        """
+        pass
+
+    def delversion(self):
+        """
+        POST
+        - project (string, required) - the project name
+        - version (string, required) - the project version
+        sample response: {"status": "ok"}
+        """
+        pass
+
+    def delproject(self):
+        """
+        POST
+        - project (string, required) - the project name
+
+        sample response: {"status": "ok"}
+        """
+        pass
 
 
 def home(request):
     frm = StartCrawlForm(request.POST or None)
+    comms = ScrapydCommunicator()
+    projects = comms.listprojects()
     if frm.is_valid():
         startpage, domain = frm.cleaned_data['startpage'], frm.cleaned_data['domain']
-        comms = ScrapydCommunicator()
-        # ans = comms.start_spider(domain=domain, startpage=startpage)
-        # return HttpResponse(content=ans.__str__())
-        spider = create_spider(startpage, domain)
-        import pdb;pdb.set_trace()
-        active = comms.active_spiders()
-        return render_to_response('johnnywalker/home.html', {'active_spiders': active})
+        return render_to_response('johnnywalker/home.html', {'active_spiders': projects})
 
-    return render_to_response('johnnywalker/home.html', {'startcrawlform': frm},
+    return render_to_response('johnnywalker/home.html', {'startcrawlform': frm, 'active_spiders': projects},
                               context_instance=RequestContext(request))
 
 
