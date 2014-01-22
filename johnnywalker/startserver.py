@@ -26,7 +26,7 @@ file : startserver.py
 project : webometrics
 
 """
-__author__ = 'mbacho'
+
 
 from scrapy.crawler import Crawler
 from scrapy.utils.project import get_project_settings

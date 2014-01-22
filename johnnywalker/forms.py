@@ -28,7 +28,7 @@ project : webometrics
 """
 from django import forms
 
-__author__ = 'mbacho'
+
 
 class StartCrawlForm(forms.Form):
     startpage = forms.URLField()

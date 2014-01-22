@@ -6,7 +6,6 @@ from core.tests import istest
 from ..spiders.walker import Walker
 
 
-__author__ = 'mbacho'
 
 
 class TestWalker(TestCase):

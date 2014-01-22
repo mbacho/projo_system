@@ -1,7 +1,7 @@
 from os.path import join, abspath
 from json import dump
 
-__author__ = 'mbacho'
+
 from ..items import WalkerItem
 from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 

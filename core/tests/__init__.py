@@ -27,8 +27,6 @@ project : webometrics
 
 """
 
-__author__ = 'mbacho'
-
 
 try:
     from nose.tools import istest

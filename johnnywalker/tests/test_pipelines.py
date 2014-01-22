@@ -38,7 +38,6 @@ from johnnywalker.pipelines import JsonLinesDomainPipeline, HashDuplicateFilterP
 from johnnywalker.spiders.walker import Walker
 
 
-__author__ = 'mbacho'
 
 
 class TestJsonLinesDomainPipeline(TestCase):

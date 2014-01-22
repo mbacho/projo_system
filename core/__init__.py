@@ -26,6 +26,3 @@ file : __init__.py.py
 project : webometrics
 
 """
-
-__author__ = 'mbacho'
-

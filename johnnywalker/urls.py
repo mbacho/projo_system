@@ -1,4 +1,4 @@
-__author__ = 'mbacho'
+
 
 from django.conf.urls import patterns, url
 from .views import home
