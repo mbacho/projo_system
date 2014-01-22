@@ -26,23 +26,17 @@ file : startserver.py
 project : webometrics
 
 """
+from os import system
+from os import chdir
+from os import getcwd
+from os.path import abspath, split
 
-
-from scrapy.crawler import Crawler
-from scrapy.utils.project import get_project_settings
-
-from twisted.internet import reactor
-from scrapy import log
-from scrapy import signals
 
 def main():
-    settings = get_project_settings()
-    crawler = Crawler(settings)
-    crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
-    crawler.configure()
-    crawler.start()
-    log.start()
-    reactor.run()
+    """Blocking method to start scrapyd server in correct folder and """
+    #TODO: Change from system calls to twister framework e.g. which scrapyd | xargs cat
+    chdir(split(abspath(__file__))[0])
+    system('scrapyd')
 
 
 if __name__ == '__main__':
