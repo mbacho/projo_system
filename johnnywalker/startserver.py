@@ -28,7 +28,7 @@ project : webometrics
 """
 from os import system
 from os import chdir
-from os.path import abspath, split, join
+from os.path import (abspath, split, join)
 
 
 def main():

@@ -27,14 +27,14 @@ project : webometrics
 
 """
 from unittest import TestCase
-from json import dumps, loads
+from json import (dumps, loads)
 from os import remove
 
 from scrapy.exceptions import DropItem
 
 from core.tests import istest
 from johnnywalker.items import WalkerItem
-from johnnywalker.pipelines import JsonLinesDomainPipeline, HashDuplicateFilterPipeline
+from johnnywalker.pipelines import (JsonLinesDomainPipeline, HashDuplicateFilterPipeline)
 from johnnywalker.spiders.walker import Walker
 
 

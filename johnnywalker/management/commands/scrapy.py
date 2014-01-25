@@ -1,8 +1,6 @@
 from __future__ import absolute_import
 from os import chdir
-from os.path import abspath
-from os.path import join
-
+from os.path import (abspath, join)
 from django.core.management.base import BaseCommand
 from scrapy.cmdline import execute
 

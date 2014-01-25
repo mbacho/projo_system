@@ -1,9 +1,9 @@
-from os.path import join, abspath
+from os.path import (join, abspath)
 from json import dump
 
+from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 
 from ..items import WalkerItem
-from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 
 
 class MyOffsiteMiddleware(OffsiteMiddleware):

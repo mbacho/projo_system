@@ -3,7 +3,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from os.path import join, abspath
+from os.path import (join, abspath)
 from json import dump
 
 from scrapy.exceptions import DropItem

@@ -1,14 +1,10 @@
 from re import sub
 
-
-
 from random import randrange
 from hashlib import sha256 as sh
-from urlparse import urlsplit, urlunsplit
-
+from urlparse import (urlsplit, urlunsplit)
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.contrib.spiders import CrawlSpider, Rule
-
+from scrapy.contrib.spiders import (CrawlSpider, Rule)
 from ..items import WalkerItem
 
 
@@ -34,12 +30,13 @@ class Walker(CrawlSpider):
     ]
 
     RICH_FILES = [
-        'doc', 'docx', 'pdf', 'ps', 'eps','txt'
+        'doc', 'docx', 'pdf', 'ps', 'eps', 'txt'
     ]
-    DENY_DOMAINS = ['maktaba.ku.ac.ke','opac.mku.ac.ke','library.kemu.ac.ke','opac.library.strathmore.edu']
+    DENY_DOMAINS = ['maktaba.ku.ac.ke', 'opac.mku.ac.ke', 'library.kemu.ac.ke', 'opac.library.strathmore.edu']
 
     rules = (
-        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS,deny_domains=DENY_DOMAINS), callback='parse_item', follow=True,
+        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS, deny_domains=DENY_DOMAINS), callback='parse_item',
+             follow=True,
              process_request='process_request', process_links='process_links', ),
     )
     start_urls = []
