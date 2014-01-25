@@ -11,3 +11,5 @@ eggs/
 twistd.pid
 project.egg-info/
 setup.py
+items
+logs
