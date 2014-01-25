@@ -534,7 +534,7 @@
 
     {
         "pk": 1,
-        "model": "johnnywalker.AvoidDomainUrl",
+        "model": "johnnywalker.AvoidUrl",
         "fields": {
             "domain": 1,
             "url_pattern": "/printpdf/"
@@ -542,7 +542,7 @@
     },
     {
         "pk": 2,
-        "model": "johnnywalker.AvoidDomainUrl",
+        "model": "johnnywalker.AvoidUrl",
         "fields": {
             "domain": 1,
             "url_pattern": "/print/"
@@ -550,7 +550,7 @@
     },
     {
         "pk": 3,
-        "model": "johnnywalker.AvoidDomainUrl",
+        "model": "johnnywalker.AvoidUrl",
         "fields": {
             "domain": 7,
             "url_pattern": "opac.library.strathmore.edu"
