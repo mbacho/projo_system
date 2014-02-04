@@ -22,24 +22,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : __init__.py.py
+file : miner.py
 project : webometrics
 
 """
 
-try:
-    from nose.tools import (istest,nottest)
-except:
-    def istest(func):
-        func.__test__ = True
-        return func
+from collections import Counter
+from json import loads
 
-    def nottest(func):
-        func.__test__ = False
-        return func
+from os.path import (join )
+
+from .models import DomainStats
 
 
-try:
-    from django.test import TestCase
-except:
-    from unittest import TestCase
+RICHFILES = ['application/pdf', 'application/ps']
+
+
+def get_domain_data(domain, datafolder):
+    return join(datafolder, '%s.jsonlines' % domain)
+
+
+def get_domain_outlink_data(domain, datafolder):
+    return join(datafolder, '%s.outlinks.jsonlines' % domain)
+
+
+def mine_data(domain, datafolder='johnnywalker/data/'):
+    fyl = open(get_domain_data(domain, datafolder), 'r')
+    domainlinks = [loads(i) for i in fyl.readlines()]
+    fyl.close()
+    fyl = open(get_domain_outlink_data(domain, datafolder), 'r')
+    outlinks = [loads(i)['page'] for i in fyl.readlines()]
+    fyl.close()
+
+    stats = DomainStats()
+    stats.domain = domain
+    stats.outlinks = len(Counter(outlinks).keys())
+
+    for i in domainlinks:
+        if i['status'] == 200:
+            stats.page_count += 1
+            if i['type'] in RICHFILES:
+                stats.richfiles += 1
+        elif i['status'] == 404:
+            stats.pages_not_found += 1
+
+    return stats

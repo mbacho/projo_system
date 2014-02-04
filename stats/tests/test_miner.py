@@ -22,24 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : __init__.py.py
+file : test_miner.py
 project : webometrics
 
 """
-
-try:
-    from nose.tools import (istest,nottest)
-except:
-    def istest(func):
-        func.__test__ = True
-        return func
-
-    def nottest(func):
-        func.__test__ = False
-        return func
+from core.tests import TestCase
+from ..miner import mine_data
 
 
-try:
-    from django.test import TestCase
-except:
-    from unittest import TestCase
+class TestMiner(TestCase):
+    def test_mine_data(self):
+        stats = mine_data('testdomain.com', 'stats/tests/data')
+        self.assertEqual(stats.outlinks, 3)
+        self.assertEqual(stats.domain, 'testdomain.com')
+        self.assertEqual(stats.page_count, 7)
+        self.assertEqual(stats.pages_not_found, 3)
+        self.assertEqual(stats.richfiles, 2)

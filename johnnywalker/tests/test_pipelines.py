@@ -26,18 +26,16 @@ file : test_pipelines.py
 project : webometrics
 
 """
-from unittest import TestCase
 from json import (dumps, loads)
 from os import remove
 
 from scrapy.exceptions import DropItem
 
+from core.tests import TestCase
 from core.tests import istest
 from johnnywalker.items import WalkerItem
 from johnnywalker.pipelines import (JsonLinesDomainPipeline, HashDuplicateFilterPipeline)
 from johnnywalker.spiders.walker import Walker
-
-
 
 
 class TestJsonLinesDomainPipeline(TestCase):

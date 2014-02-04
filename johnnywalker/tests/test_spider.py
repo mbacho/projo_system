@@ -1,11 +1,8 @@
-from unittest import TestCase
-
 from scrapy.link import Link
 
+from core.tests import TestCase
 from core.tests import istest
 from ..spiders.walker import Walker
-
-
 
 
 class TestWalker(TestCase):
