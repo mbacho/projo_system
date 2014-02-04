@@ -2,7 +2,8 @@
 *.pyo
 *.pyc
 webometrics.db
-
+.coverage
+coverage_html_reports
 data
 johnnywalker/data/
 build/
