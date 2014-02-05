@@ -67,3 +67,7 @@ def mine_data(domain, datafolder='johnnywalker/data/'):
             stats.pages_not_found += 1
 
     return stats
+
+def mine_details(domain):
+    #mongodb aggregation
+    pass

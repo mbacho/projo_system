@@ -15,7 +15,8 @@ ROBOTSTXT_OBEY = True
 
 ITEM_PIPELINES = {
     'johnnywalker.pipelines.HashDuplicateFilterPipeline':10,
-    'johnnywalker.pipelines.JsonLinesDomainPipeline': 20
+    'johnnywalker.pipelines.MongoStorePipeline': 20,
+    #'johnnywalker.pipelines.JsonLinesDomainPipeline': 30
 }
 
 DOWNLOADER_MIDDLEWARES = {
