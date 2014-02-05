@@ -9,3 +9,8 @@ class AcademicDomain(models.Model):
     # abbr = models.CharField(max_length=50)
     domain = models.URLField()
     link = models.URLField()
+
+
+class AvoidUrl(models.Model):
+    domain = models.ForeignKey(AcademicDomain)
+    url_pattern = models.CharField(unique=True, null=False, blank=False,max_length=100)

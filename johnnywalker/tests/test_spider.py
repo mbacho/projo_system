@@ -1,10 +1,8 @@
-from unittest import TestCase
-from unittest import SkipTest
-from . import istest
 from scrapy.link import Link
-from ..spiders.walker import Walker
 
-__author__ = 'mbacho'
+from core.tests import TestCase
+from core.tests import istest
+from ..spiders.walker import Walker
 
 
 class TestWalker(TestCase):
@@ -52,6 +50,9 @@ class TestWalker(TestCase):
             d, ans = i['domain'], i['valid']
             res = self.spider.is_valid_domain(d)
             self.assertTrue(res == ans, 'domain validation error')
+
+    def test_rich_files(self):
+        self.fail('urgent tests')
 
     def test_process_request(self):
         pass

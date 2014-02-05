@@ -2,6 +2,19 @@
 
 {% block body %}
     <div>
-    <a href="active">active</a>
+        <h3>Status</h3>
+
+        <p>Projects : {{ active_spiders }}</p>
+
+        <p>Action status : {{ status }}</p>
+
+        <p>Jobs : {{ jobs }}</p>
     </div>
+    <form method="post" action="{% url 'crawler_home' %}" class="form-inline">
+        {% csrf_token %}
+
+        {{ startcrawlform.as_p }}
+        <input type="submit" value="start"/>
+
+    </form>
 {% endblock %}

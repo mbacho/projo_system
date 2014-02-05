@@ -1,19 +1,16 @@
-
-__author__ = 'mbacho'
+from re import sub
 
 from random import randrange
 from hashlib import sha256 as sh
-from urlparse import urlsplit
-
+from urlparse import (urlsplit, urlunsplit)
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.contrib.spiders import CrawlSpider, Rule
-
+from scrapy.contrib.spiders import (CrawlSpider, Rule)
 from ..items import WalkerItem
 
 
 class Walker(CrawlSpider):
     name = 'walker'
-    handle_httpstatus_list = [404]
+    handle_httpstatus_list = [404, 500]
     IGNORED_EXTS = [
         # images
         'mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif',
@@ -32,17 +29,25 @@ class Walker(CrawlSpider):
         'js', 'css', 'vbs', 'cs',
     ]
 
+    RICH_FILES = [
+        'doc', 'docx', 'pdf', 'ps', 'eps', 'txt'
+    ]
+    DENY_DOMAINS = ['maktaba.ku.ac.ke', 'opac.mku.ac.ke', 'library.kemu.ac.ke', 'opac.library.strathmore.edu']
+
     rules = (
-        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS), callback='parse_item', follow=True,
-             process_links='process_links', process_request='process_request'),
+        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS, deny_domains=DENY_DOMAINS), callback='parse_item',
+             follow=True,
+             process_request='process_request', process_links='process_links', ),
     )
     start_urls = []
     allowed_domains = []
 
     def __init__(self, start, domain, *args, **kwargs):
         super(Walker, self).__init__(*args, **kwargs)
-        if type(start) is not str or type(domain) is not str:
-            raise TypeError('invalid type given for startpage or domain')
+        if (type(start) is not str) and (type(start) is not unicode):
+            raise TypeError('invalid type given for startpage')
+        if (type(domain) is not str) and (type(domain) is not unicode):
+            raise TypeError('invalid type given for domain')
         if start == '' or domain == '':
             raise ValueError('startpage or domain not provided')
 
@@ -73,26 +78,20 @@ class Walker(CrawlSpider):
         return results
 
     def process_links(self, links):
-        """
-        called for each list of links extracted from each response using the specified link_extractor.
-        """
-        processed_links = []
-        for i in links:
-            split_link = urlsplit(i.url)
-            if split_link.netloc in self.allowed_domains:
-                processed_links.append(i)
-            else:
-                pass
-        return processed_links
+        """called for each list of links extracted from each response using the specified link_extractor."""
+        for link in links:
+            split_link = urlsplit(link.url)
+            link.url = urlunsplit((split_link.scheme, split_link.netloc, sub(r'//+', '/', split_link.path),
+                                   split_link.query, split_link.fragment))
+        return links
 
     def process_request(self, request):
         """
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
-        #TODO : check filetype and change request to HEAD if type in RICHFILES
         ext = request.url.split(".")[-1]
         if ext in self.RICH_FILES:
-          request.method = 'HEAD'
+            request.method = 'HEAD'
         return request
 
     def is_valid_domain(self, domain):

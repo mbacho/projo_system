@@ -15,7 +15,8 @@ ROBOTSTXT_OBEY = True
 
 ITEM_PIPELINES = {
     'johnnywalker.pipelines.HashDuplicateFilterPipeline':10,
-    'johnnywalker.pipelines.JsonLinesDomainPipeline': 20
+    'johnnywalker.pipelines.MongoStorePipeline': 20,
+    #'johnnywalker.pipelines.JsonLinesDomainPipeline': 30
 }
 
 DOWNLOADER_MIDDLEWARES = {
@@ -34,7 +35,7 @@ SPIDER_MIDDLEWARES = {
 #FEED_URI = join(path, 'data', 'feed_data.jsonlines')
 #FEED_FORMAT = 'jsonlines'
 
-# JOBDIR = 'jobs'
+JOBS_TOPDIR = 'jobs'
 
 TELNETCONSOLE_ENABLED = False
 WEBSERVICE_ENABLED = True
