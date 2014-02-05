@@ -28,46 +28,26 @@ project : webometrics
 """
 
 from collections import Counter
-from json import loads
-
-from os.path import (join )
-
+from pymongo import MongoClient
 from .models import DomainStats
+from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_LINKS, MONGO_COLLECTION_OUTLINKS)
 
 
-RICHFILES = ['application/pdf', 'application/ps']
-
-
-def get_domain_data(domain, datafolder):
-    return join(datafolder, '%s.jsonlines' % domain)
-
-
-def get_domain_outlink_data(domain, datafolder):
-    return join(datafolder, '%s.outlinks.jsonlines' % domain)
-
-
-def mine_data(domain, datafolder='johnnywalker/data/'):
-    fyl = open(get_domain_data(domain, datafolder), 'r')
-    domainlinks = [loads(i) for i in fyl.readlines()]
-    fyl.close()
-    fyl = open(get_domain_outlink_data(domain, datafolder), 'r')
-    outlinks = [loads(i)['page'] for i in fyl.readlines()]
-    fyl.close()
+def mine_data(domain):
+    client = MongoClient()
+    db = client[MONGO_DBNAME]
+    links = db[MONGO_COLLECTION_LINKS][domain]
+    if links not in db.collection_names():
+        raise ValueError('no data found for domain %s' % domain)
+    outlinks = db[MONGO_COLLECTION_OUTLINKS][domain]
 
     stats = DomainStats()
     stats.domain = domain
-    stats.outlinks = len(Counter(outlinks).keys())
+    stats.page_count = links.find({'status': 200}).count()
+    stats.pages_not_found = links.find({'status': 404}).count()
+    stats.richfiles = links.find({'type': {'$ne': 'text/html'}}).count()
 
-    for i in domainlinks:
-        if i['status'] == 200:
-            stats.page_count += 1
-            if i['type'] in RICHFILES:
-                stats.richfiles += 1
-        elif i['status'] == 404:
-            stats.pages_not_found += 1
+    stats.outlinks = len(Counter(outlinks).keys())
 
     return stats
 
-def mine_details(domain):
-    #mongodb aggregation
-    pass
