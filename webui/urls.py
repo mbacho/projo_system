@@ -1,5 +1,8 @@
-from django.conf.urls import (patterns, url)
+from django.conf.urls import (patterns, url, include)
 from .views import home
+from .api import UserProjectResource
+
+u = UserProjectResource()
 
 urlpatterns = patterns('',
                        # Examples:
@@ -18,5 +21,5 @@ urlpatterns = patterns('',
                        url(r'^project/del', home, name='project_del'),
                        url(r'^project/stats', home, name='project_stats'),
 
-                       url(r'user', home, name='user'),
+                       url(r'^api/', include(u.urls))
 )

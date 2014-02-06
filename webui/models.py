@@ -20,3 +20,8 @@ class UserDets(models.Model):
 class ProjectDomains(models.Model):
     project = models.ForeignKey(Project)
     domain = models.ForeignKey(AcademicDomain)
+    jobid = models.CharField(max_length=100, default='')
+    start = models.DateTimeField(auto_now_add=True)
+    stop = models.DateTimeField(null=True, blank=True)
+    reason = models.CharField(max_length=20, default='')
+

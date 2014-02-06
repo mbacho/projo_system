@@ -1,11 +1,9 @@
+from django.conf.urls import (patterns, url, include)
 
+from .api import CrawlerProjectResource
 
-from django.conf.urls import (patterns, url)
-from .views import home
+c = CrawlerProjectResource()
 
 urlpatterns = patterns('',
-                       # Examples:
-                       # url(r'^$', 'webometrics.views.home', name='home'),
-                       # url(r'^webometrics/', include('webometrics.foo.urls')),
-                       url(r'^crawler', home, name='crawler_home'),
+                       url(r'^api/', include(c.urls)),
 )
