@@ -26,15 +26,48 @@ file : test_miner.py
 project : webometrics
 
 """
-from core.tests import TestCase
+from json import loads
+from os.path import join, abspath
+
+from pymongo import MongoClient
+
+from core.tests import TestCase,set_trace
+from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_OUTLINKS, MONGO_COLLECTION_LINKS)
 from ..miner import mine_data
 
 
 class TestMiner(TestCase):
+    domain = 'testdomain.com'
+
+    def setUp(self):
+        self.client = MongoClient()
+        self.db = self.client[MONGO_DBNAME]
+        self.links = self.db[MONGO_COLLECTION_LINKS][self.domain]
+        self.outlinks = self.db[MONGO_COLLECTION_OUTLINKS][self.domain]
+        datadir = abspath(join(__file__, '..'))
+        fyl = open(join(datadir, 'data/%s.jsonlines' % self.domain), 'r')
+        for i in fyl:
+            self.links.insert(loads(i))
+        fyl.close()
+        fyl = open(join(datadir, 'data/%s.outlinks.jsonlines' % self.domain), 'r')
+        for i in fyl:
+            self.outlinks.insert(loads(i))
+        fyl.close()
+
+    def test_setup(self):
+        self.assertEqual(self.links.count(), 10)
+        self.assertEqual(self.outlinks.count(), 7)
+
     def test_mine_data(self):
-        stats = mine_data('testdomain.com', 'stats/tests/data')
+        stats = mine_data(self.domain)
         self.assertEqual(stats.outlinks, 3)
-        self.assertEqual(stats.domain, 'testdomain.com')
+        self.assertEqual(stats.domain, self.domain)
         self.assertEqual(stats.page_count, 7)
         self.assertEqual(stats.pages_not_found, 3)
         self.assertEqual(stats.richfiles, 2)
+
+    def tearDown(self):
+        self.db.drop_collection(self.links.name)
+        self.db.drop_collection(self.outlinks.name)
+        self.client.close()
+

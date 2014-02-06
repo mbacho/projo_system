@@ -6,6 +6,7 @@ from urlparse import (urlsplit, urlunsplit)
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import (CrawlSpider, Rule)
 from ..items import WalkerItem
+from .. import RICH_FILES
 
 
 class Walker(CrawlSpider):
@@ -29,9 +30,6 @@ class Walker(CrawlSpider):
         'js', 'css', 'vbs', 'cs',
     ]
 
-    RICH_FILES = [
-        'doc', 'docx', 'pdf', 'ps', 'eps', 'txt'
-    ]
     DENY_DOMAINS = ['maktaba.ku.ac.ke', 'opac.mku.ac.ke', 'library.kemu.ac.ke', 'opac.library.strathmore.edu']
 
     rules = (
@@ -90,7 +88,7 @@ class Walker(CrawlSpider):
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
         ext = request.url.split(".")[-1]
-        if ext in self.RICH_FILES:
+        if ext in RICH_FILES.keys():
             request.method = 'HEAD'
         return request
 

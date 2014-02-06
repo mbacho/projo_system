@@ -26,45 +26,45 @@ file : test_pipelines.py
 project : webometrics
 
 """
-from json import (dumps, loads)
-from os import remove
 
 from scrapy.exceptions import DropItem
 
 from core.tests import TestCase
-from core.tests import istest
+from johnnywalker import MONGO_DBNAME
 from johnnywalker.items import WalkerItem
-from johnnywalker.pipelines import (JsonLinesDomainPipeline, HashDuplicateFilterPipeline)
+from johnnywalker.pipelines import (MongoStorePipeline, HashDuplicateFilterPipeline)
 from johnnywalker.spiders.walker import Walker
 
 
-class TestJsonLinesDomainPipeline(TestCase):
-    @istest
+class TestMongoStorePipeline(TestCase):
+    domain = 'testdomain.com'
+
     def setUp(self):
-        self.pipeline = JsonLinesDomainPipeline()
+        self.pipeline = MongoStorePipeline()
         self.spider = Walker(domain='testdomain.com', start='http://testdomain.com')
+
+    def test_open_spider(self):
         self.pipeline.open_spider(self.spider)
-        self.assertIsNotNone(self.pipeline.file)
+        self.client = self.pipeline.client
+        self.assertIsNotNone(self.client)
+        self.db = self.client[MONGO_DBNAME]
+        self.assertIsNotNone(self.db)
+        self.links = self.pipeline.link_collection
 
     def test_process_item(self):
         item = WalkerItem()
-        item['response_hash'] = '3829rerw98'
-        item['page'] = 'http://testdomain.com/home'
-        item['parent'] = 'http://testdomain.com/'
-        item['status'] = 200
+        item['response_hash'] = '8ewr98'
         item['type'] = 'text/html'
+        item['parent'] = 'http://testdomain.com'
+        item['page'] = 'http://testdomain.com/about'
         self.pipeline.process_item(item, self.spider)
-        fname = self.pipeline.file.name
-        f = open(fname, 'r')
-        lines = f.readlines()
-        f.close()
-        self.assertEqual(loads(lines[-1]), loads(dumps(dict(item))))
+        self.assertEqual(self.links.count(), 1)
 
     def test_close_spider(self):
         self.pipeline.close_spider(self.spider)
-        self.assertTrue(self.pipeline.file.closed)
-        #TODO : Why ain't the remove working?
-        remove(self.pipeline.file.name)
+
+    def tearDown(self):
+        self.db.drop_collection(self.links.name)
 
 
 class TestHashDuplicateFilterPipeline(TestCase):

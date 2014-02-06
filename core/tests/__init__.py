@@ -43,3 +43,14 @@ try:
     from django.test import TestCase
 except:
     from unittest import TestCase
+
+try:
+    from nose.tools import set_trace
+except:
+    from pdb import set_trace
+
+
+class TestCase(TestCase):
+    def set_trace(self):
+        set_trace()
+
