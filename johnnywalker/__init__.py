@@ -8,7 +8,8 @@ MONGO_COLLECTION_OUTLINKS = 'outlinks'
 
 RICH_FILES = {
     'doc': 'application/msword',
-    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'docx': '',
+    'odt': 'application/vnd.oasis.opendocument.text	',
     'pdf': 'application/pdf',
     'ps': 'application/postscript',
     'eps': 'application/postscript',

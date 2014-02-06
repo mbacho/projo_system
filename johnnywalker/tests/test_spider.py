@@ -1,8 +1,11 @@
+from os.path import (join, abspath)
+
+from scrapy.http import (Response, Request, Headers)
 from scrapy.link import Link
 
 from core.tests import TestCase
 from core.tests import istest
-from ..spiders.walker import Walker
+from ..spiders.walker import (Walker, sh)
 
 
 class TestWalker(TestCase):
@@ -51,16 +54,34 @@ class TestWalker(TestCase):
             res = self.spider.is_valid_domain(d)
             self.assertTrue(res == ans, 'domain validation error')
 
-    def test_rich_files(self):
-        self.fail('urgent tests')
+    def test_parse_item(self):
+        request_headers = Headers({'referer': 'http://testdomain.com'})
+        response_headers = Headers({'content-type': 'text/html'})
+        request = Request(url="http://testdomain.com/richfiles", headers=request_headers, body="")
+        response = Response(url='http://testdomain.com/richfiles', body=self.get_html('testpage.html'),
+                            headers=response_headers,
+                            request=request)
+        item = self.spider.parse_item(response)
+        self.assertEqual(item['page'], 'http://testdomain.com/richfiles')
+        self.assertEqual(item['parent'], 'http://testdomain.com')
+        self.assertEqual(item['response_hash'], sh(self.get_html('testpage.html')).hexdigest())
 
     def test_process_request(self):
-        pass
+        exts = {
+            'html': 'get',
+            'doc': 'head',
+            'pdf': 'head'
+        }
+        base_url = 'http://testdomain.com/page'
 
-    def test_user_agent(self):
-        pass
+        for k in exts:
+            req= Request(url="%s.%s" % (base_url, k),method='get')
+            ans = self.spider.process_request(req)
+            self.assertEqual(ans.method.lower(), exts[k], "%s ==> %s" % (k, ans.method))
 
-    def test_parse_item(self):
-        pass
-
-
+    def get_html(self, filename):
+        fpath = abspath(join(__file__, '..'))
+        f = open(join(fpath, 'html/%s' % filename), 'r')
+        s = f.read()
+        f.close()
+        return s

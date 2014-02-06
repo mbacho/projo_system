@@ -29,7 +29,7 @@ project : webometrics
 
 from scrapy.exceptions import DropItem
 
-from core.tests import TestCase
+from core.tests import (TestCase, istest)
 from johnnywalker import MONGO_DBNAME
 from johnnywalker.items import WalkerItem
 from johnnywalker.pipelines import (MongoStorePipeline, HashDuplicateFilterPipeline)
@@ -39,17 +39,17 @@ from johnnywalker.spiders.walker import Walker
 class TestMongoStorePipeline(TestCase):
     domain = 'testdomain.com'
 
+    @istest
     def setUp(self):
         self.pipeline = MongoStorePipeline()
         self.spider = Walker(domain='testdomain.com', start='http://testdomain.com')
-
-    def test_open_spider(self):
         self.pipeline.open_spider(self.spider)
         self.client = self.pipeline.client
         self.assertIsNotNone(self.client)
         self.db = self.client[MONGO_DBNAME]
         self.assertIsNotNone(self.db)
         self.links = self.pipeline.link_collection
+        self.assertIsNotNone(self.links)
 
     def test_process_item(self):
         item = WalkerItem()
@@ -57,6 +57,7 @@ class TestMongoStorePipeline(TestCase):
         item['type'] = 'text/html'
         item['parent'] = 'http://testdomain.com'
         item['page'] = 'http://testdomain.com/about'
+
         self.pipeline.process_item(item, self.spider)
         self.assertEqual(self.links.count(), 1)
 
@@ -65,6 +66,7 @@ class TestMongoStorePipeline(TestCase):
 
     def tearDown(self):
         self.db.drop_collection(self.links.name)
+
 
 
 class TestHashDuplicateFilterPipeline(TestCase):

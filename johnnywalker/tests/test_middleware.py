@@ -22,29 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : __init__.py.py
+file : test_middleware.py
 project : webometrics
 
 """
-
-try:
-    from nose.tools import (istest,nottest)
-except:
-    def istest(func):
-        func.__test__ = True
-        return func
-
-    def nottest(func):
-        func.__test__ = False
-        return func
+from core.tests import TestCase
+from ..middleware.offsite import MyOffsiteMiddleware
+from ..middleware.downloader import MyHeadersMiddleware
 
 
-try:
-    from django.test import TestCase
-except:
-    from unittest import TestCase
+class TestMyHeadersMiddleware(TestCase):
+    # def setUp(self):
+    #     self.middleware = MyHeadersMiddleware()
+    pass
 
-try:
-    from nose.tools import set_trace
-except:
-    from pdb import set_trace
+
+class TestMyOffsiteMiddleware(TestCase):
+    def setUp(self):
+        self.middleware = MyOffsiteMiddleware()
+
+    def test_richfiles(self):
+        pass
+
+    def tearDown(self):
+        del self.middleware
+        
