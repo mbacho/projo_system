@@ -24,7 +24,8 @@ class MyOffsiteMiddleware(OffsiteMiddleware):
         self.link_collection = collection
 
     def __del__(self):
-        self.db.close()
+        if self.db is not None:
+            self.db.close()
 
     def should_follow(self, request, spider):
         ans = super(MyOffsiteMiddleware, self).should_follow(request, spider)

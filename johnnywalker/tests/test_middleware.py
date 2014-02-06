@@ -46,4 +46,3 @@ class TestMyOffsiteMiddleware(TestCase):
 
     def tearDown(self):
         del self.middleware
-        
