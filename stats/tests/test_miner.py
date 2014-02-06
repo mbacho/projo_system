@@ -31,7 +31,7 @@ from os.path import join, abspath
 
 from pymongo import MongoClient
 
-from core.tests import TestCase,set_trace
+from core.tests import TestCase
 from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_OUTLINKS, MONGO_COLLECTION_LINKS)
 from ..miner import mine_data
 
@@ -59,6 +59,8 @@ class TestMiner(TestCase):
         self.assertEqual(self.outlinks.count(), 7)
 
     def test_mine_data(self):
+        with self.assertRaises(ValueError):
+            mine_data('somedomain.co.ke')
         stats = mine_data(self.domain)
         self.assertEqual(stats.outlinks, 3)
         self.assertEqual(stats.domain, self.domain)

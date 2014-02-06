@@ -44,7 +44,7 @@ def mine_data(domain):
     stats.domain = domain
     stats.page_count = links.find({'status': 200}).count()
     stats.pages_not_found = links.find({'status': 404}).count()
-    stats.richfiles = links.find({'type': {'$in': RICH_FILES.values()},'status':200}).count()
+    stats.richfiles = links.find({'type': {'$in': RICH_FILES.values()}, 'status': 200}).count()
     stats.outlinks = len(outlinks.distinct('page'))
 
     return stats
