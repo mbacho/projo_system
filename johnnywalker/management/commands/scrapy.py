@@ -1,9 +1,10 @@
 from __future__ import absolute_import
 from os import chdir
-from os.path import (abspath, join)
+
 from django.core.management.base import BaseCommand
 from scrapy.cmdline import execute
 
+from . import get_scrapyroot
 
 class Command(BaseCommand):
     help = 'Run scrapy within django'
@@ -13,7 +14,7 @@ class Command(BaseCommand):
         self.execute()
 
     def handle(self, *args, **options):
-        scrapydir = abspath(join(__file__, '..', '..', '..', '..'))
+        scrapydir = get_scrapyroot()
         chdir(scrapydir)
         execute(self._argv[1:])
         self.stdout.write(str(args))

@@ -22,22 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : startserver.py
+file : scrapyd.py
 project : webometrics
 
 """
-from os import system
-from os import chdir
-from os.path import (abspath, split, join)
+from os import (system, chdir)
+
+from django.core.management import BaseCommand
+from . import get_scrapyroot
 
 
-def main():
-    """Blocking method to start scrapyd server in correct folder and """
-    #TODO: Change from system calls to twister framework e.g. which scrapyd | xargs cat
-    chdir(join(split(abspath(__file__))[0], '..'))
-    system('scrapyd')
+class Command(BaseCommand):
+    help = 'starts scrapyd server'
 
+    def run_from_argv(self, argv):
+        self._argv = argv
+        self.execute()
 
-if __name__ == '__main__':
-    main()
-
+    def handle(self, *args, **options):
+        #TODO: Change from system calls to twister framework e.g. which scrapyd | xargs cat
+        chdir(get_scrapyroot())
+        system('scrapyd')
