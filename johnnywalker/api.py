@@ -33,7 +33,7 @@ class CrawlerProjectResource(Resource):
     comm = ScrapydCommunicator()
 
     class Meta:
-        name = 'crawlerproject'
+        resource_name = 'crawler'
 
     def schedule(self, startpage, domain):
         return self.comm.schedule(startpage,domain)

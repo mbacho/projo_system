@@ -1,11 +1,18 @@
 
 
 from django.conf.urls import (patterns, include, url)
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from johnnywalker.api import CrawlerProjectResource
+from stats.api import ResultsResource
+from webui.api import UserProjectResource
+from tastypie.api import Api
 
 admin.autodiscover()
+
+api = Api(api_name='api')
+api.register(CrawlerProjectResource())
+api.register(ResultsResource())
+api.register(UserProjectResource())
 
 urlpatterns = patterns('',
                        # Examples:
@@ -21,4 +28,5 @@ urlpatterns = patterns('',
                        url(r'', include('webui.urls')),
                        url(r'', include('johnnywalker.urls')),
                        url(r'', include('stats.urls')),
+                       url(r'',include(api.urls))
 )

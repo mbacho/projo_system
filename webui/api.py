@@ -32,7 +32,7 @@ from .models import Project
 
 class UserProjectResource(ModelResource):
     class Meta:
-        name = 'user'
+        resource_name = 'user'
         queryset = Project.objects.all()
         fields = ['name']
         allowed_methods = ['post']

@@ -31,6 +31,6 @@ from tastypie.resources import Resource
 
 class ResultsResource(Resource):
     class Meta:
-        name = 'results'
+        resource_name = 'results'
 
 
