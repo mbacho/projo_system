@@ -10,7 +10,13 @@ class AcademicDomain(models.Model):
     domain = models.URLField()
     link = models.URLField()
 
+    def __unicode__(self):
+        return u'{0} ({1} | {2})'.format(self.name, self.domain, self.link)
+
 
 class AvoidUrl(models.Model):
     domain = models.ForeignKey(AcademicDomain)
-    url_pattern = models.CharField(unique=True, null=False, blank=False,max_length=100)
+    url_pattern = models.CharField(unique=True, null=False, blank=False, max_length=100)
+
+    def __unicode__(self):
+        return u'{0} "{1}"'.format(self.domain.domain, self.url_pattern)
