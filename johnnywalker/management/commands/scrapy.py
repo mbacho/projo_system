@@ -16,7 +16,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         scrapydir = get_scrapyroot()
         chdir(scrapydir)
-        execute(self._argv[1:])
+        default_args = ['scrapy','crawl', 'walker']
+        default_args.extend(['-a',self._argv[2]])
+        default_args.extend(['-a',self._argv[3]])
+        execute(default_args)
         self.stdout.write(str(args))
         self.stdout.write(str(options))
 
