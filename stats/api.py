@@ -26,11 +26,13 @@ file : api.py
 project : webometrics
 
 """
-from tastypie.resources import Resource
+from tastypie.resources import Resource, ModelResource
+from stats.models import DomainStats
 
 
-class ResultsResource(Resource):
+class ResultsResource(ModelResource):
     class Meta:
         resource_name = 'results'
+        queryset = DomainStats.objects.all()
 
 
