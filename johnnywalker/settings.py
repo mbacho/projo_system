@@ -14,9 +14,8 @@ COOKIES_ENABLED = False
 ROBOTSTXT_OBEY = True
 
 ITEM_PIPELINES = {
-    'johnnywalker.pipelines.HashDuplicateFilterPipeline':10,
+    'johnnywalker.pipelines.HashDuplicateFilterPipeline': 10,
     'johnnywalker.pipelines.MongoStorePipeline': 20,
-    #'johnnywalker.pipelines.JsonLinesDomainPipeline': 30
 }
 
 DOWNLOADER_MIDDLEWARES = {
@@ -29,16 +28,9 @@ SPIDER_MIDDLEWARES = {
     'johnnywalker.middleware.offsite.MyOffsiteMiddleware': 500
 }
 
-
-#from os.path import join, abspath
-#path = abspath('.')
-#FEED_URI = join(path, 'data', 'feed_data.jsonlines')
-#FEED_FORMAT = 'jsonlines'
-
-JOBS_TOPDIR = 'jobs'
+EXTENSIONS = {
+        'johnnywalker.extensions.SignalProcessorPipeline': 10,
+}
 
 TELNETCONSOLE_ENABLED = False
-WEBSERVICE_ENABLED = True
-#WEBSERVICE_RESOURCES = {'scrapytut.webservice.StatsResource':1,'scrapytut.webservice.EngineStatusResource':1,}
-#WEBSERVICE_PORT = 8081
-#WEBSERVICE_LOGFILE = 'logs/webservice_log'
+WEBSERVICE_ENABLED = False
