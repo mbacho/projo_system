@@ -17,12 +17,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         scrapydir = get_scrapyroot()
         chdir(scrapydir)
-        if len(self._argv) != 4:
+        default_args = ['scrapy']
+        if len(self._argv) == 3 and self._argv[2] == 'deploy':
+            default_args.append('deploy')
+            default_args.append('webometrics')
+        elif len(self._argv) == 4:
+            default_args.extend(['crawl', 'walker'])
+            default_args.extend(['-a', self._argv[2]])
+            default_args.extend(['-a', self._argv[3]])
+        else:
             self.stdout.write(self.help)
             return
-        default_args = ['scrapy', 'crawl', 'walker']
-        default_args.extend(['-a', self._argv[2]])
-        default_args.extend(['-a', self._argv[3]])
+
         execute(default_args)
         self.stdout.write(str(args))
         self.stdout.write(str(options))
