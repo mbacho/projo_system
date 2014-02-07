@@ -12,6 +12,7 @@ from .. import RICH_FILES
 class Walker(CrawlSpider):
     name = 'walker'
     handle_httpstatus_list = [404, 500]
+    jobid = None #use with scrapy server
     IGNORED_EXTS = [
         # images
         'mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif',
@@ -40,7 +41,7 @@ class Walker(CrawlSpider):
     start_urls = []
     allowed_domains = []
 
-    def __init__(self, start, domain, *args, **kwargs):
+    def __init__(self, start, domain, jobid=None, *args, **kwargs):
         super(Walker, self).__init__(*args, **kwargs)
         if (type(start) is not str) and (type(start) is not unicode):
             raise TypeError('invalid type given for startpage')
@@ -48,7 +49,7 @@ class Walker(CrawlSpider):
             raise TypeError('invalid type given for domain')
         if start == '' or domain == '':
             raise ValueError('startpage or domain not provided')
-
+        self.jobid = jobid
         self.start_urls = [start]
         self.allowed_domains = [domain]
 
