@@ -29,6 +29,7 @@ project : webometrics
 from tastypie.resources import (Resource)
 from core.comm import ScrapydCommunicator
 
+
 class CrawlerProjectResource(Resource):
     comm = ScrapydCommunicator()
 
@@ -36,7 +37,7 @@ class CrawlerProjectResource(Resource):
         resource_name = 'crawler'
 
     def schedule(self, startpage, domain):
-        return self.comm.schedule(startpage,domain)
+        return self.comm.schedule(startpage, domain)
 
     def cancel(self, jobid):
         return self.comm.cancel(jobid)
@@ -44,3 +45,29 @@ class CrawlerProjectResource(Resource):
     def listjobs(self):
         return self.comm.listjobs()
 
+    def detail_uri_kwargs(self):
+        pass
+
+    def get_object_list(self):
+        pass
+
+    def obj_get_list(self):
+        pass
+
+    def obj_get(self):
+        pass
+
+    def obj_create(self):
+        pass
+
+    def obj_update(self):
+        pass
+
+    def obj_delete_list(self):
+        pass
+
+    def obj_delete(self):
+        pass
+
+    def rollback(self):
+        pass

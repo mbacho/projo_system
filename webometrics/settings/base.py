@@ -167,7 +167,6 @@ CSRF_COOKIE_NAME = "XSRF_TOKEN"
 # API Settings
 TASTYPIE_DEFAULT_FORMATS = ['json']
 TASTYPIE_CANNED_ERROR = "Oops, the server just crapped. Our work monkeys have been notified."
-API_LIMIT_PER_PAGE = 15
+API_LIMIT_PER_PAGE = 50
 TASTYPIE_FULL_DEBUG = True
-TASTYPIE_ALLOW_MISSING_SLASH = True
 
