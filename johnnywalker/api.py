@@ -27,22 +27,20 @@ project : webometrics
 
 """
 from tastypie.resources import (Resource)
-
+from core.comm import ScrapydCommunicator
 
 class CrawlerProjectResource(Resource):
-    projectname = 'crawler'
+    comm = ScrapydCommunicator()
 
     class Meta:
         name = 'crawlerproject'
 
     def schedule(self, startpage, domain):
-        pass
+        return self.comm.schedule(startpage,domain)
 
     def cancel(self, jobid):
-        pass
+        return self.comm.cancel(jobid)
 
     def listjobs(self):
-        pass
+        return self.comm.listjobs()
 
-    def get_json(self, url):
-        pass
