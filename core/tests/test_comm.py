@@ -36,9 +36,11 @@ class TestCommunicator(TestCase):
         self.comm = ScrapydCommunicator()
 
     def test_connection_fail(self):
-        self.skipTest('connection test logic not worked out')
-        with self.assertRaises(BaseException):
-            self.comm._get_jsondata('notexistent', 'method', None)
+        self.comm.host = 'hostnotfound'
+        ans = self.comm._get_jsondata('notexistent', 'POST', None)
+        self.assertEqual(ans['status'], 'error')
+        self.comm._get_jsondata('notexistent', 'GET', None)
+        self.assertEqual(ans['status'], 'error')
 
     def test_listprojects(self):
         ans = self.comm.listprojects()
