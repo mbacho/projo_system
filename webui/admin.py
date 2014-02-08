@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import (Project,ProjectDomains,UserDets)
+from .models import (Project,ProjectDomain)
 
 admin.site.register(Project)
-admin.site.register(ProjectDomains)
-admin.site.register(UserDets)
-
+admin.site.register(ProjectDomain)
