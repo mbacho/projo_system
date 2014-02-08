@@ -88,6 +88,10 @@ class TestWalker(TestCase):
 
         self.fail('test linkextractions')
 
+    def test_spiderrules(self):
+        self.fail('test spider rules, denydomains, denyurls e.t.c.')
+
+
     def get_html(self, filename):
         fpath = abspath(join(__file__, '..'))
         f = open(join(fpath, 'html/%s' % filename), 'r')

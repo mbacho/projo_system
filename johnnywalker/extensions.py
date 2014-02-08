@@ -26,14 +26,14 @@ file : extensions.py
 project : webometrics
 
 """
+from django.utils.timezone import now
+from scrapy import log
 from scrapy.signals import (spider_error, spider_closed, spider_opened)
 from stats.miner import mine_data
+from webui.models import ProjectDomain
 
 
-class SignalProcessorPipeline(object):
-    def __init__(self):
-        pass
-
+class SignalProcessor(object):
     @classmethod
     def from_crawler(cls, crawler):
         # instantiate the extension object
@@ -52,10 +52,18 @@ class SignalProcessorPipeline(object):
 
     def spider_closed(self, spider, reason):
         #reason could be in ['finished','cancelled','shutdown']
+        if spider.jobid not in (None,''):
+            try:
+                pd = ProjectDomain.objects.get(jobid=spider.jobid)
+                pd.stoptime = now()
+                pd.stopreason = reason
+                pd.save()
+            except:
+                pass
+
         if reason == 'finished':
             mine_data(spider.allowed_domains[0])
-        else: #unclean shutdown
-            pass
+
 
     def spider_error(self, spider, failure, response):
         """

@@ -26,8 +26,67 @@ file : test_api.py
 project : webometrics
 
 """
+from django.contrib.auth.models import User
 from tastypie.test import ResourceTestCase
+from ..api import (ProjectResource, AcademicDomainResource, ProjectDomainResource, UserResource)
 
 
-class TestUserResource(ResourceTestCase):
-    pass
+class MyBaseResourceTestCase(ResourceTestCase):
+    apitest = None
+
+    def setUp(self):
+        super(MyBaseResourceTestCase, self).setUp()
+        # Create a user.
+        self.username = 'yusa'
+        self.password = 'pass'
+        self.email = 'yusa@mail.com'
+        self.user = User.objects.create_user(self.username, self.email, self.password)
+
+    def get_credentials(self):
+        return self.create_basic(self.username, self.password)
+
+
+class TestUserResource(MyBaseResourceTestCase):
+    def setUp(self):
+        super(TestUserResource, self).setUp()
+        self.apitest = UserResource()
+
+    def test_get_unauthorzied(self):
+        self.assertHttpUnauthorized(self.api_client.get('/api/user/'))
+
+    def test_resource_ok(self):
+        self.assertHttpOK(self.api_client.get('/api/user/', authentication=self.get_credentials()))
+
+class TestProjectResource(MyBaseResourceTestCase):
+    def setUp(self):
+        super(TestProjectResource, self).setUp()
+        self.apitest = ProjectResource()
+
+    def test_get_unauthorzied(self):
+        self.assertHttpUnauthorized(self.api_client.get('/api/project/'))
+
+    def test_resource_ok(self):
+        self.assertHttpOK(self.api_client.get('/api/project/', authentication=self.get_credentials()))
+
+class TestAcademicDomainResource(MyBaseResourceTestCase):
+    def setUp(self):
+        super(TestAcademicDomainResource, self).setUp()
+        self.apitest = AcademicDomainResource()
+
+    def test_get_unauthorzied(self):
+        self.assertHttpUnauthorized(self.api_client.get('/api/domain/'))
+
+    def test_resource_ok(self):
+        self.assertHttpOK(self.api_client.get('/api/domain/', authentication=self.get_credentials()))
+
+class TestProjectDomainResource(MyBaseResourceTestCase):
+    def setUp(self):
+        super(TestProjectDomainResource, self).setUp()
+        self.apitest = ProjectDomainResource()
+
+    def test_get_unauthorzied(self):
+        self.assertHttpUnauthorized(self.api_client.get('/api/projectdomain/'))
+
+    def test_resource_ok(self):
+        self.assertHttpOK(self.api_client.get('/api/projectdomain/', authentication=self.get_credentials()))
+

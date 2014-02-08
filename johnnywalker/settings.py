@@ -29,7 +29,7 @@ SPIDER_MIDDLEWARES = {
 }
 
 EXTENSIONS = {
-        'johnnywalker.extensions.SignalProcessorPipeline': 10,
+        'johnnywalker.extensions.SignalProcessor': 10,
 }
 
 TELNETCONSOLE_ENABLED = False

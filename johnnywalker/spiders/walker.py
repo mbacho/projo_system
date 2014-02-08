@@ -36,6 +36,7 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import (CrawlSpider, Rule)
 from ..items import WalkerItem
 from .. import RICH_FILES
+from johnnywalker.models import AvoidUrl
 
 
 class Walker(CrawlSpider):
@@ -62,15 +63,17 @@ class Walker(CrawlSpider):
 
     DENY_DOMAINS = ['maktaba.ku.ac.ke', 'opac.mku.ac.ke', 'library.kemu.ac.ke', 'opac.library.strathmore.edu']
 
+    DENY_PATTERNS = [x.url_pattern for x in AvoidUrl.objects.all()]
+
     rules = (
-        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS, deny_domains=DENY_DOMAINS), callback='parse_item',
-             follow=True,
+        Rule(SgmlLinkExtractor(deny_extensions=IGNORED_EXTS, deny=DENY_PATTERNS, deny_domains=DENY_DOMAINS),
+             callback='parse_item', follow=True,
              process_request='process_request', process_links='process_links', ),
     )
     start_urls = []
     allowed_domains = []
 
-    def __init__(self, start, domain, jobid=None, *args, **kwargs):
+    def __init__(self, start, domain, _job = None, *args, **kwargs): #_job is given by scrapyd if started by server
         super(Walker, self).__init__(*args, **kwargs)
         if (type(start) is not str) and (type(start) is not unicode):
             raise TypeError('invalid type given for startpage')
@@ -78,7 +81,8 @@ class Walker(CrawlSpider):
             raise TypeError('invalid type given for domain')
         if start == '' or domain == '':
             raise ValueError('startpage or domain not provided')
-        self.jobid = jobid
+
+        self.jobid = _job
         self.start_urls = [start]
         self.allowed_domains = [domain]
 

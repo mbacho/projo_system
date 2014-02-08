@@ -44,12 +44,15 @@ class ScrapydCommunicator(object):
 
     def _get_jsondata(self, apicall, method, arguments=None):
         url = "http://{0}:{1}/{2}.json".format(self.host, self.port, apicall)
-        data_encoded = urlencode(arguments) if type(arguments) is dict else ""
-        if method in ['POST', 'post']:
-            return loads(urlopen(url, data_encoded).read())
-        else:
-            data = ("?" + data_encoded) if len(data_encoded) > 0 else ""
-            return loads(urlopen(urljoin(url, data)).read())
+        try:
+            data_encoded = urlencode(arguments) if type(arguments) is dict else ""
+            if method in ['POST', 'post']:
+                return loads(urlopen(url, data_encoded).read())
+            else:
+                data = ("?" + data_encoded) if len(data_encoded) > 0 else ""
+                return loads(urlopen(urljoin(url, data)).read())
+        except:
+            return {'status':'error','message':'server connection error'}
 
     def listprojects(self):
         """

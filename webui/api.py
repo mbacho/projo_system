@@ -26,26 +26,64 @@ file : api.py
 project : webometrics
 
 """
-from tastypie.resources import ModelResource
-from .models import Project
+from django.contrib.auth.models import User
+from tastypie.authentication import BasicAuthentication
+from tastypie.authorization import DjangoAuthorization
+from tastypie.resources import (ModelResource, ALL, ALL_WITH_RELATIONS)
+from tastypie.fields import (ForeignKey )
+from johnnywalker.models import AcademicDomain
+from .models import (Project, ProjectDomain)
 
 
-class UserProjectResource(ModelResource):
+class MyBaseModelResource(ModelResource):
     class Meta:
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+
+
+class UserResource(MyBaseModelResource):
+    class Meta(MyBaseModelResource.Meta):
         resource_name = 'user'
-        queryset = Project.objects.all()
+        queryset = User.objects.all()
+        fields = ['email', 'first_name', 'last_name', 'username']
+        filtering = {
+            'username': ALL
+        }
+
+
+class AcademicDomainResource(MyBaseModelResource):
+    class Meta(MyBaseModelResource.Meta):
+        resource_name = 'domain'
+        queryset = AcademicDomain.objects.all()
+        filtering = {
+            'domain': ALL
+        }
+
+
+class ProjectResource(MyBaseModelResource):
+    owner = ForeignKey(UserResource, 'owner')
+
+    class Meta(MyBaseModelResource.Meta):
         fields = ['name']
-        allowed_methods = ['post']
+        queryset = Project.objects.all()
+        resource_name = 'project'
+        filtering = {
+            'owner': ALL_WITH_RELATIONS,
+            'created': ['exact', 'lt', 'lte', 'gt', 'gte']
+        }
 
-    def listprojects(self, user):
-        pass
 
-    def newproject(self, **kwargs):
-        pass
+class ProjectDomainResource(MyBaseModelResource):
+    domain = ForeignKey(AcademicDomainResource, 'domain')
+    project = ForeignKey(ProjectResource, 'project')
 
-    def editproject(self, name, **kwargs):
-        pass
-
-    def delproject(self, name):
-        pass
+    class Meta(MyBaseModelResource.Meta):
+        resource_name = 'projectdomain'
+        queryset = ProjectDomain.objects.all()
+        filtering = {
+            'project': ALL_WITH_RELATIONS,
+            'domain': ALL_WITH_RELATIONS,
+            'subdomain':['exact']
+        }
 
