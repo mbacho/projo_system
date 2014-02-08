@@ -8,7 +8,7 @@ from . import get_scrapyroot
 
 
 class Command(BaseCommand):
-    help = 'Run scrapy within django\nUsage : python manage.py scrapy start=<start page> domain=<domain url>'
+    help = 'Run scrapy within django\nUsage : python manage.py scrapy [deploy | start=<start page> domain=<domain url>]'
 
     def run_from_argv(self, argv):
         self._argv = argv
