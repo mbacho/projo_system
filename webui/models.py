@@ -16,22 +16,15 @@ class Project(models.Model):
         return unicode(self.name)
 
 
-class UserDets(models.Model):
-    """Stores user details"""
-    user = models.OneToOneField(User)
-
-    def __unicode__(self):
-        return unicode(self.user.get_username())
-
-
-class ProjectDomains(models.Model):
+class ProjectDomain(models.Model):
     project = models.ForeignKey(Project)
     domain = models.ForeignKey(AcademicDomain)
+    subdomain = models.CharField(default='', null=True, blank=True, max_length=50)
     starturl = models.URLField(null=True, blank=True)
     jobid = models.CharField(max_length=100, default='')
-    start = models.DateTimeField(auto_now_add=True, default=timezone.now())
-    stop = models.DateTimeField(null=True, blank=True)
-    reason = models.CharField(max_length=20, default='')
+    starttime = models.DateTimeField(auto_now_add=True, default=timezone.now())
+    stoptime = models.DateTimeField(null=True, blank=True)
+    stopreason = models.CharField(max_length=20, default='')
 
     def __unicode__(self):
-        return u"{0}".format(self.project, self.domain, self.jobid)
+        return u"{0} {1}.{2} {3}".format(self.project, self.subdomain, self.domain, self.jobid)
