@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+{% block stylesheets %}
+    <link href="/static/css/login.css" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+
+    {% if frm.errors %}
+        {{ frm.errors }}
+    {% endif %}
+
+    <form class="form-signin" method="post" action="{% if signup %}{% url 'signup' %}{% else %}{% url 'signin' %}{% endif %}">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Sign {% if signup %}up{% else %}in{% endif %}</h2>
+        <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+        {% if signup %}
+            <input name="email" type="email" class="form-control" placeholder="Email" required>
+        {% endif %}
+        <input name="password" type="password" class="form-control" placeholder="Password" required>
+        {% if signup %}
+            <input name="password_confirm" type="password" class="form-control" placeholder="Confirm password" required>
+        {% endif %}
+        {% if not signup %}
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <input type="hidden" name="nextpage" value="{{ nextpage }}"/>
+        {% endif %}
+        <input value="Sign {% if signup %}up{% else %}in{% endif %}" class="btn btn-lg btn-primary btn-block"
+               type="submit"/>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends '_base.html' %}
+{% block body %}
+    {% if user.is_authenticated %}
+        {% if user.is_active %}
+            <p>Thanks for confirming your account</p>
+        {% else %}
+            <p>Confirm your account via link sent via email</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

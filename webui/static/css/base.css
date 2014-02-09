@@ -1,0 +1,11 @@
+body {
+    background-color: #eee;
+}
+th {
+    background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+	height: auto;
+	padding: 5px 10px 2px;
+	border-bottom: 0;
+	text-align: center;
+	color: #666666;
+}

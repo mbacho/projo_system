@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {# <link rel="shortcut icon" href=""> #}
-    <title>Kenya Webspace{% block title %}{% endblock %}</title>
+    <title>Kenya Webometrics {% block title %}{% endblock %}</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     {# <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet"> #}
+    <link href="/static/css/base.css" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,26 +36,32 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="{% url 'project_list' %}">My Projects</a>
-                </li>
-                <li>
-                    <a href="{% url 'project_new' %}">Start Projects</a>
-                </li>
-                <li>
-                    <a href="{% url 'signup' %}">Sign up</a>
-                </li>
-                <li>
-                    <a href="{% url 'signin' %}">Signin</a>
-                </li>
-                <li>
-                    <a href="{% url 'signout' %}">Signout</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li {% if active == 'projects' %}class="active"{% endif %}>
+                        <a href="{% url 'project_list' %}">Projects</a>
+                    </li>
+                    <li {% if active == 'results' %}class="active"{% endif %}>
+                        <a href="{% url 'results' %}">Results</a>
+                    </li>
+                {% endif %}
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{% url 'user' %}">CurrentUser</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'user' %}">{{ user.username }}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'signout' %}">Sign out</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'signup' %}">Sign up</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'signin' %}">Signin</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -65,8 +72,9 @@
 <footer>
     {% block footer %}{% endblock %}
 </footer>
-<script src="/static/js/jquery-1.10.1.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/lib/jquery-1.10.1.min.js"></script>
+<script src="/static/js/lib/bootstrap.min.js"></script>
+<script src="/static/js/lib/angular.min.js"></script>
 {% block scriptfiles %}{% endblock %}
 {% block scripts %}{% endblock %}
 </body>
