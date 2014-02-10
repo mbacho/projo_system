@@ -1,0 +1,14 @@
+<table class="table table-responsive table-bordered table-striped table-hover">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Owner</th>
+    </tr>
+    <tr ng-repeat="i in projects">
+        <td></td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.created|date }}</td>
+        <td>{{ i.owner }}</td>
+    </tr>
+</table>

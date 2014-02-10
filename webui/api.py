@@ -27,7 +27,7 @@ project : webometrics
 
 """
 from django.contrib.auth.models import User
-from tastypie.authentication import BasicAuthentication
+from tastypie.authentication import BasicAuthentication, SessionAuthentication, MultiAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import (ModelResource, ALL, ALL_WITH_RELATIONS)
 from tastypie.fields import (ForeignKey )
@@ -37,7 +37,7 @@ from .models import (Project, ProjectDomain)
 
 class MyBaseModelResource(ModelResource):
     class Meta:
-        authentication = BasicAuthentication()
+        authentication = MultiAuthentication(SessionAuthentication(), BasicAuthentication())
         authorization = DjangoAuthorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
 
@@ -84,6 +84,6 @@ class ProjectDomainResource(MyBaseModelResource):
         filtering = {
             'project': ALL_WITH_RELATIONS,
             'domain': ALL_WITH_RELATIONS,
-            'subdomain':['exact']
+            'subdomain': ['exact']
         }
 
