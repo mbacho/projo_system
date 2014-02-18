@@ -27,8 +27,12 @@ class MongoStorePipeline(object):
     def open_spider(self, spider):
         self.client = MongoClient()
         db = self.client[MONGO_DBNAME]
-        domain = spider.allowed_domains[0]
-        collection = db[MONGO_COLLECTION_LINKS][domain]
+        collection = None
+        if spider.jobid not in [None, '']:
+            collection = db[spider.jobid]
+        else:
+            domain = spider.allowed_domains[0]
+            collection = db[MONGO_COLLECTION_LINKS][domain]
         if collection.name in db.collection_names():
             db.drop_collection(collection.name)
         self.link_collection = collection
