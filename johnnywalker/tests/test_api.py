@@ -26,7 +26,3 @@ file : test_api.py
 project : webometrics
 
 """
-from tastypie.test import ResourceTestCase
-
-class CrawlerResource(ResourceTestCase):
-    pass

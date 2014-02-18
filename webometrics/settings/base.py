@@ -123,7 +123,6 @@ INSTALLED_APPS = (
     #3rd party apps
     'gunicorn',
     'south',
-    'tastypie',
 
     #my apps
     'johnnywalker',

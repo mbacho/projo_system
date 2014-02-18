@@ -26,8 +26,4 @@ file : test_api.py
 project : webometrics
 
 """
-from tastypie.test import ResourceTestCase
 
-
-class TestResultsResource(ResourceTestCase):
-    pass
