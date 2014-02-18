@@ -13,7 +13,7 @@ install:
   - "pip install -r requirements/test.txt"
 
 before_script:
-  - "python manage.py scrapyd"
+  - "python manage.py scrapyd &"
   - "python manage.py scrapy deploy"
 
 # command to run tests
