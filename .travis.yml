@@ -7,13 +7,14 @@ services:
   - mongodb
 #  - postgres
 
-before_install:
-  - "python manage.py scrapyd"
-
 # command to install dependencies
 install:
   - "pip install -r requirements/production.txt"
   - "pip install -r requirements/test.txt"
+
+before_script:
+  - "python manage.py scrapy deploy"
+  - "python manage.py scrapyd"
 
 # command to run tests
 script: python manage.py test --settings=webometrics.settings.test
