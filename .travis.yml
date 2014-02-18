@@ -7,6 +7,9 @@ services:
   - mongodb
 #  - postgres
 
+before_install:
+  - "python manage.py scrapyd"
+
 # command to install dependencies
 install:
   - "pip install -r requirements/production.txt"

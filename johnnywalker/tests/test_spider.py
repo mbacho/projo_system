@@ -71,25 +71,27 @@ class TestWalker(TestCase):
             '.html': 'get',
             '.doc': 'head',
             '.pdf': 'head',
-            '':'get'
+            '': 'get'
         }
         base_url = 'http://testdomain.com/page'
 
         for k in exts:
-            req= Request(url=base_url+k,method='get')
+            req = Request(url=base_url + k, method='get')
             ans = self.spider.process_request(req)
             self.assertEqual(ans.method.lower(), exts[k], "%s ==> %s" % (k, ans.method))
 
     def test_linkextractions(self):
         links = [
-            {'good':'http://testdomain.com'},
-            {'good':'http://testdomain.com/gp','bad':'http://testdomain.com///gp'},
+            {'good': 'http://testdomain.com'},
+            {'good': 'http://testdomain.com/gp', 'bad': 'http://testdomain.com///gp'},
         ]
-
-        self.fail('test linkextractions')
+        for i in links:
+            bad = Link(i['bad']) if 'bad' in i.keys() else Link(i['good'])
+            ans = self.spider.process_links([bad])[0]
+            self.assertEqual(ans.url, i['good'])
 
     def test_spiderrules(self):
-        self.fail('test spider rules, denydomains, denyurls e.t.c.')
+        self.skipTest('test spider rules, denydomains, denyurls e.t.c.')
 
 
     def get_html(self, filename):
