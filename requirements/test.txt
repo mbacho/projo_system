@@ -1,4 +1,4 @@
--r base.txt
+-r develop.txt
 
 coverage==3.7.1
 django-nose==1.2
