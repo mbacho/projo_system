@@ -5,11 +5,10 @@ python:
 
 services:
   - mongodb
-  - postgres
+#  - postgres
 
 # command to install dependencies
 install:
-  -
   - "pip install -r requirements/production.txt"
   - "pip install -r requirements/test.txt"
 
