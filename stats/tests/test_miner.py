@@ -27,7 +27,7 @@ project : webometrics
 
 """
 from json import loads
-from os.path import join, abspath
+from os.path import (join, abspath, dirname)
 
 from pymongo import MongoClient
 
@@ -44,12 +44,12 @@ class TestMiner(TestCase):
         self.db = self.client[MONGO_DBNAME]
         self.links = self.db[MONGO_COLLECTION_LINKS][self.domain]
         self.outlinks = self.db[MONGO_COLLECTION_OUTLINKS][self.domain]
-        datadir = abspath(join(__file__, '..'))
-        fyl = open(join(datadir, 'data/%s.jsonlines' % self.domain), 'r')
+        datadir = abspath(join(dirname(__file__), 'data'))
+        fyl = open(join(datadir, '%s.jsonlines' % self.domain), 'r')
         for i in fyl:
             self.links.insert(loads(i))
         fyl.close()
-        fyl = open(join(datadir, 'data/%s.outlinks.jsonlines' % self.domain), 'r')
+        fyl = open(join(datadir, '%s.outlinks.jsonlines' % self.domain), 'r')
         for i in fyl:
             self.outlinks.insert(loads(i))
         fyl.close()
