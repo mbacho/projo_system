@@ -34,7 +34,7 @@ from django.utils.http import urlencode
 
 
 class ScrapydCommunicator(object):
-    host = '127.0.0.1'
+    host = 'localhost'
     port = 6880
     spider = 'walker'
     project = 'johnnywalker'
@@ -52,6 +52,7 @@ class ScrapydCommunicator(object):
                 data = ("?" + data_encoded) if len(data_encoded) > 0 else ""
                 return loads(urlopen(urljoin(url, data)).read())
         except:
+            print url
             return {'status':'error','message':'server connection error'}
 
     def listprojects(self):
