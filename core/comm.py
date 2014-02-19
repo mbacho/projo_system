@@ -52,7 +52,7 @@ class ScrapydCommunicator(object):
                 data = ("?" + data_encoded) if len(data_encoded) > 0 else ""
                 return loads(urlopen(urljoin(url, data)).read())
         except Exception, ex:
-            return {'status':'error', 'message':'server connection error', 'exception':ex.message }
+            return {'status':'error', 'message':'server connection error', 'exception': str(ex) }
 
     def listprojects(self):
         """
