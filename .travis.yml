@@ -11,8 +11,8 @@ install:
   - "pip install -r requirements/test.txt"
 
 before_script:
-  - "python manage.py scrapyd &"
-  - sleep 3 # give scrapyd some time to start
-  - "python manage.py scrapy deploy"
+#  - "python manage.py scrapyd &"
+#  - sleep 3 # give scrapyd some time to start
+#  - "python manage.py scrapy deploy"
 
 script: ./test.sh
