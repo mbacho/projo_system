@@ -30,11 +30,14 @@ project : webometrics
 from . import TestCase
 from core.comm import ScrapydCommunicator
 
+from . import nottest
+
 
 class TestCommunicator(TestCase):
     def setUp(self):
         self.comm = ScrapydCommunicator()
 
+    @nottest
     def test_connection_fail(self):
         self.comm.host = 'hostnotfound'
         ans = self.comm._get_jsondata('notexistent', 'POST', None)
@@ -42,11 +45,13 @@ class TestCommunicator(TestCase):
         self.comm._get_jsondata('notexistent', 'GET', None)
         self.assertEqual(ans['status'], 'error')
 
+    @nottest
     def test_listprojects(self):
         ans = self.comm.listprojects()
         self.assertEqual(ans['status'], 'ok')
         self.assertIn(self.comm.project, ans['projects'])
 
+    @nottest
     def test_listspiders(self):
         ans = self.comm.listspiders()
         self.assertEqual(ans['status'], 'ok')
