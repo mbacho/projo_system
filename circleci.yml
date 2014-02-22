@@ -9,12 +9,6 @@ dependencies:
   override:
     - pip install -r requirements/test.txt
           
-test:
-  pre:
-#    - python manage.py scrapyd
-#        background: true
-#    - sleep 5
-#    - python manage.py scrapy deploy
-    
+test:    
   override:
     - ./test.sh    
