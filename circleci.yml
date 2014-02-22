@@ -17,4 +17,4 @@ test:
     - python manage.py scrapy deploy
     
   override:
-    - test.sh    
+    - ./test.sh    
