@@ -18,6 +18,7 @@ class TestWalker(TestCase):
             self.spider = Walker('', '')
 
         self.spider = Walker('http://localhost', 'localhost')
+        self.schedule_spider = Walker('http://localhost','localhost','somejobid')
 
     def test_urls(self):
         self.assertEqual(len(self.spider.start_urls), 1)
@@ -93,6 +94,9 @@ class TestWalker(TestCase):
     def test_spiderrules(self):
         self.skipTest('test spider rules, denydomains, denyurls e.t.c.')
 
+    def test_collection_name(self):
+        self.assertEqual(self.spider.collection_name,'localhost')
+        self.assertEqual(self.schedule_spider.collection_name,'somejobid')
 
     def get_html(self, filename):
         fpath = abspath(join(__file__, '..'))

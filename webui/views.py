@@ -69,7 +69,6 @@ def signup(request):
 
 @login_required(login_url='signin')
 def project_new(request, name):
-    name = request.GET.get('name', None)
     domain = request.GET.get('domain', None)
     starturl = request.GET.get('starturl', None)
     subdomain = request.GET.get('subdomain', None)

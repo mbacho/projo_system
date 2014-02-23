@@ -17,8 +17,7 @@ class MyOffsiteMiddleware(OffsiteMiddleware):
         super(MyOffsiteMiddleware, self).spider_opened(spider)
         self.client = MongoClient()
         self.db = self.client[MONGO_DBNAME]
-        domain = spider.allowed_domains[0]
-        collection = self.db[MONGO_COLLECTION_OUTLINKS][domain]
+        collection = self.db[MONGO_COLLECTION_OUTLINKS][spider.collection_name]
         if collection.name in self.db.collection_names():
             self.db.drop_collection(collection.name)
         self.link_collection = collection

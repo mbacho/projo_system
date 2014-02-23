@@ -73,7 +73,7 @@ class Walker(CrawlSpider):
     start_urls = []
     allowed_domains = []
 
-    def __init__(self, start, domain, _job = None, *args, **kwargs): #_job is given by scrapyd if started by server
+    def __init__(self, start, domain, _job=None, *args, **kwargs): #_job is given by scrapyd if started by server
         super(Walker, self).__init__(*args, **kwargs)
         if (type(start) is not str) and (type(start) is not unicode):
             raise TypeError('invalid type given for startpage')
@@ -148,3 +148,11 @@ class Walker(CrawlSpider):
         ]
         rand = randrange(0, len(agents))
         return agents[rand]
+
+    @property
+    def collection_name(self):
+        """Name to be used to save collection of scraped data"""
+        if self.jobid not in [None, '']:
+            return self.jobid
+        else:
+            return self.allowed_domains[0]
