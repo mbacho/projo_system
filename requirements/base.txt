@@ -1,8 +1,11 @@
 Django==1.5.4
+Markdown==2.4
 Scrapy==0.20.2
 South==0.8.4
 Twisted==13.2.0
 cssselect==0.9.1
+django-filter==0.7
+djangorestframework==2.3.12
 gunicorn==18.0
 lxml==3.2.5
 psycopg2==2.5.1
@@ -13,6 +16,7 @@ python-mimeparse==0.1.4
 queuelib==1.1.1
 scrapyd==1.0.1
 six==1.5.1
+sqlparse==0.1.11
 w3lib==1.5
 wsgiref==0.1.2
 zope.interface==4.0.5

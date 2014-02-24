@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     #3rd party apps
     'gunicorn',
     'south',
+    'rest_framework',
 
     #my apps
     'johnnywalker',
@@ -160,7 +161,3 @@ LOGGING = {
         },
     }
 }
-
-
-# CSRF: this is the cookie name expected by angular.js
-CSRF_COOKIE_NAME = "XSRF_TOKEN"
