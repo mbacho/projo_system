@@ -15,7 +15,7 @@ class AcademicDomain(models.Model):
 
 
 class AvoidUrl(models.Model):
-    domain = models.ForeignKey(AcademicDomain)
+    domain = models.ForeignKey(AcademicDomain, related_name='avoidurl_domain')
     url_pattern = models.CharField(unique=True, null=False, blank=False, max_length=100)
 
     def __unicode__(self):

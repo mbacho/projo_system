@@ -10,15 +10,16 @@ class Project(models.Model):
     """Project details"""
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, related_name='projects')
 
     def __unicode__(self):
         return unicode(self.name)
 
 
 class ProjectDomain(models.Model):
-    project = models.ForeignKey(Project)
-    domain = models.ForeignKey(AcademicDomain)
+    project = models.ForeignKey(Project, related_name='projectdomain_project')
+    domain = models.ForeignKey(AcademicDomain, related_name='projectdomain_domain')
+
     subdomain = models.CharField(default='', null=True, blank=True, max_length=50)
     starturl = models.URLField(null=True, blank=True)
     jobid = models.CharField(max_length=100, default='')

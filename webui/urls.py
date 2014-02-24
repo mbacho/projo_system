@@ -1,6 +1,7 @@
-from django.conf.urls import (patterns, url )
+from django.conf.urls import (patterns, url, include)
 from .views import home
 from .views import (home, signin, signout, signup, project_new, project_edit, project_del, results)
+
 urlpatterns = patterns('',
                        # Examples:
                        # url(r'^$', 'webometrics.views.home', name='home'),
@@ -20,4 +21,5 @@ urlpatterns = patterns('',
                        url(r'^results/', home, name='results'),
 
                        url(r'^user/', home, name='user'),
+                       url(r'^api/',include('webui.api.urls'))
 )
