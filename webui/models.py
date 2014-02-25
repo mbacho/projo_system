@@ -12,6 +12,9 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='projects')
 
+    class Meta:
+        unique_together = ('name','owner')
+
     def __unicode__(self):
         return unicode(self.name)
 

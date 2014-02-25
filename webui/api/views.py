@@ -53,3 +53,4 @@ class ProjectDomainViewSet(ModelViewSet):
     serializer_class = ProjectDomainSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication]
+
