@@ -26,6 +26,7 @@ file : urls.py
 project : webometrics
 
 """
+from django.conf.urls import url, include, patterns
 
 from rest_framework.routers import DefaultRouter
 from .webui.views import UserViewSet, ProjectViewSet, ProjectDomainViewSet
@@ -43,5 +44,7 @@ router.register(r'domainstats', DomainStatsViewSet)
 router.register(r'academicdomain', AcademicDomainViewSet)
 router.register(r'avoidurl', AvoidUrlViewSet)
 
-urlpatterns = router.urls
-
+urlpatterns = patterns('',
+                       url(r'', include(router.urls)),
+                       url(r'^docs/', include('rest_framework_swagger.urls')),
+)

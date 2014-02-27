@@ -33,4 +33,4 @@ from stats.models import DomainStats
 class DomainStatsSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = DomainStats
-        fields = ('url', 'domain', 'outlinks', 'richfiles', 'pages_not_found', 'page_count', 'created')
+        fields = ('url', 'projectdomain', 'outlinks', 'richfiles', 'pages_not_found', 'page_count', 'created')

@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'south',
     'rest_framework',
+    'rest_framework_swagger',
 
     #my apps
     'johnnywalker',
