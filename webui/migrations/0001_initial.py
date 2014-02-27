@@ -13,35 +13,37 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(related_name='projects', to=orm['auth.User'])),
         ))
         db.send_create_signal(u'webui', ['Project'])
 
-        # Adding model 'UserDets'
-        db.create_table(u'webui_userdets', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-        ))
-        db.send_create_signal(u'webui', ['UserDets'])
+        # Adding unique constraint on 'Project', fields ['name', 'owner']
+        db.create_unique(u'webui_project', ['name', 'owner_id'])
 
-        # Adding model 'ProjectDomains'
-        db.create_table(u'webui_projectdomains', (
+        # Adding model 'ProjectDomain'
+        db.create_table(u'webui_projectdomain', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['webui.Project'])),
-            ('domain', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['johnnywalker.AcademicDomain'])),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='projectdomain_project', to=orm['webui.Project'])),
+            ('domain', self.gf('django.db.models.fields.related.ForeignKey')(related_name='projectdomain_domain', to=orm['johnnywalker.AcademicDomain'])),
+            ('subdomain', self.gf('django.db.models.fields.CharField')(default='', max_length=50, null=True, blank=True)),
+            ('starturl', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('jobid', self.gf('django.db.models.fields.CharField')(default='', unique=True, max_length=100, blank=True)),
+            ('starttime', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2014, 2, 27, 0, 0), auto_now_add=True, blank=True)),
+            ('stoptime', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('status', self.gf('django.db.models.fields.CharField')(default='unknown', max_length=20, blank=True)),
         ))
-        db.send_create_signal(u'webui', ['ProjectDomains'])
+        db.send_create_signal(u'webui', ['ProjectDomain'])
 
 
     def backwards(self, orm):
+        # Removing unique constraint on 'Project', fields ['name', 'owner']
+        db.delete_unique(u'webui_project', ['name', 'owner_id'])
+
         # Deleting model 'Project'
         db.delete_table(u'webui_project')
 
-        # Deleting model 'UserDets'
-        db.delete_table(u'webui_userdets')
-
-        # Deleting model 'ProjectDomains'
-        db.delete_table(u'webui_projectdomains')
+        # Deleting model 'ProjectDomain'
+        db.delete_table(u'webui_projectdomain')
 
 
     models = {
@@ -89,22 +91,23 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '150'})
         },
         u'webui.project': {
-            'Meta': {'object_name': 'Project'},
+            'Meta': {'unique_together': "(('name', 'owner'),)", 'object_name': 'Project'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projects'", 'to': u"orm['auth.User']"})
         },
-        u'webui.projectdomains': {
-            'Meta': {'object_name': 'ProjectDomains'},
-            'domain': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['johnnywalker.AcademicDomain']"}),
+        u'webui.projectdomain': {
+            'Meta': {'object_name': 'ProjectDomain'},
+            'domain': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projectdomain_domain'", 'to': u"orm['johnnywalker.AcademicDomain']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['webui.Project']"})
-        },
-        u'webui.userdets': {
-            'Meta': {'object_name': 'UserDets'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+            'jobid': ('django.db.models.fields.CharField', [], {'default': "''", 'unique': 'True', 'max_length': '100', 'blank': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'projectdomain_project'", 'to': u"orm['webui.Project']"}),
+            'starttime': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2014, 2, 27, 0, 0)', 'auto_now_add': 'True', 'blank': 'True'}),
+            'starturl': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.CharField', [], {'default': "'unknown'", 'max_length': '20', 'blank': 'True'}),
+            'stoptime': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'subdomain': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'null': 'True', 'blank': 'True'})
         }
     }
 

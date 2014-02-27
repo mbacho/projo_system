@@ -6,8 +6,7 @@ from django.db import models
 class AcademicDomain(models.Model):
     """Valid domain for academic institutions"""
     name = models.CharField(max_length=150)
-    # abbr = models.CharField(max_length=50)
-    domain = models.URLField()
+    domain = models.CharField(max_length=255)
     link = models.URLField()
 
     def __unicode__(self):

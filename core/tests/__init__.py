@@ -28,7 +28,7 @@ project : webometrics
 """
 
 try:
-    from nose.tools import (istest,nottest)
+    from nose.tools import (istest, nottest)
 except:
     def istest(func):
         func.__test__ = True
@@ -37,7 +37,6 @@ except:
     def nottest(func):
         func.__test__ = False
         return func
-
 
 try:
     from django.test import TestCase

@@ -22,30 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : miner.py
+file : __init__.py.py
 project : webometrics
 
 """
-
-from pymongo import MongoClient
-from .models import DomainStats
-from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_LINKS, MONGO_COLLECTION_OUTLINKS, RICH_FILES)
+from django.contrib.auth.models import User
+from rest_framework.test import APIClient, APITestCase
 
 
-def mine_data(collection_name, project_domain):
-    client = MongoClient()
-    db = client[MONGO_DBNAME]
-    links = db[MONGO_COLLECTION_LINKS][collection_name]
-    if links.name not in db.collection_names():
-        raise ValueError('no data found for collection %s' % collection_name)
-    outlinks = db[MONGO_COLLECTION_OUTLINKS][collection_name]
+class TestAPI(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.url_name = ''
+        user, username, email, password = \
+            None, 'testuser', 'testmail@mail.com', 'pass'
+        try:
+            user = User.objects.get(username=username, email=email, password=password)
+        except User.DoesNotExist, dne:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        self.user = user
 
-    stats = DomainStats()
-    stats.domain = project_domain
-    stats.page_count = links.find({'status': 200}).count()
-    stats.pages_not_found = links.find({'status': 404}).count()
-    stats.richfiles = links.find({'type': {'$in': RICH_FILES.values()}, 'status': 200}).count()
-    stats.outlinks = len(outlinks.distinct('page'))
-    stats.save()
+    def auth_client(self):
+        self.client.force_authenticate(user=self.user)
 
-    return stats
+    def tearDown(self):
+        self.user.delete()
+
+    @property
+    def list_url(self):
+        return self.url_name + '-list'
+
+    @property
+    def detail_url(self):
+        return self.url_name + '-detail'

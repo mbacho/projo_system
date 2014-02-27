@@ -32,7 +32,7 @@ class ProjectDomain(models.Model):
 
     subdomain = models.CharField(default='', null=True, blank=True, max_length=50)
     starturl = models.URLField(null=True, blank=True)
-    jobid = models.CharField(max_length=100, default='', blank=True)
+    jobid = models.CharField(max_length=100, default='', blank=True, unique=True)
     starttime = models.DateTimeField(auto_now_add=True, default=timezone.now())
     stoptime = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, default='unknown', blank=True, choices=JOB_STATUS)

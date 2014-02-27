@@ -1,8 +1,11 @@
-from django.db import models
 
-# Create your models here.
+from django.db import models
+from webui.models import ProjectDomain
+
+
 class DomainStats(models.Model):
-    domain = models.CharField(max_length=100)
+    projectdomain = models.ForeignKey(ProjectDomain)
+
     outlinks = models.PositiveIntegerField(default=0)
     richfiles = models.PositiveIntegerField(default=0)
     pages_not_found = models.PositiveIntegerField(default=0)
@@ -11,5 +14,5 @@ class DomainStats(models.Model):
 
     def __unicode__(self):
         return "domain={0},outlinks={1},richfiles={2},pages_not_found={3},page_count={4}".format(
-            self.domain, self.outlinks, self.richfiles, self.pages_not_found, self.page_count
+            self.projectdomain, self.outlinks, self.richfiles, self.pages_not_found, self.page_count
         )

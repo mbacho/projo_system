@@ -32,7 +32,7 @@ from .serializers import AcademicDomainSerializer, AvoidUrlSerializer
 from johnnywalker.models import AcademicDomain, AvoidUrl
 
 
-class AcademicDomainViewSet(SecurityMixin,ModelViewSet):
+class AcademicDomainViewSet(SecurityMixin, ModelViewSet):
     queryset = AcademicDomain.objects.all()
     serializer_class = AcademicDomainSerializer
 
