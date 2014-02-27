@@ -67,5 +67,5 @@ class TestSignalProcessor(TestCase):
     def test_spider_closed(self):
         self.extension.spider_closed(self.spider, 'shutdown')
         projectdomain = ProjectDomain.objects.get(jobid='somejobid')
-        self.assertEqual(projectdomain.stopreason, 'shutdown')
+        self.assertEqual(projectdomain.status, 'shutdown')
 

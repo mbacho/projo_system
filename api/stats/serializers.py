@@ -26,31 +26,11 @@ file : serializers.py
 project : webometrics
 
 """
-from django.contrib.auth.models import User
-from rest_framework.serializers import HyperlinkedModelSerializer, HyperlinkedRelatedField
-from webui.models import Project, ProjectDomain
+from rest_framework.serializers import HyperlinkedModelSerializer
+from stats.models import DomainStats
 
 
-class ProjectDomainSerializer(HyperlinkedModelSerializer):
+class DomainStatsSerializer(HyperlinkedModelSerializer):
     class Meta:
-        model = ProjectDomain
-        fields = (
-            'url', 'id', 'project', 'domain', 'starturl', 'subdomain',
-            'jobid', 'starttime', 'stoptime', 'stopreason'
-        )
-
-
-class ProjectSerializer(HyperlinkedModelSerializer):
-    projectdomain_project = HyperlinkedRelatedField(many=True, view_name='projectdomain-detail', required=False)
-
-    class Meta:
-        model = Project
-        fields = ('url', 'id', 'name', 'created', 'owner', 'projectdomain_project')
-
-
-class UserSerializer(HyperlinkedModelSerializer):
-    projects = HyperlinkedRelatedField(many=True, view_name='project-detail', required=False)
-
-    class Meta:
-        model = User
-        fields = ('url', 'id', 'username', 'email', 'projects')
+        model = DomainStats
+        fields = ('url', 'domain', 'outlinks', 'richfiles', 'pages_not_found', 'page_count', 'created')

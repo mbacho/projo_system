@@ -129,6 +129,8 @@ INSTALLED_APPS = (
     'johnnywalker',
     'webui',
     'stats',
+    'core',
+    'api'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

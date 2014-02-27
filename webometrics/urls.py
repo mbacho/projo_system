@@ -17,4 +17,6 @@ urlpatterns = patterns('',
                        url(r'', include('webui.urls')),
                        url(r'', include('johnnywalker.urls')),
                        url(r'', include('stats.urls')),
+
+                       url(r'^api/', include('api.urls')),
 )

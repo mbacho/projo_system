@@ -530,6 +530,15 @@
             "name": "Kenya Highlands Evangelical University(Kenya Highlands Bible College)"
         }
     },
+    {
+        "pk": 60,
+        "model": "johnnywalker.AcademicDomain",
+        "fields": {
+            "domain": "localhost",
+            "link": "http://localhost",
+            "name": "Local website"
+        }
+    },
 
 
     {

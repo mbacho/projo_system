@@ -22,31 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : miner.py
+file : mixins.py
 project : webometrics
 
 """
-
-from pymongo import MongoClient
-from .models import DomainStats
-from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_LINKS, MONGO_COLLECTION_OUTLINKS, RICH_FILES)
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
-def mine_data(collection_name, domain_url):
-    client = MongoClient()
-    db = client[MONGO_DBNAME]
-    links = db[MONGO_COLLECTION_LINKS][collection_name]
-    if links.name not in db.collection_names():
-        raise ValueError('no data found for collection %s' % collection_name)
-    outlinks = db[MONGO_COLLECTION_OUTLINKS][collection_name]
-
-    stats = DomainStats()
-    stats.domain = domain_url
-    stats.page_count = links.find({'status': 200}).count()
-    stats.pages_not_found = links.find({'status': 404}).count()
-    stats.richfiles = links.find({'type': {'$in': RICH_FILES.values()}, 'status': 200}).count()
-    stats.outlinks = len(outlinks.distinct('page'))
-    stats.save()
-
-    return stats
-
+class SecurityMixin(object):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]

@@ -22,35 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : views.py
+file : serializers.py
 project : webometrics
 
 """
 from django.contrib.auth.models import User
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-from webui.api.serializers import ProjectSerializer, ProjectDomainSerializer, UserSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, HyperlinkedRelatedField
 from webui.models import Project, ProjectDomain
 
 
-class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
+class ProjectDomainSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = ProjectDomain
+        fields = (
+            'url', 'id', 'project', 'domain', 'starturl', 'subdomain',
+            'jobid', 'starttime', 'stoptime', 'status'
+        )
 
 
-class ProjectViewSet(ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
+class ProjectSerializer(HyperlinkedModelSerializer):
+    projectdomain_project = HyperlinkedRelatedField(many=True, view_name='projectdomain-detail', required=False)
+
+    class Meta:
+        model = Project
+        fields = ('url', 'id', 'name', 'created', 'owner', 'projectdomain_project')
 
 
-class ProjectDomainViewSet(ModelViewSet):
-    queryset = ProjectDomain.objects.all()
-    serializer_class = ProjectDomainSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
+class UserSerializer(HyperlinkedModelSerializer):
+    projects = HyperlinkedRelatedField(many=True, view_name='project-detail', required=False)
 
+    class Meta:
+        model = User
+        fields = ('url', 'id', 'username', 'email', 'projects')

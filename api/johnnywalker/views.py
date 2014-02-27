@@ -22,16 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : urls.py
+file : views.py
 project : webometrics
 
 """
-from rest_framework.routers import DefaultRouter
-from views import UserViewSet, ProjectViewSet, ProjectDomainViewSet
+from rest_framework.viewsets import ModelViewSet
+from ..mixins import SecurityMixin
+from .serializers import AcademicDomainSerializer, AvoidUrlSerializer
+from johnnywalker.models import AcademicDomain, AvoidUrl
 
-router = DefaultRouter()
-router.register(r'projects', ProjectViewSet)
-router.register(r'users', UserViewSet)
-router.register(r'projectdomains', ProjectDomainViewSet)
 
-urlpatterns = router.urls
+class AcademicDomainViewSet(SecurityMixin,ModelViewSet):
+    queryset = AcademicDomain.objects.all()
+    serializer_class = AcademicDomainSerializer
+
+
+class AvoidUrlViewSet(SecurityMixin, ModelViewSet):
+    queryset = AvoidUrl.objects.all()
+    serializer_class = AvoidUrlSerializer

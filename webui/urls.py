@@ -21,5 +21,4 @@ urlpatterns = patterns('',
                        url(r'^results/', home, name='results'),
 
                        url(r'^user/', home, name='user'),
-                       url(r'^api/',include('webui.api.urls'))
 )
