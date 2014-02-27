@@ -34,7 +34,7 @@ from api.tests import TestAPI
 class TestAcademicDomainViewSet(TestAPI):
     def setUp(self):
         super(TestAcademicDomainViewSet, self).setUp()
-        self.url_name = 'academicdomain'
+        self.url_name = 'academicdomains'
 
     def test_unauth(self):
         response = self.client.get(reverse(self.list_url))
@@ -58,7 +58,7 @@ class TestAcademicDomainViewSet(TestAPI):
 class TestAvoidUrlViewSet(TestAPI):
     def setUp(self):
         super(TestAvoidUrlViewSet, self).setUp()
-        self.url_name = 'avoidurl'
+        self.url_name = 'avoidurls'
 
     def test_unauth(self):
         response = self.client.get(reverse(self.list_url))

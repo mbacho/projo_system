@@ -41,10 +41,10 @@ router.register(r'projectdomains', ProjectDomainViewSet)
 
 router.register(r'domainstats', DomainStatsViewSet)
 
-router.register(r'academicdomain', AcademicDomainViewSet)
-router.register(r'avoidurl', AvoidUrlViewSet)
+router.register(r'academicdomains', AcademicDomainViewSet)
+router.register(r'avoidurls', AvoidUrlViewSet)
 
 urlpatterns = patterns('',
-                       url(r'', include(router.urls)),
-                       url(r'^docs/', include('rest_framework_swagger.urls')),
+                       url(r'^', include(router.urls)),
+                       url(r'^api-docs/', include('rest_framework_swagger.urls')),
 )
