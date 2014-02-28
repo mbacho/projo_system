@@ -26,5 +26,22 @@ file : test_views.py
 project : webometrics
 
 """
+from django.core.urlresolvers import reverse
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK
+from api.tests import TestAPI
 
+
+class TestDomainStatsViewSet(TestAPI):
+    def setUp(self):
+        super(TestDomainStatsViewSet, self).setUp()
+        self.url_name = 'domainstats'
+
+    def test_unauth(self):
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)
+
+    def test_auth(self):
+        self.auth_client()
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_200_OK)
 

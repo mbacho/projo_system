@@ -26,5 +26,52 @@ file : test_views.py
 project : webometrics
 
 """
+from django.core.urlresolvers import reverse
+from rest_framework.status import HTTP_403_FORBIDDEN, HTTP_200_OK
+from api.tests import TestAPI
 
+
+class TestUserViewSet(TestAPI):
+    def setUp(self):
+        super(TestUserViewSet, self).setUp()
+        self.url_name = 'user'
+
+    def test_unauth(self):
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)
+
+    def test_auth(self):
+        self.auth_client()
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_200_OK)
+
+
+class TestProjectViewSet(TestAPI):
+    def setUp(self):
+        super(TestProjectViewSet, self).setUp()
+        self.url_name = 'project'
+
+    def test_unauth(self):
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)
+
+    def test_auth(self):
+        self.auth_client()
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_200_OK)
+
+
+class TestProjectDomainViewSet(TestAPI):
+    def setUp(self):
+        super(TestProjectDomainViewSet, self).setUp()
+        self.url_name = 'projectdomain'
+
+    def test_unauth(self):
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)
+
+    def test_auth(self):
+        self.auth_client()
+        response = self.client.get(reverse(self.list_url))
+        self.assertEqual(response.status_code, HTTP_200_OK)
 

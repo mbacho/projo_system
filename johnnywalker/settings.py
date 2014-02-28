@@ -18,11 +18,6 @@ ITEM_PIPELINES = {
     'johnnywalker.pipelines.MongoStorePipeline': 20,
 }
 
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.contrib.downloadermiddleware.defaultheaders.DefaultHeadersMiddleware': None,
-    'johnnywalker.middleware.downloader.MyHeadersMiddleware': 550,
-}
-
 SPIDER_MIDDLEWARES = {
     'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware': None,
     'johnnywalker.middleware.offsite.MyOffsiteMiddleware': 500

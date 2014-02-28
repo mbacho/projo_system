@@ -61,16 +61,16 @@ class ScrapydCommunicator(object):
         """
         return self._get_jsondata('listprojects', 'GET')
 
-    def addversion(self):
-        """
-        POST
-        - project (string, required) - the project name
-        - version (string, required) - the project version
-        - egg (file, required) - a Python egg containing the project's code
-
-        sample response : {"status": "ok", "spiders": 3}
-        """
-        pass
+    #def addversion(self):
+        # """
+        # POST
+        # - project (string, required) - the project name
+        # - version (string, required) - the project version
+        # - egg (file, required) - a Python egg containing the project's code
+        #
+        # sample response : {"status": "ok", "spiders": 3}
+        # """
+    #    pass
 
     def schedule(self, startpage, domain):
         """

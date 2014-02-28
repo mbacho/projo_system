@@ -31,7 +31,7 @@ from django.contrib.auth.models import User
 from scrapy.crawler import Crawler
 from scrapy.settings import Settings
 
-from core.tests import (TestCase, set_trace)
+from core.tests import (TestCase )
 from ..extensions import SignalProcessor
 from johnnywalker.models import AcademicDomain
 from johnnywalker.spiders.walker import Walker

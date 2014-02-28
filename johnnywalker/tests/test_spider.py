@@ -16,6 +16,9 @@ class TestWalker(TestCase):
 
         with self.assertRaises(ValueError):
             self.spider = Walker('', '')
+            
+        with self.assertRaises(TypeError):
+            self.spider = Walker('http://localhost', None)
 
         self.spider = Walker('http://localhost', 'localhost')
         self.schedule_spider = Walker('http://localhost','localhost','somejobid')

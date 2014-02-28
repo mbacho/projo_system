@@ -52,3 +52,22 @@ class TestCommunicator(TestCase):
         self.assertEqual(ans['status'], 'ok')
         self.assertIn(self.comm.spider, ans['spiders'])
 
+    def test_listjobs(self):
+        ans = self.comm.listjobs()
+        self.assertEqual(ans['status'], 'ok')
+        self.assertIn('pending', ans)
+        self.assertIn('running', ans)
+        self.assertIn('finished', ans)
+
+    def test_cancel(self):
+        ans = self.comm.cancel('somejobid')
+        self.assertEqual(ans['status'], 'ok')
+
+    def test_listversions(self):
+        ans = self.comm.listversions()
+        self.assertEqual(ans['status'], 'ok')
+
+    def test_schedule(self):
+        ans = self.comm.schedule('http://somedomain', 'somedomain')
+        self.assertEqual(ans['status'], 'ok')
+        self.comm.cancel(ans['jobid'])

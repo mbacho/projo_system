@@ -35,23 +35,19 @@ from webui.models import ProjectDomain
 class SignalProcessor(object):
     @classmethod
     def from_crawler(cls, crawler):
-        # instantiate the extension object
         ext = cls()
-
-        # connect the extension object to signals
-        # crawler.signals.connect(ext.spider_opened, signal=spider_opened)
         crawler.signals.connect(ext.spider_closed, signal=spider_closed)
-        #crawler.signals.connect(ext.spider_error, signal=spider_error)
-
-        # return the extension object
         return ext
 
-    def spider_opened(self, spider):
-        pass
-
     def spider_closed(self, spider, reason):
-        #reason could be in ['finished','cancelled','shutdown']
-        if spider.jobid not in (None, ''):
+        """
+        reason could be:
+        finished: closed because the spider has completed scraping
+        cancelled: spider was manually closed
+        shutdown: engine was shutdown (for example, by hitting Ctrl-C to stop it)
+        """
+        pd = None
+        if spider.jobid not in [None, '']:
             try:
                 pd = ProjectDomain.objects.get(jobid=spider.jobid)
                 pd.stoptime = now()
@@ -61,15 +57,9 @@ class SignalProcessor(object):
                 pass
 
         if reason == 'finished':
-            mine_data(spider.collection_name, spider.allowed_domains[0])
-
-
-    def spider_error(self, spider, failure, response):
-        """
-        failure - the exception raised as a Twisted Failure object
-        response - the response being processed when the exception was raised
-
-        """
-        pass
-
+            mine_data(spider.collection_name, pd)
+        elif reason == 'cancelled':
+            pass
+        elif reason == 'shutdown':
+            pass
 
