@@ -107,4 +107,5 @@ class Home(resource.Resource):
             'running': running,
             'finished': finished
         }
-        return render_to_string('johnnywalker/home.html', data)
+
+        return bytes(render_to_string('johnnywalker/home.html', data))

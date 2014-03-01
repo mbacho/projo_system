@@ -71,4 +71,4 @@ def get_app():
     return app
 
 application = get_app()
-#application = get_application()
+# application = get_application()
