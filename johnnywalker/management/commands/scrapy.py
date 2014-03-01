@@ -8,7 +8,9 @@ from . import get_scrapyroot
 
 
 class Command(BaseCommand):
-    help = 'Run scrapy within django\nUsage : python manage.py scrapy [deploy | start=<start page> domain=<domain url>]'
+    help = """Run scrapy within django
+Usage : python manage.py scrapy [deploy | shell | start=<start page> domain=<domain url>]
+    """
 
     def run_from_argv(self, argv):
         self._argv = argv
@@ -18,9 +20,12 @@ class Command(BaseCommand):
         scrapydir = get_scrapyroot()
         chdir(scrapydir)
         default_args = ['scrapy']
-        if len(self._argv) == 3 and self._argv[2] == 'deploy':
-            default_args.append('deploy')
-            default_args.append('webometrics')
+        if len(self._argv) == 3:
+            if self._argv[2] == 'deploy':
+                default_args.append('deploy')
+                default_args.append('webometrics')
+            elif self._argv[2] == 'shell':
+                default_args.append('shell')
         elif len(self._argv) == 4:
             default_args.extend(['crawl', 'walker'])
             default_args.extend(['-a', self._argv[2]])
