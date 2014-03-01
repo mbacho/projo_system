@@ -22,30 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : scrapyd.py
+file : __init__.py.py
 project : webometrics
 
 """
-from os import ( chdir)
-from os.path import abspath, dirname, join
 
-from django.core.management import BaseCommand
-
-from . import get_scrapyroot
-from johnnywalker.server import app
-from twisted.scripts.twistd import run
-from sys import argv
-
-
-class Command(BaseCommand):
-    help = 'starts customized scrapyd server'
-
-    def run_from_argv(self, argv):
-        self._argv = argv
-        self.execute()
-
-    def handle(self, *args, **options):
-        chdir(get_scrapyroot())
-        argv.pop(0)
-        argv[1:1] = ['-n', '-y', abspath(join(dirname(app.__file__), 'app.py'))]
-        run()

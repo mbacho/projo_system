@@ -1,0 +1,84 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Monitor
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <h1>Monitor</h1>
+    <table style="table table-responsive table-bordered table-striped table-hover">
+        <caption>Pending</caption>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>PID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for m in queue.list %}
+            <tr>
+                <td>{{ m.name }}</td>
+                <td>{{ m.job }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table style="table table-responsive table-bordered table-striped table-hover">
+        <caption>Running</caption>
+        <thead>
+        <tr>
+            <th>Job</th>
+            <th>PID</th>
+            <th>Runtime</th>
+            <th>Log</th>
+            <th>Items</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in running %}
+            <tr>
+                <td>{{ p.job }}</td>
+                <td>{{ p.pid }}</td>
+                <td>{{ p.runtime }}</td>
+                <td><a href="{{ STATIC_URL }}{{ p.log_url }}">Log</a></td>
+                <td><a href="{{ STATIC_URL }}{{ p.items_url }}">Items</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table style="table table-responsive table-bordered table-striped table-hover">
+        <caption>Finished</caption>
+        <thead>
+        <tr>
+            <th>Job</th>
+            <th>Runtime</th>
+            <th>Log</th>
+            <th>Items</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in finished %}
+            <tr>
+                <td>{{ p.job }}</td>
+                <td>{{ p.runtime }}</td>
+                <td><a href="{{ STATIC_URL }}{{ p.log_url }}">Log</a></td>
+                <td><a href="{{ STATIC_URL }}{{ p.items_url }}">Items</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block scriptfiles %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -1,10 +1,16 @@
+#IDE stuff
 .idea
+
+#python stuff
 *.pyo
 *.pyc
-webometrics.db
 .coverage
 coverage_html_reports
-johnnywalker/data/
+
+#django stuff
+webometrics.db
+
+#scrapyd stuff
 build/
 dbs/
 eggs/
