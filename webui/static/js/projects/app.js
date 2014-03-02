@@ -10,11 +10,11 @@ projectApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: '/partials/home.html',
+                templateUrl: '/static/partials/project/project-list.html',
                 controller: 'ProjectCtrl'
             }).
             when('/new', {
-                templateUrl: '/partials/project-new.html',
+                templateUrl: '/static/partials/project/project-new.html',
                 controller: 'ProjectNewCtrl'
             }).
             otherwise({

@@ -6,8 +6,9 @@ var projectServices = angular.module('projectServices', ['ngResource']);
 
 projectServices.factory('Project', ['$resource',
     function ($resource) {
-        return $resource('projects/:id', {}, {
-            query: {method: 'GET', params: {id: 'projects'}, isArray: false}
+        return $resource('api/projects/:id/', {}, {
+            get: {method: 'GET', params: {id: '@id'}, isArray: false},
+            all: {method: 'GET', isArray: true}
         });
     }
 ]);

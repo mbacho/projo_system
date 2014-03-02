@@ -6964,8 +6964,8 @@ function $HttpProvider() {
       patch:  copy(CONTENT_TYPE_APPLICATION_JSON)
     },
 
-    xsrfCookieName: 'XSRF-TOKEN',
-    xsrfHeaderName: 'X-XSRF-TOKEN'
+    xsrfCookieName: 'csrftoken',
+    xsrfHeaderName: 'X-CSRFTOKEN'
   };
 
   /**

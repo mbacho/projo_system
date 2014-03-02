@@ -5,36 +5,12 @@
 {% endblock %}
 {% block body %}
     <div ng-app="projectApp">
-        <button class="btn btn-primary{% if not user.is_active %} disabled{% endif %}">Create project</button>
-        <form ng-submit="createProject()" ng-controller="ProjectNewCtrl">
-            <input class="form-control" name="project_name" type="text" id="project_name" placeholder="Project name"/>
+        <form ng-submit="createProject()" ng-controller="ProjectCtrl">
+            <input class="form-control" name="project_name" type="text" id="project_name" placeholder="Project name"
+                   ng-model="project_name"/>
             <input class="btn btn-primary" type="submit">
         </form>
-        {% if not user.is_active %}
-            <span class="alert-warning">Authenticate your account to create projects</span>
-        {% endif %}
-        {% if projects %}
-            <table class="table table-responsive table-bordered table-striped table-hover">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Created</th>
-                    <th>Owner</th>
-                </tr>
-                {% for i in projects %}
-                    <tr>
-                        <td></td>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.created|naturaltime }}</td>
-                        <td>{{ i.owner }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% else %}
-            <div>
-                <span>No projects available. <a>Create</a> one</span>
-            </div>
-        {% endif %}
+        <div ng-view></div>
     </div>
 {% endblock %}
 {% block scriptfiles %}
