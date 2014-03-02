@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.timezone import now
+from rest_framework.decorators import api_view
 
 from core.comm import ScrapydCommunicator
 from webui.forms import (SigninForm, SignupForm)
@@ -101,7 +102,7 @@ def project_new(request, name):
 
 @login_required(login_url='signin')
 def project_edit(request, name):
-    return HttpResponse(content='project del %s' % name)
+    return HttpResponse(mimetype='application/json', content={'name': name})
 
 
 @login_required(login_url='signin')
