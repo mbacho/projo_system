@@ -49,6 +49,7 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
     serializer_class = ProjectDomainSerializer
 
     def pre_save(self, obj):
+        #TODO Check if obj has been saved before
         obj.creator = self.request.user
         comm = ScrapydCommunicator()
         domain = obj.domain.domain
