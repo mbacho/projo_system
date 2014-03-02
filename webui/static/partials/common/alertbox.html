@@ -1,0 +1,16 @@
+<div class="container">
+    <div id="alertBox" class="alert alert-info fade in col-md-6 col-lg-offset-3">
+        <button type="button" id="alert_close" class="close">×</button>
+        <h4 id="alert_title"></h4>
+
+        <p id="alert_msg"></p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#alert_close").click(function () { //override misbehaving alert('close')
+            window.alert_box.hideAlert();
+        });
+        loadAlertBox();
+    });
+</script>

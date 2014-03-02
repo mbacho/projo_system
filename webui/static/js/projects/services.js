@@ -13,3 +13,13 @@ projectServices.factory('Project', ['$resource',
     }
 ]);
 
+
+projectServices.factory('ProjectDomain', ['$resource',
+    function ($resource) {
+        return $resource('api/projectdomains/:id/', {}, {
+            get: {method: 'GET', params: {id: '@id'}, isArray: false},
+            all: {method: 'GET', isArray: true}
+        });
+    }
+]);
+

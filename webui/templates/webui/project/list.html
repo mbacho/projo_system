@@ -1,19 +1,12 @@
-{% extends '_base.html' %}
+{% extends 'webui/angular_base.html' %}
 {% load humanize %}
 {% load static %}
-{% block stylesheets %}
-{% endblock %}
-{% block body %}
-    <div ng-app="projectApp">
-        <form ng-submit="createProject()" ng-controller="ProjectCtrl">
-            <input class="form-control" name="project_name" type="text" id="project_name" placeholder="Project name"
-                   ng-model="project_name"/>
-            <input class="btn btn-primary" type="submit">
-        </form>
-        <div ng-view></div>
-    </div>
+{% block ng_app %}projectApp{% endblock %}
+{% block angular_body %}
+    <div ng-view></div>
 {% endblock %}
 {% block scriptfiles %}
+    {{ block.super }}
     <script src="{% static 'js/lib/angular.js' %}"></script>
     <script src="{% static 'js/lib/angular-route.js' %}"></script>
     <script src="{% static 'js/lib/angular-resource.js' %}"></script>
