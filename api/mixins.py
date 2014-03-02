@@ -31,5 +31,6 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class SecurityMixin(object):
+    #TODO Implement object level permissions
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication]
