@@ -27,11 +27,16 @@ project : webometrics
 
 """
 from django.contrib.auth.models import User
+from rest_framework.fields import URLField
+from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.serializers import ModelSerializer
 from webui.models import Project, ProjectDomain
 
 
 class ProjectDomainSerializer(ModelSerializer):
+    domain = PrimaryKeyRelatedField(many=False, required=False)
+    starturl = URLField(required=False, default='')
+
     class Meta:
         model = ProjectDomain
         fields = (
@@ -41,7 +46,7 @@ class ProjectDomainSerializer(ModelSerializer):
 
 
 class ProjectSerializer(ModelSerializer):
-    projectdomain_project = ProjectDomainSerializer(many=True, required=False)
+    projectdomain_project = PrimaryKeyRelatedField(many=True, required=False)
 
     class Meta:
         model = Project
@@ -49,7 +54,7 @@ class ProjectSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
-    projects = ProjectSerializer(many=True, required=False)
+    projects = PrimaryKeyRelatedField(many=True, required=False)
 
     class Meta:
         model = User
