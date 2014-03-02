@@ -26,20 +26,21 @@ file : serializers.py
 project : webometrics
 
 """
-from rest_framework.serializers import HyperlinkedModelSerializer, HyperlinkedRelatedField
+from rest_framework.relations import RelatedField
+from rest_framework.serializers import ModelSerializer
 from johnnywalker.models import AcademicDomain, AvoidUrl
 
 
-class AcademicDomainSerializer(HyperlinkedModelSerializer):
+class AcademicDomainSerializer(ModelSerializer):
     class Meta:
         model = AcademicDomain
-        fields = ('url', 'name', 'domain', 'link')
+        fields = ('id', 'name', 'domain', 'link')
 
 
-class AvoidUrlSerializer(HyperlinkedModelSerializer):
-    avoidurl_domain = HyperlinkedRelatedField('domain', view_name='academicdomain-detailed')
+class AvoidUrlSerializer(ModelSerializer):
+    avoidurl_domain = RelatedField('domain')
 
     class Meta:
         model = AvoidUrl
-        fields = ('url', 'domain', 'url_pattern')
+        fields = ('id', 'domain', 'url_pattern')
 

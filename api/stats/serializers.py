@@ -26,11 +26,11 @@ file : serializers.py
 project : webometrics
 
 """
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 from stats.models import DomainStats
 
 
-class DomainStatsSerializer(HyperlinkedModelSerializer):
+class DomainStatsSerializer(ModelSerializer):
     class Meta:
         model = DomainStats
-        fields = ('url', 'projectdomain', 'outlinks', 'richfiles', 'pages_not_found', 'page_count', 'created')
+        fields = ('id', 'projectdomain', 'outlinks', 'richfiles', 'pages_not_found', 'page_count', 'created')
