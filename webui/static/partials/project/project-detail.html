@@ -1,1 +1,43 @@
-<div></div>
+<div>
+    <p>{{ project.name }}</p>
+
+    <p>{{ project.created | date }}</p>
+    <table class="table table-responsive table-bordered table-striped table-hover">
+        <caption><h4>Domains</h4></caption>
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Domain</td>
+            <td>Subdomain</td>
+            <td>Start URL</td>
+            <td>Start time</td>
+            <td>Stop time</td>
+            <td>Status</td>
+            <td colspan="2"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in project.projectdomain_project">
+            <td>{{ $index + 1 }}</td>
+            <td><a ng-href="{{ i.domain.link }}">{{ i.domain.domain }}</a></td>
+            <td>{{ i.subdomain }}</td>
+            <td><a ng-href="{{ i.starturl }}">{{ i.starturl }}</a></td>
+            <td>{{ i.starttime | date }}</td>
+            <td>{{ i.stoptime | date }}</td>
+            <td>
+                <label class="label"
+                       ng-class="{'label-success':i.status=='finished','label-danger':i.status=='shutdown','label-info':i.status=='running'}">
+                    {{ i.status }}</label>
+            </td>
+            <td>
+                <button ng-class="{'hidden':i.status!='running'}" class="btn btn-danger" ng-click="cancelPD(i)">cancel
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-warning" ng-click="delPD(i)">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button ng-click="addPD()" class="btn btn-primary">Add Domain</button>
+</div>

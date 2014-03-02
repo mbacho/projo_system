@@ -7,7 +7,7 @@
         <th>Domain(s)</th>
         <th></th>
     </tr>
-    <tr ng-repeat="i in projects | orderBy:displayOrder">
+    <tr ng-repeat="i in projects | orderBy:displayOrder" ng-click="openProject(i)" style="cursor: pointer;">
         <td>{{ $index +1 }}</td>
         <td>{{ i.name }}</td>
         <td>{{ i.created|date }}</td>
@@ -18,3 +18,4 @@
         </td>
     </tr>
 </table>
+<a href="#!/new_project" class="btn btn-primary">New project</a>
