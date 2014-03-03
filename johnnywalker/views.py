@@ -1,5 +1,6 @@
 # Create your views here.
 from datetime import datetime
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render_to_response
 from scrapyd import Config
 from scrapyd.launcher import Launcher
@@ -14,6 +15,7 @@ def get_items_url(self, jobid):
     return "/static/items/johnnywalker/walker/{0}.jl".format(jobid)
 
 
+@login_required
 def home(request):
     config = Config()
     poller = QueuePoller(config)
@@ -40,6 +42,7 @@ def home(request):
     data = {
         'pending': pending,
         'running': running,
-        'finished': finished
+        'finished': finished,
+        'user': request.user
     }
     return render_to_response('johnnywalker/home.html', data)
