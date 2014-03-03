@@ -22,24 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : scrapyd.py
+file : __init__.py.py
 project : webometrics
 
 """
-from os import (system, chdir)
 
-from django.core.management import BaseCommand
-from . import get_scrapyroot
-
-
-class Command(BaseCommand):
-    help = 'starts scrapyd server'
-
-    def run_from_argv(self, argv):
-        self._argv = argv
-        self.execute()
-
-    def handle(self, *args, **options):
-        #TODO: Change from system calls to twister framework e.g. which scrapyd | xargs cat
-        chdir(get_scrapyroot())
-        system('scrapyd')
