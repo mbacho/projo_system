@@ -1,4 +1,5 @@
 language: python
+
 python:
   - "2.7"
 
@@ -7,12 +8,11 @@ services:
 #  - postgres
 
 install:
-  - "pip install -r requirements/production.txt"
   - "pip install -r requirements/test.txt"
 
 before_script:
-#  - "python manage.py scrapyd &"
-#  - sleep 3 # give scrapyd some time to start
-#  - "python manage.py scrapy deploy"
+  - "python manage.py crawl_server &"
+  - sleep 3 # give scrapyd some time to start
+  - "python manage.py crawler deploy"
 
 script: ./test.sh
