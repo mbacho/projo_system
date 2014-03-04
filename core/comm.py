@@ -35,7 +35,7 @@ from django.utils.http import urlencode
 
 class ScrapydCommunicator(object):
     host = 'localhost'
-    port = 8000
+    port = 6880
     spider = 'walker'
     project = 'johnnywalker'
 
