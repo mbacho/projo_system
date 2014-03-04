@@ -27,7 +27,7 @@ project : webometrics
 
 """
 from django.utils.timezone import now
-from scrapy.signals import ( spider_closed )
+from scrapy.signals import ( spider_closed, spider_error)
 from stats.miner import mine_data
 from webui.models import ProjectDomain
 
@@ -37,6 +37,7 @@ class SignalProcessor(object):
     def from_crawler(cls, crawler):
         ext = cls()
         crawler.signals.connect(ext.spider_closed, signal=spider_closed)
+        crawler.signals.error(ext.spider_error, signal=spider_error)
         return ext
 
     def spider_closed(self, spider, reason):
@@ -63,3 +64,5 @@ class SignalProcessor(object):
         elif reason == 'shutdown':
             pass
 
+    def spider_error(self, failure, response, spider):
+        pass
