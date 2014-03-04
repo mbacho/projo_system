@@ -35,7 +35,7 @@ from django.utils.http import urlencode
 
 class ScrapydCommunicator(object):
     host = 'localhost'
-    port = 6880
+    port = 8000
     spider = 'walker'
     project = 'johnnywalker'
 
@@ -52,7 +52,7 @@ class ScrapydCommunicator(object):
                 data = ("?" + data_encoded) if len(data_encoded) > 0 else ""
                 return loads(urlopen(urljoin(url, data)).read())
         except Exception, ex:
-            return {'status':'error', 'message':'server connection error', 'exception': str(ex) }
+            return {'status': 'error', 'message': 'server connection error', 'exception': str(ex)}
 
     def listprojects(self):
         """
@@ -61,7 +61,7 @@ class ScrapydCommunicator(object):
         """
         return self._get_jsondata('listprojects', 'GET')
 
-    #def addversion(self):
+        #def addversion(self):
         # """
         # POST
         # - project (string, required) - the project name
@@ -70,6 +70,7 @@ class ScrapydCommunicator(object):
         #
         # sample response : {"status": "ok", "spiders": 3}
         # """
+
     #    pass
 
     def schedule(self, startpage, domain):

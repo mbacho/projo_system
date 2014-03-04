@@ -28,26 +28,34 @@ project : webometrics
 """
 
 from datetime import datetime
+from os.path import abspath, join
 
+import django
 from django.template.loader import render_to_string
-from twisted.web import resource
+import rest_framework
+from twisted.web import resource, static
 from twisted.application.service import IServiceCollection
 from scrapy.utils.misc import load_object
 from scrapyd.interfaces import IPoller, IEggStorage, ISpiderScheduler
 
 
 class Root(resource.Resource):
-    def __init__(self, config, app):
+    def __init__(self, config, app, wsgi_resource):
         resource.Resource.__init__(self)
         self.debug = config.getboolean('debug', False)
         self.runner = config.get('runner')
         self.app = app
-        self.putChild('', Home(self))
         services = config.items('services', ())
         for servName, servClsName in services:
             servCls = load_object(servClsName)
             self.putChild(servName, servCls(self))
         self.update_projects()
+        self.wsgi_resource = wsgi_resource
+
+    def getChild(self, path, request):
+        path0 = request.prepath.pop(0)
+        request.postpath.insert(0, path0)
+        return self.wsgi_resource
 
     def update_projects(self):
         self.poller.update_projects()
@@ -77,12 +85,14 @@ class Root(resource.Resource):
         return "/static/items/johnnywalker/walker/{0}.jl".format(jobid)
 
 
-class Home(resource.Resource):
+class CrawlerStats(resource.Resource):
     def __init__(self, root):
         resource.Resource.__init__(self)
         self.root = root
 
     def render(self, txrequest):
+        # from nose.tools import set_trace
+        # set_trace()
         queue_list = self.root.poller.queues.items()[0]
         queue_list = queue_list[1].list()
         pending = [{
@@ -109,3 +119,19 @@ class Home(resource.Resource):
         }
 
         return bytes(render_to_string('johnnywalker/home.html', data))
+
+
+class StaticFile(static.File):
+    def __init__(self):
+        super(StaticFile, self).__init__(join(abspath("."), "static"))
+        self.staticadminsrc = static.File(join(django.__path__[0], "contrib/admin/static"))
+        self.staticrestsrc = static.File(join(rest_framework.__path__[0], "static"))
+
+    def getChild(self, path, request):
+        if path == 'admin':
+            return self.staticadminsrc.getChild(path, request)
+        elif path == 'rest_framework':
+            return self.staticrestsrc.getChild(path, request)
+
+        return super(StaticFile, self).getChild(path, request)
+
