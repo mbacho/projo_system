@@ -14,8 +14,11 @@ webometrics.db
 build/
 dbs/
 eggs/
-twistd.pid
 project.egg-info/
 setup.py
 items
 logs
+
+#twisted stuff
+twistd.log
+twistd.pid
