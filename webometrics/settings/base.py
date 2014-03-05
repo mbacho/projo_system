@@ -131,7 +131,8 @@ INSTALLED_APPS = (
     'webui',
     'stats',
     'core',
-    'api'
+    'api',
+    'combi_server'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
