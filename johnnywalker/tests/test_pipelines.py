@@ -28,9 +28,8 @@ project : webometrics
 """
 
 from scrapy.exceptions import DropItem
-
+from django.conf import settings
 from core.tests import (TestCase, istest)
-from johnnywalker import MONGO_DBNAME
 from johnnywalker.items import WalkerItem
 from johnnywalker.pipelines import (MongoStorePipeline, HashDuplicateFilterPipeline)
 from johnnywalker.spiders.walker import Walker
@@ -46,7 +45,8 @@ class TestMongoStorePipeline(TestCase):
         self.pipeline.open_spider(self.spider)
         self.client = self.pipeline.client
         self.assertIsNotNone(self.client)
-        self.db = self.client[MONGO_DBNAME]
+        dbname = settings.MONGO_DB['name']
+        self.db = self.client[dbname]
         self.assertIsNotNone(self.db)
         self.links = self.pipeline.link_collection
         self.assertIsNotNone(self.links)
@@ -66,7 +66,6 @@ class TestMongoStorePipeline(TestCase):
 
     def tearDown(self):
         self.db.drop_collection(self.links.name)
-
 
 
 class TestHashDuplicateFilterPipeline(TestCase):

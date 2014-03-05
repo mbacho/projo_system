@@ -564,5 +564,69 @@
             "domain": 7,
             "url_pattern": "opac.library.strathmore.edu"
         }
+    },
+    {
+        "pk": 1,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Microsoft Word Document",
+            "ext": "doc",
+            "type": "application/msword"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Microsoft Word Document",
+            "ext": "docx",
+            "type": ""
+        }
+    },
+    {
+        "pk": 3,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Open Office Open Document",
+            "ext": "odt",
+            "type": "application/vnd.oasis.opendocument.text"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Portable Document Format",
+            "ext": "pdf",
+            "type": "application/pdf"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Postscript",
+            "ext": "ps",
+            "type": "application/postscript"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Postscript",
+            "ext": "eps",
+            "type": "application/postscript"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "johnnywalker.RichFile",
+        "fields": {
+            "name": "Text file",
+            "ext": "txt",
+            "type": "text/plain"
+        }
     }
+
 ]

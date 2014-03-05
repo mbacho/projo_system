@@ -16,6 +16,12 @@ DATABASES = {
     },
 }
 
+MONGO_DB = {
+    'name': 'webometrics_test',
+    'link_collection': 'links',
+    'outlink_collection': 'outlinks',
+}
+
 INSTALLED_APPS += (
     'django_nose',
 )

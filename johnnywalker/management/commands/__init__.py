@@ -26,9 +26,3 @@ file : __init__.py
 project : webometrics
 
 """
-
-from os.path import (abspath, join)
-
-def get_scrapyroot():
-    return abspath(join(__file__, '..', '..', '..', '..'))
-

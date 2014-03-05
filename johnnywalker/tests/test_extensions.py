@@ -43,7 +43,7 @@ class TestSignalProcessor(TestCase):
 
     def setUp(self):
         self.crawler = Crawler(Settings())
-        self.extension = SignalProcessor.from_crawler(self.crawler)
+        self.extension = SignalProcessor()
         self.spider = Walker(start='http://testdomain.com', domain='localhost', _job='somejobid')
         user = User.objects.create_user('testyusa', 'test@mail.com', 'pass')
         project = Project()
@@ -69,3 +69,5 @@ class TestSignalProcessor(TestCase):
         projectdomain = ProjectDomain.objects.get(jobid='somejobid')
         self.assertEqual(projectdomain.status, 'shutdown')
 
+    def test_from_crawler(self):
+        ext = SignalProcessor.from_crawler(self.crawler)

@@ -35,8 +35,7 @@ from urlparse import (urlsplit, urlunsplit)
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import (CrawlSpider, Rule)
 from ..items import WalkerItem
-from .. import RICH_FILES
-from johnnywalker.models import AvoidUrl
+from johnnywalker.models import AvoidUrl, RichFile
 
 
 class Walker(CrawlSpider):
@@ -85,6 +84,7 @@ class Walker(CrawlSpider):
         self.jobid = _job
         self.start_urls = [start]
         self.allowed_domains = [domain]
+        self.rich_files = [x.ext for x in RichFile.objects.all()]
 
 
     def parse_item(self, response):
@@ -122,7 +122,7 @@ class Walker(CrawlSpider):
         called with every request extracted by this rule, and must return a request or None (to filter out the request)
         """
         ext = request.url.split(".")[-1]
-        if ext in RICH_FILES.keys():
+        if ext in self.rich_files:
             request.method = 'HEAD'
         return request
 

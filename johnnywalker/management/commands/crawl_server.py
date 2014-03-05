@@ -26,16 +26,12 @@ file : scrapyd.py
 project : webometrics
 
 """
-from os import ( chdir)
-from os.path import abspath, dirname, join
-
-from django.core.management import BaseCommand
-
-from . import get_scrapyroot
-import scrapyd
-from twisted.scripts.twistd import run
+from os.path import dirname, join
 from sys import argv
 
+from django.core.management import BaseCommand
+import scrapyd
+from twisted.scripts.twistd import run
 
 class Command(BaseCommand):
     help = 'starts customized scrapyd server'
@@ -45,7 +41,6 @@ class Command(BaseCommand):
         self.execute()
 
     def handle(self, *args, **options):
-        chdir(get_scrapyroot())
         argv.pop(0)
         argv[1:1] = ['-n', '-y', join(dirname(scrapyd.__file__), 'txapp.py')]
         run()

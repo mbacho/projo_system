@@ -169,3 +169,9 @@ LOGGING = {
 REST_SETTINGS = {
     'PAGINATE_BY': 20
 }
+
+MONGO_DB = {
+    'name': 'webometrics',
+    'link_collection': 'links',
+    'outlink_collection': 'outlinks',
+}

@@ -37,7 +37,7 @@ class SignalProcessor(object):
     def from_crawler(cls, crawler):
         ext = cls()
         crawler.signals.connect(ext.spider_closed, signal=spider_closed)
-        crawler.signals.error(ext.spider_error, signal=spider_error)
+        crawler.signals.connect(ext.spider_error, signal=spider_error)
         return ext
 
     def spider_closed(self, spider, reason):
@@ -65,4 +65,6 @@ class SignalProcessor(object):
             pass
 
     def spider_error(self, failure, response, spider):
-        pass
+        from nose.tools import set_trace
+
+        set_trace()

@@ -28,23 +28,28 @@ project : webometrics
 """
 
 from pymongo import MongoClient
+from johnnywalker.models import RichFile
 from .models import DomainStats
-from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_LINKS, MONGO_COLLECTION_OUTLINKS, RICH_FILES)
-
+from django.conf import settings
 
 def mine_data(collection_name, project_domain):
+    dbname = settings.MONGO_DB['name']
+    collection_links = settings.MONGO_DB['link_collection']
+    collection_outlinks = settings.MONGO_DB['outlink_collection']
+    rich_files = [x.ext for x in RichFile.objects.all()]
+
     client = MongoClient()
-    db = client[MONGO_DBNAME]
-    links = db[MONGO_COLLECTION_LINKS][collection_name]
+    db = client[dbname]
+    links = db[collection_links][collection_name]
     if links.name not in db.collection_names():
         raise ValueError('no data found for collection %s' % collection_name)
-    outlinks = db[MONGO_COLLECTION_OUTLINKS][collection_name]
+    outlinks = db[collection_outlinks][collection_name]
 
     stats = DomainStats()
     stats.domain = project_domain
     stats.page_count = links.find({'status': 200}).count()
     stats.pages_not_found = links.find({'status': 404}).count()
-    stats.richfiles = links.find({'type': {'$in': RICH_FILES.values()}, 'status': 200}).count()
+    stats.richfiles = links.find({'type': {'$in': rich_files}, 'status': 200}).count()
     stats.outlinks = len(outlinks.distinct('page'))
     stats.save()
 

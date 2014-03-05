@@ -19,3 +19,9 @@ class AvoidUrl(models.Model):
 
     def __unicode__(self):
         return u'{0} "{1}"'.format(self.domain.domain, self.url_pattern)
+
+
+class RichFile(models.Model):
+    name = models.CharField(max_length=255)
+    ext = models.CharField(max_length=10, unique=True)
+    type = models.CharField(max_length=255)

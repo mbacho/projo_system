@@ -1,14 +1,18 @@
 from os.path import (join, abspath)
+from django_nose import FastFixtureTestCase
 
 from scrapy.http import (Response, Request, Headers)
 from scrapy.link import Link
 
-from core.tests import TestCase
 from core.tests import istest
 from ..spiders.walker import (Walker, sh)
 
 
-class TestWalker(TestCase):
+class TestWalker(FastFixtureTestCase):
+    fixtures = [
+        'johnnywalker/fixtures/initial_data.json'
+    ]
+
     @istest
     def setUp(self):
         with self.assertRaises(TypeError):
@@ -16,12 +20,12 @@ class TestWalker(TestCase):
 
         with self.assertRaises(ValueError):
             self.spider = Walker('', '')
-            
+
         with self.assertRaises(TypeError):
             self.spider = Walker('http://localhost', None)
 
         self.spider = Walker('http://localhost', 'localhost')
-        self.schedule_spider = Walker('http://localhost','localhost','somejobid')
+        self.schedule_spider = Walker('http://localhost', 'localhost', 'somejobid')
 
     def test_urls(self):
         self.assertEqual(len(self.spider.start_urls), 1)
@@ -82,7 +86,7 @@ class TestWalker(TestCase):
         for k in exts:
             req = Request(url=base_url + k, method='get')
             ans = self.spider.process_request(req)
-            self.assertEqual(ans.method.lower(), exts[k], "%s ==> %s" % (k, ans.method))
+            self.assertEqual(ans.method.lower(), exts[k], "%s ==> %s" % (req.url, ans.method))
 
     def test_linkextractions(self):
         links = [
@@ -98,8 +102,8 @@ class TestWalker(TestCase):
         self.skipTest('test spider rules, denydomains, denyurls e.t.c.')
 
     def test_collection_name(self):
-        self.assertEqual(self.spider.collection_name,'localhost')
-        self.assertEqual(self.schedule_spider.collection_name,'somejobid')
+        self.assertEqual(self.spider.collection_name, 'localhost')
+        self.assertEqual(self.schedule_spider.collection_name, 'somejobid')
 
     def get_html(self, filename):
         fpath = abspath(join(__file__, '..'))

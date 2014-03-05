@@ -2,10 +2,10 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+from django.conf import settings
 
 from pymongo import MongoClient
 from scrapy.exceptions import DropItem
-from . import (MONGO_COLLECTION_LINKS, MONGO_DBNAME)
 
 
 class HashDuplicateFilterPipeline(object):
@@ -26,8 +26,11 @@ class MongoStorePipeline(object):
 
     def open_spider(self, spider):
         self.client = MongoClient()
-        db = self.client[MONGO_DBNAME]
-        collection = db[MONGO_COLLECTION_LINKS][spider.collection_name]
+        dbname = settings.MONGO_DB['name']
+        collection_links = settings.MONGO_DB['link_collection']
+
+        db = self.client[dbname]
+        collection = db[collection_links][spider.collection_name]
         if collection.name in db.collection_names():
             db.drop_collection(collection.name)
         self.link_collection = collection

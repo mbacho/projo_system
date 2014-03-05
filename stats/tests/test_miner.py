@@ -30,9 +30,9 @@ from json import loads
 from os.path import (join, abspath, dirname)
 
 from pymongo import MongoClient
-
+from django.conf import settings
 from core.tests import TestCase
-from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_OUTLINKS, MONGO_COLLECTION_LINKS)
+from johnnywalker.models import RichFile
 from ..miner import mine_data
 
 
@@ -40,10 +40,15 @@ class TestMiner(TestCase):
     domain = 'testdomain.com'
 
     def setUp(self):
+        dbname = settings.MONGO_DB['name']
+        collection_links = settings.MONGO_DB['link_collection']
+        collection_outlinks = settings.MONGO_DB['outlink_collection']
+        rich_files = [x.ext for x in RichFile.objects.all()]
+
         self.client = MongoClient()
-        self.db = self.client[MONGO_DBNAME]
-        self.links = self.db[MONGO_COLLECTION_LINKS][self.domain]
-        self.outlinks = self.db[MONGO_COLLECTION_OUTLINKS][self.domain]
+        self.db = self.client[dbname]
+        self.links = self.db[collection_links][self.domain]
+        self.outlinks = self.db[collection_outlinks][self.domain]
         datadir = abspath(join(dirname(__file__), 'data'))
         fyl = open(join(datadir, '%s.jsonlines' % self.domain), 'r')
         for i in fyl:

@@ -1,9 +1,10 @@
+from django.conf import settings
 from pymongo import MongoClient
 
 from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 
 from ..items import WalkerItem
-from johnnywalker import (MONGO_DBNAME, MONGO_COLLECTION_OUTLINKS)
+from johnnywalker.models import RichFile
 
 
 class MyOffsiteMiddleware(OffsiteMiddleware):
@@ -15,9 +16,11 @@ class MyOffsiteMiddleware(OffsiteMiddleware):
 
     def spider_opened(self, spider):
         super(MyOffsiteMiddleware, self).spider_opened(spider)
+        dbname = settings.MONGO_DB['name']
+        collection_outlinks = settings.MONGO_DB['outlink_collection']
         self.client = MongoClient()
-        self.db = self.client[MONGO_DBNAME]
-        collection = self.db[MONGO_COLLECTION_OUTLINKS][spider.collection_name]
+        self.db = self.client[dbname]
+        collection = self.db[collection_outlinks][spider.collection_name]
         if collection.name in self.db.collection_names():
             self.db.drop_collection(collection.name)
         self.link_collection = collection
