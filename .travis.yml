@@ -10,9 +10,4 @@ services:
 install:
   - "pip install -r requirements/test.txt"
 
-before_script:
-  - "python manage.py crawl_server &"
-  - sleep 3 # give scrapyd some time to start
-  - "python manage.py crawler deploy"
-
 script: ./test.sh
