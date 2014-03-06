@@ -33,5 +33,6 @@ NOSE_ARGS = [
     "--cover-html",
     "--cover-html-dir=coverage_html_reports",
     "--cover-erase",
-    "--cover-package=core,johnnywalker,stats,webui"
+    "--cover-package=core,johnnywalker,stats,webui",
+    "--with-fixture-bundling"
 ]

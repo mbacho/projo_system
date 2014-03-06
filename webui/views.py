@@ -1,19 +1,15 @@
 # Create your views here.
-from json import dumps
 
 from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils.timezone import now
-from rest_framework.decorators import api_view
 
-from core.comm import ScrapydCommunicator
 from webui.forms import (SigninForm, SignupForm)
-from webui.models import Project, ProjectDomain
+from webui.models import Project
 
 
 @login_required(login_url='signin')
@@ -24,7 +20,6 @@ def home(request):
                               {'projects': projos, 'user': request.user, 'active': 'projects'})
 
 
-#@login_not_required(redirect_url='home')
 def signin(request):
     frm = SigninForm(request.POST or None)
 
@@ -47,7 +42,6 @@ def signin(request):
                               context_instance=RequestContext(request))
 
 
-#@login_not_required(redirect_url='home')
 def signout(request):
     logout(request)
     return HttpResponseRedirect(reverse('signin'))
@@ -72,45 +66,4 @@ def signup(request):
 
     return render_to_response('webui/signin.html', {'frm': frm, 'signup': True, },
                               context_instance=RequestContext(request))
-
-
-@login_required(login_url='signin')
-def project_new(request, name):
-    domain = request.GET.get('domain', None)
-    starturl = request.GET.get('starturl', None)
-    subdomain = request.GET.get('subdomain', None)
-
-    comm = ScrapydCommunicator()
-    j = comm.schedule(startpage=starturl, domain=domain)
-    if j['status'] == 'ok':
-        p = Project()
-        p.name = name
-        p.owner = request.user
-        p.save()
-
-        pd = ProjectDomain()
-        pd.project = p
-        pd.subdomain = subdomain
-        pd.domain_id = domain
-        pd.jobid = j['jobid']
-        pd.starttime = now()
-        pd.starturl = starturl
-        pd.save()
-
-    return HttpResponse(content_type='application/json', content=dumps(j))
-
-
-@login_required(login_url='signin')
-def project_edit(request, name):
-    return HttpResponse(mimetype='application/json', content={'name': name})
-
-
-@login_required(login_url='signin')
-def project_del(request, name):
-    return HttpResponse(content='project del %s' % name)
-
-
-@login_required(login_url='signin')
-def results(request):
-    return render_to_response('_base.html', {'user': request.user, 'active': 'results'})
 

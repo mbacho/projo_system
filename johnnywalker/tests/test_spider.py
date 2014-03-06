@@ -1,5 +1,5 @@
 from os.path import (join, abspath)
-from django_nose import FastFixtureTestCase
+from core.tests import TestCase
 
 from scrapy.http import (Response, Request, Headers)
 from scrapy.link import Link
@@ -8,7 +8,7 @@ from core.tests import istest
 from ..spiders.walker import (Walker, sh)
 
 
-class TestWalker(FastFixtureTestCase):
+class TestWalker(TestCase):
     fixtures = [
         'johnnywalker/fixtures/initial_data.json'
     ]

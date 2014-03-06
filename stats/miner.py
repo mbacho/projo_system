@@ -28,15 +28,18 @@ project : webometrics
 """
 
 from pymongo import MongoClient
+from django.conf import settings
+
 from johnnywalker.models import RichFile
 from .models import DomainStats
-from django.conf import settings
+from webui.models import ProjectDomain
+
 
 def mine_data(collection_name, project_domain):
     dbname = settings.MONGO_DB['name']
     collection_links = settings.MONGO_DB['link_collection']
     collection_outlinks = settings.MONGO_DB['outlink_collection']
-    rich_files = [x.ext for x in RichFile.objects.all()]
+    rich_files = [x.type for x in RichFile.objects.all()]
 
     client = MongoClient()
     db = client[dbname]
@@ -46,7 +49,7 @@ def mine_data(collection_name, project_domain):
     outlinks = db[collection_outlinks][collection_name]
 
     stats = DomainStats()
-    stats.domain = project_domain
+    stats.projectdomain = project_domain
     stats.page_count = links.find({'status': 200}).count()
     stats.pages_not_found = links.find({'status': 404}).count()
     stats.richfiles = links.find({'type': {'$in': rich_files}, 'status': 200}).count()
@@ -54,3 +57,11 @@ def mine_data(collection_name, project_domain):
     stats.save()
 
     return stats
+
+
+def history_miner(academic_domain, owner):
+    project_domains = ProjectDomain.objects.filter(domain=academic_domain, project__owner=owner)
+    domain_stats = DomainStats.objects.filter(projectdomain__in=project_domains).order_by('created')
+
+    return domain_stats
+

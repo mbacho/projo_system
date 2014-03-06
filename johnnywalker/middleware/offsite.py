@@ -4,7 +4,6 @@ from pymongo import MongoClient
 from scrapy.contrib.spidermiddleware.offsite import OffsiteMiddleware
 
 from ..items import WalkerItem
-from johnnywalker.models import RichFile
 
 
 class MyOffsiteMiddleware(OffsiteMiddleware):

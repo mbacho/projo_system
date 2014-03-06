@@ -31,7 +31,6 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from core.comm import ScrapydCommunicator
 from ..mixins import SecurityMixin
 from .serializers import ProjectSerializer, ProjectDomainSerializer, UserSerializer
 from webui.models import Project, ProjectDomain
@@ -57,32 +56,16 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
     def pre_save(self, obj):
         if obj.starturl == '':
             obj.starturl = obj.domain.link
-        if obj.jobid == '':
-            #TODO Check if obj has been saved before
-            obj.creator = self.request.user
-            comm = ScrapydCommunicator()
-            domain = obj.domain.domain
-            if obj.subdomain not in (None, ''):
-                domain = obj.subdomain + '.' + domain
-            ans = comm.schedule(obj.starturl, domain)
-            if ans['status'] == 'ok':
-                obj.jobid = ans['jobid']
-                obj.status = 'running'
 
     def pre_delete(self, obj):
-        if obj.jobid:
-            comm = ScrapydCommunicator()
-            comm.cancel(obj.jobid)
+        pass
 
     @action()
     def canceljob(self, request, pk):
         pd = ProjectDomain.objects.get(id=pk)
         if request.user.is_superuser or pd.project.owner == request.user:
             #TODO check if job belongs to current user or is admin
-            comm = ScrapydCommunicator()
-            jobid = request.DATA['jobid']
-            ans = comm.cancel(jobid)
-            return Response(ans)
+            return Response({'status': 'ok'})
         else:
             return Response({'error': 'Unauthorized action'}, HTTP_401_UNAUTHORIZED)
 

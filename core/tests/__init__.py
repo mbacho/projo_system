@@ -39,9 +39,9 @@ except:
         return func
 
 try:
-    from django.test import TestCase
+    from django_nose import FastFixtureTestCase as TestCase
 except:
-    from unittest import TestCase
+    from django.test import TestCase
 
 try:
     from nose.tools import set_trace

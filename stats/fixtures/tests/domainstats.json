@@ -1,0 +1,37 @@
+[
+    {
+        "pk": 1,
+        "model": "webui.Project",
+        "fields": {
+            "owner": 1,
+            "created":"2014-02-03T10:44:33.494Z",
+            "name": "testproject"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "webui.ProjectDomain",
+        "fields": {
+            "project": 1,
+            "domain": 1,
+            "subdomain": "",
+            "starturl": "",
+            "jobid": "uisad7887sad",
+            "starttime": "2014-02-03T18:22:10.494Z",
+            "stoptime": "2014-02-27T18:22:10.494Z",
+            "status": "finished"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "stats.DomainStats",
+        "fields": {
+            "projectdomain": 1,
+            "outlinks": 23,
+            "richfiles": 4,
+            "pages_not_found": 5,
+            "page_count": 25,
+            "created":"2014-02-03T10:50:00.494Z"
+        }
+    }
+]

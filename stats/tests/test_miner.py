@@ -31,13 +31,18 @@ from os.path import (join, abspath, dirname)
 
 from pymongo import MongoClient
 from django.conf import settings
+
 from core.tests import TestCase
 from johnnywalker.models import RichFile
 from ..miner import mine_data
+from webui.models import ProjectDomain
 
 
 class TestMiner(TestCase):
-    domain = 'testdomain.com'
+    fixtures = [
+        'johnnywalker/fixtures/initial_data.json',
+        'tests/domainstats.json'
+    ]
 
     def setUp(self):
         dbname = settings.MONGO_DB['name']
@@ -45,16 +50,17 @@ class TestMiner(TestCase):
         collection_outlinks = settings.MONGO_DB['outlink_collection']
         rich_files = [x.ext for x in RichFile.objects.all()]
 
+        self.project_domain = ProjectDomain.objects.get(id=1)
         self.client = MongoClient()
         self.db = self.client[dbname]
-        self.links = self.db[collection_links][self.domain]
-        self.outlinks = self.db[collection_outlinks][self.domain]
+        self.links = self.db[collection_links][self.project_domain.domain.domain]
+        self.outlinks = self.db[collection_outlinks][self.project_domain.domain.domain]
         datadir = abspath(join(dirname(__file__), 'data'))
-        fyl = open(join(datadir, '%s.jsonlines' % self.domain), 'r')
+        fyl = open(join(datadir, '%s.links.jsonlines' % self.project_domain.domain.domain), 'r')
         for i in fyl:
             self.links.insert(loads(i))
         fyl.close()
-        fyl = open(join(datadir, '%s.outlinks.jsonlines' % self.domain), 'r')
+        fyl = open(join(datadir, '%s.outlinks.jsonlines' % self.project_domain.domain.domain), 'r')
         for i in fyl:
             self.outlinks.insert(loads(i))
         fyl.close()
@@ -64,15 +70,18 @@ class TestMiner(TestCase):
         self.assertEqual(self.outlinks.count(), 7)
 
     def test_mine_data(self):
-        self.skipTest('not ready')
         with self.assertRaises(ValueError):
             mine_data('somedomain.co.ke', 'somedomain.co.ke')
-        stats = mine_data(self.domain, self.domain)
+        stats = mine_data(self.project_domain.domain.domain, self.project_domain)
+        self.assertIsNotNone(stats.projectdomain)
         self.assertEqual(stats.outlinks, 3)
-        self.assertEqual(stats.domain, self.domain)
+        self.assertEqual(stats.projectdomain, self.project_domain)
         self.assertEqual(stats.page_count, 7)
         self.assertEqual(stats.pages_not_found, 3)
         self.assertEqual(stats.richfiles, 2)
+
+    def test_history_miner(self):
+        pass
 
     def tearDown(self):
         self.db.drop_collection(self.links.name)

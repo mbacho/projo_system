@@ -132,7 +132,7 @@ INSTALLED_APPS = (
     'stats',
     'core',
     'api',
-    'combi_server'
+    'crawler_server'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
