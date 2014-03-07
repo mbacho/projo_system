@@ -29,13 +29,14 @@ project : webometrics
 
 from celery import Task, task
 
-class RunSpiderTask(Task):
+
+class DebugTask(Task):
+    name = 'crawler_server.DebugTask'
 
     def run(self, *args, **kwargs):
-        return "sawaz"
+        return "debug_class"
 
 
-@task(bind=True, name='crawler_server.jobs.tasks.debug_task')
+@task(bind=True, name='crawler_server.debug_task')
 def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
-    return "ads"
+    return "debug_task"

@@ -4,6 +4,8 @@ Testing django settings for webometrics project.
 
 from .develop import *
 
+DEBUG = True
+
 #In memory database for testing
 DATABASES = {
     "default": {
@@ -33,9 +35,10 @@ NOSE_ARGS = [
     "--cover-html",
     "--cover-html-dir=coverage_html_reports",
     "--cover-erase",
-    "--cover-package=core,johnnywalker,stats,webui",
+    "--cover-package=api,core,crawler_server,johnnywalker,stats,webui",
     "--with-fixture-bundling"
 ]
 
 #celery settings
 BROKER_BACKEND = 'memory'
+CELERY_ALWAYS_EAGER = True  # skip daemonizing process

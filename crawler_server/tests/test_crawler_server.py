@@ -28,13 +28,22 @@ project : webometrics
 """
 
 from core.tests import TestCase
+from crawler_server.tasks import debug_task, DebugTask
+
 
 class TestCrawlerServer(TestCase):
     def setUp(self):
         pass
 
     def test_jobs(self):
-        pass
+        a = debug_task.delay()
+        self.assertEqual(a.get(), 'debug_task')
+        self.assertTrue(a.successful())
+
+        rst = DebugTask()
+        a = rst.delay()
+        self.assertEqual(a.get(), 'debug_class')
+        self.assertTrue(a.successful())
 
     def tearDown(self):
         pass
