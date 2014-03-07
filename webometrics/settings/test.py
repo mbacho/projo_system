@@ -36,3 +36,6 @@ NOSE_ARGS = [
     "--cover-package=core,johnnywalker,stats,webui",
     "--with-fixture-bundling"
 ]
+
+#celery settings
+BROKER_BACKEND = 'memory'

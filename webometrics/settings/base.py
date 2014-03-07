@@ -125,6 +125,8 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'rest_framework_swagger',
+    'celery',
+    'djcelery',
 
     #my apps
     'johnnywalker',
@@ -175,3 +177,22 @@ MONGO_DB = {
     'link_collection': 'links',
     'outlink_collection': 'outlinks',
 }
+
+
+# Celery settings
+import djcelery
+
+djcelery.setup_loader()
+
+# ##BROKER_URL = 'amqp://guest:guest@localhost//'
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+BROKER_HOST = "127.0.0.1"
+BROKER_PORT = 5672
+BROKER_VHOST = "/"
+BROKER_USER = "guest"
+BROKER_PASSWORD = "guest"
