@@ -28,13 +28,10 @@ project : webometrics
 """
 
 from core.tests import TestCase
-from crawler_server.tasks import debug_task, DebugTask
+from crawler_server.tasks import debug_task, DebugTask, RunSpiderTask
 
 
 class TestCrawlerServer(TestCase):
-    def setUp(self):
-        pass
-
     def test_jobs(self):
         a = debug_task.delay()
         self.assertEqual(a.get(), 'debug_task')
@@ -44,6 +41,17 @@ class TestCrawlerServer(TestCase):
         a = rst.delay()
         self.assertEqual(a.get(), 'debug_class')
         self.assertTrue(a.successful())
+
+
+class TestRunSpiderTask(TestCase):
+    def setUp(self):
+        self.rst = RunSpiderTask()
+
+    def test_run(self):
+        self.rst.run('localhost', 'http://localhost')
+
+    def test_delay(self):
+        self.rst.delay(domain='localhost', starturl='http://localhost')
 
     def tearDown(self):
         pass

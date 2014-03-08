@@ -28,7 +28,10 @@ project : webometrics
 """
 
 from celery import Task, task
-from os import system
+from scrapy.crawler import Crawler
+from scrapy.conf import get_project_settings
+
+from johnnywalker.spiders.walker import Walker
 
 
 @task(bind=True, name='crawler_server.debug_task')
@@ -45,6 +48,25 @@ class DebugTask(Task):
         return "debug_class"
 
 
-class RunSpiderTask(Task):
-    def run(self, *args, **kwargs):
-        system('python manage.py crawl start=http://ku.ac.ke domain=ku.ac.ke')
+class RunSpider(Task):
+    def run(self, domain, starturl, *args, **kwargs):
+        # jobdir = dirname(join(abspath(manage.__file__), 'jobs'))
+        from nose.tools import set_trace
+
+        set_trace()
+        # cmd = 'python manage.py scrapy crawl walker '
+        # cmd_args = '-a start={0} -a domain={1} -a _job={2} -s JOBDIR={3}'
+        # cmd_args_s = cmd_args.format(starturl, domain, self.request.id, "jobdir/" + self.request.id)
+        # system(cmd + cmd_args_s)
+        spider = Walker(starturl, domain, self.request.id)
+        crawler = Crawler(get_project_settings())
+        crawler.crawl(spider)
+
+
+class CancelSpiderRun(Task):
+    def run(self, job_id, *args, **kwargs):
+        #revoke task
+        #delete files
+        #delete stats/entry
+        pass
+
