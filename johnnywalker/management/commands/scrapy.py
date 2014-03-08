@@ -22,29 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-file : tasks.py
+file : scrapy.py
 project : webometrics
 
 """
+from __future__ import absolute_import
 
-from celery import Task, task
-from os import system
-
-
-@task(bind=True, name='crawler_server.debug_task')
-def debug_task(self):
-    """Test method"""
-    return "debug_task"
+from django.core.management import BaseCommand
+from scrapy.cmdline import execute
 
 
-class DebugTask(Task):
-    """Test class"""
-    name = 'crawler_server.DebugTask'
+class Command(BaseCommand):
+    help = """Run scrapy within django"""
 
-    def run(self, *args, **kwargs):
-        return "debug_class"
+    def run_from_argv(self, argv):
+        self._argv = argv
+        self.execute()
+
+    def handle(self, *args, **options):
+        execute(self._argv[1:])
+        self.stdout.write(str(args))
+        self.stdout.write(str(options))
 
 
-class RunSpiderTask(Task):
-    def run(self, *args, **kwargs):
-        system('python manage.py crawl start=http://ku.ac.ke domain=ku.ac.ke')
