@@ -27,11 +27,16 @@ project : webometrics
 
 """
 
-from celery import Task, task
-from scrapy.crawler import Crawler
-from scrapy.conf import get_project_settings
+from os.path import abspath, join, dirname
+from os import system, chdir
 
-from johnnywalker.spiders.walker import Walker
+from celery import Task, task
+from celery.utils.log import get_task_logger
+
+import manage
+
+jobdir = dirname(join(abspath(manage.__file__), 'jobs'))
+logger = get_task_logger(__name__)
 
 
 @task(bind=True, name='crawler_server.debug_task')
@@ -50,23 +55,20 @@ class DebugTask(Task):
 
 class RunSpider(Task):
     def run(self, domain, starturl, *args, **kwargs):
-        # jobdir = dirname(join(abspath(manage.__file__), 'jobs'))
-        from nose.tools import set_trace
-
-        set_trace()
-        # cmd = 'python manage.py scrapy crawl walker '
-        # cmd_args = '-a start={0} -a domain={1} -a _job={2} -s JOBDIR={3}'
-        # cmd_args_s = cmd_args.format(starturl, domain, self.request.id, "jobdir/" + self.request.id)
-        # system(cmd + cmd_args_s)
-        spider = Walker(starturl, domain, self.request.id)
-        crawler = Crawler(get_project_settings())
-        crawler.crawl(spider)
+        proj_dir = dirname(abspath(manage.__file__))
+        chdir(proj_dir)
+        jobdir = join(proj_dir, 'jobs')
+        logdir = join(proj_dir, 'logs')
+        cmd = 'python manage.py scrapy crawl --logfile={0}.log '.format(join(logdir, self.request.id))
+        cmd_args = ' -a start={0} -a domain={1} -a _job={2} -s JOBDIR={3} walker'
+        cmd_args_s = cmd_args.format(starturl, domain, self.request.id, join(jobdir, self.request.id))
+        logger.debug(cmd + cmd_args_s)
+        system(cmd + cmd_args_s)
 
 
-class CancelSpiderRun(Task):
+class CancelSpider(Task):
     def run(self, job_id, *args, **kwargs):
         #revoke task
         #delete files
         #delete stats/entry
-        pass
-
+        return 'cancelled'

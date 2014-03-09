@@ -10,7 +10,7 @@ for i in build coverage_html_reports dbs eggs items logs project.egg-info; do
 done
 
 #remove files
-for i in .coverage twistd.pid; do
+for i in .coverage twistd.pid setup.py; do
     if [ -e "$i" ]; then
         rm "$i"
     fi

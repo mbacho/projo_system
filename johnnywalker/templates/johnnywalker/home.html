@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %}
     Monitor
 {% endblock %}
@@ -13,39 +13,37 @@
         <caption>Pending</caption>
         <thead>
         <tr>
-            <th>Name</th>
-            <th>PID</th>
+            <th>ID</th>
         </tr>
         </thead>
         <tbody>
-        {% for m in queue.list %}
+        {% for m in pending %}
             <tr>
-                <td>{{ m.name }}</td>
-                <td>{{ m.job }}</td>
+                <td>{{ m.id }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <table style="table table-responsive table-bordered table-striped table-hover">
-        <caption>Running</caption>
+        <caption>Active</caption>
         <thead>
         <tr>
             <th>Job</th>
             <th>PID</th>
+            <th>Start time</th>
             <th>Runtime</th>
             <th>Log</th>
-            <th>Items</th>
         </tr>
         </thead>
         <tbody>
-        {% for p in running %}
+        {% for p in active %}
             <tr>
-                <td>{{ p.job }}</td>
+                <td>{{ p.id }}</td>
                 <td>{{ p.pid }}</td>
+                <td>{{ p.start_time }}</td>
                 <td>{{ p.runtime }}</td>
-                <td><a href="{{ STATIC_URL }}{{ p.log_url }}">Log</a></td>
-                <td><a href="{{ STATIC_URL }}{{ p.items_url }}">Items</a></td>
+                <td><a href="{% static p.log_url %}">Log</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -58,16 +56,14 @@
             <th>Job</th>
             <th>Runtime</th>
             <th>Log</th>
-            <th>Items</th>
         </tr>
         </thead>
         <tbody>
         {% for p in finished %}
             <tr>
-                <td>{{ p.job }}</td>
+                <td>{{ p.id }}</td>
                 <td>{{ p.runtime }}</td>
                 <td><a href="{{ STATIC_URL }}{{ p.log_url }}">Log</a></td>
-                <td><a href="{{ STATIC_URL }}{{ p.items_url }}">Items</a></td>
             </tr>
         {% endfor %}
         </tbody>

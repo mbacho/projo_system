@@ -28,7 +28,7 @@ project : webometrics
 """
 
 from core.tests import TestCase
-from crawler_server.tasks import debug_task, DebugTask, RunSpiderTask
+from crawler_server.tasks import debug_task, DebugTask, RunSpider, CancelSpider
 
 
 class TestCrawlerServer(TestCase):
@@ -43,15 +43,20 @@ class TestCrawlerServer(TestCase):
         self.assertTrue(a.successful())
 
 
-class TestRunSpiderTask(TestCase):
+class TestSpiderTasks(TestCase):
     def setUp(self):
-        self.rst = RunSpiderTask()
+        self.rs = RunSpider()
+        self.cs = CancelSpider()
 
-    def test_run(self):
-        self.rst.run('localhost', 'http://localhost')
+    def test_run_spider(self):
+        a = self.rs.delay(domain='localhost', starturl='http://localhost')
+        self.assertTrue(a.successful())
 
-    def test_delay(self):
-        self.rst.delay(domain='localhost', starturl='http://localhost')
+    def test_spider_cancel(self):
+        a = self.cs.delay('somejobid')
+        self.assertEqual(a.get(), 'cancelled')
+        self.assertTrue(a.successful())
 
     def tearDown(self):
         pass
+

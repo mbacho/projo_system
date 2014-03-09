@@ -18,6 +18,7 @@ project.egg-info/
 setup.py
 items
 logs
+jobs
 
 #twisted stuff
 twistd.log

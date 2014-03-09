@@ -31,6 +31,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+from crawler_server.tasks import RunSpider
 from ..mixins import SecurityMixin
 from .serializers import ProjectSerializer, ProjectDomainSerializer, UserSerializer
 from webui.models import Project, ProjectDomain
@@ -56,6 +57,13 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
     def pre_save(self, obj):
         if obj.starturl == '':
             obj.starturl = obj.domain.link
+
+        if obj.jobid == '':
+            rs = RunSpider()
+            result = rs.delay(domain=obj.get_crawl_domain(), starturl=obj.starturl)
+            obj.jobid = result.task_id
+            if result.status == 'PENDING':
+                obj.status = 'running'
 
     def pre_delete(self, obj):
         pass

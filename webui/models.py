@@ -37,5 +37,8 @@ class ProjectDomain(models.Model):
     stoptime = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, default='unknown', blank=True, choices=JOB_STATUS)
 
+    def get_crawl_domain(self):
+        return self.domain.domain if self.subdomain == '' else self.subdomain + "." + self.domain.domain
+
     def __unicode__(self):
         return u"{0} {1}.{2} {3}".format(self.project, self.subdomain, self.domain, self.jobid)
