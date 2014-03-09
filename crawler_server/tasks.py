@@ -27,15 +27,16 @@ project : webometrics
 
 """
 
-from os.path import abspath, join, dirname
-from os import system, chdir
+from os.path import join
+from os import system, chdir, unlink
+from shutil import rmtree
 
 from celery import Task, task
 from celery.utils.log import get_task_logger
+from celery.result import AsyncResult
+from django.conf import settings
 
-import manage
 
-jobdir = dirname(join(abspath(manage.__file__), 'jobs'))
 logger = get_task_logger(__name__)
 
 
@@ -55,10 +56,10 @@ class DebugTask(Task):
 
 class RunSpider(Task):
     def run(self, domain, starturl, *args, **kwargs):
-        proj_dir = dirname(abspath(manage.__file__))
-        chdir(proj_dir)
-        jobdir = join(proj_dir, 'jobs')
-        logdir = join(proj_dir, 'logs')
+        projdir = settings.CRAWLER_DIRS['projdir']
+        jobdir = settings.CRAWLER_DIRS['jobdir']
+        logdir = settings.CRAWLER_DIRS['logdir']
+        chdir(projdir)
         cmd = 'python manage.py scrapy crawl --logfile={0}.log '.format(join(logdir, self.request.id))
         cmd_args = ' -a start={0} -a domain={1} -a _job={2} -s JOBDIR={3} walker'
         cmd_args_s = cmd_args.format(starturl, domain, self.request.id, join(jobdir, self.request.id))
@@ -67,8 +68,23 @@ class RunSpider(Task):
 
 
 class CancelSpider(Task):
-    def run(self, job_id, *args, **kwargs):
+    def run(self, task_id, *args, **kwargs):
         #revoke task
         #delete files
         #delete stats/entry
-        return 'cancelled'
+        a = AsyncResult(task_id)
+        a.revoke(terminate=True)
+        jobdir = settings.CRAWLER_DIRS['jobdir']
+        logdir = settings.CRAWLER_DIRS['logdir']
+
+        try:
+            rmtree(join(jobdir, task_id))
+        except:
+            pass
+
+        try:
+            unlink(join(logdir, (task_id + '.log')))
+        except:
+            pass
+
+        return a

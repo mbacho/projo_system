@@ -65,6 +65,4 @@ class SignalProcessor(object):
             pass
 
     def spider_error(self, failure, response, spider):
-        from nose.tools import set_trace
-
-        set_trace()
+        pass

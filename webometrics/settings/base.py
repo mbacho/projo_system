@@ -1,8 +1,14 @@
 """
 Base django settings for webometrics project.
 This are just base settings ...they are incomplete thus shouldn't be used directly
-as projece settings
+as project settings
 """
+from os.path import join, abspath, dirname
+
+import djcelery
+
+import manage
+
 
 APPEND_SLASH = False
 
@@ -114,9 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django.contrib.humanize',
 
@@ -172,24 +176,27 @@ REST_SETTINGS = {
     'PAGINATE_BY': 20
 }
 
+#mongo db database & collection names
 MONGO_DB = {
     'name': 'webometrics',
     'link_collection': 'links',
     'outlink_collection': 'outlinks',
 }
 
+#Crawler directories
+CRAWLER_DIRS = {
+    'projdir': dirname(abspath(manage.__file__))
+}
+CRAWLER_DIRS['jobdir'] = join(CRAWLER_DIRS['projdir'], 'crawler_server/static/jobs')
+CRAWLER_DIRS['logdir'] = join(CRAWLER_DIRS['projdir'], 'crawler_server/static/logs')
+
 
 # Celery settings
-import djcelery
-
 djcelery.setup_loader()
-
-# ##BROKER_URL = 'amqp://guest:guest@localhost//'
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERYD_CONCURRENCY = 1
 
 BROKER_HOST = "127.0.0.1"
 BROKER_PORT = 5672

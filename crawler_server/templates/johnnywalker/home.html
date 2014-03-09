@@ -1,5 +1,6 @@
-{% extends '_base.html' %}
+{% extends 'webui/angular_base.html' %}
 {% load static %}
+
 {% block title %}
     Monitor
 {% endblock %}
@@ -43,7 +44,7 @@
                 <td>{{ p.pid }}</td>
                 <td>{{ p.start_time }}</td>
                 <td>{{ p.runtime }}</td>
-                <td><a href="{% static p.log_url %}">Log</a></td>
+                <td><a href="{{ p.logurl }}">Log</a></td>
             </tr>
         {% endfor %}
         </tbody>

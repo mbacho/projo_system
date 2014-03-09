@@ -26,7 +26,11 @@ file : urls.py
 project : webometrics
 
 """
+from django.conf.urls import ( url, patterns)
+from .views import home
 
 
-urlpatterns = ()
+urlpatterns = patterns('',
+                       url(r'^crawler/', home, name='crawler-home'),
+)
 

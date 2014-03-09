@@ -26,6 +26,7 @@ file : test_crawler_server.py
 project : webometrics
 
 """
+from celery.exceptions import TaskRevokedError
 
 from core.tests import TestCase
 from crawler_server.tasks import debug_task, DebugTask, RunSpider, CancelSpider
@@ -51,10 +52,14 @@ class TestSpiderTasks(TestCase):
     def test_run_spider(self):
         a = self.rs.delay(domain='localhost', starturl='http://localhost')
         self.assertTrue(a.successful())
+        # jobdir = settings.CRAWLER_DIRS['jobdir']
+        # logdir = settings.CRAWLER_DIRS['logdir']
+        # self.assertTrue(exists(join(jobdir, a.task_id)))
+        # self.assertTrue(exists(join(logdir, a.task_id)))
 
     def test_spider_cancel(self):
-        a = self.cs.delay('somejobid')
-        self.assertEqual(a.get(), 'cancelled')
+        a = self.cs.delay('some-random-test-task-id')
+        self.assertIsInstance(a.info, TaskRevokedError)
         self.assertTrue(a.successful())
 
     def tearDown(self):
