@@ -29,39 +29,50 @@ project : webometrics
 
 from pymongo import MongoClient
 from django.conf import settings
+from networkx import DiGraph
+from networkx.algorithms.link_analysis import pagerank as pr
+from pymongo.collection import Collection
 
 from johnnywalker.models import RichFile
 from .models import DomainStats
-from webui.models import ProjectDomain
 
 
-def mine_data(collection_name, project_domain):
-    dbname = settings.MONGO_DB['name']
-    collection_links = settings.MONGO_DB['link_collection']
-    collection_outlinks = settings.MONGO_DB['outlink_collection']
-    rich_files = [x.type for x in RichFile.objects.all()]
+class Miner(object):
+    def __init__(self, collection_name, project_domain):
+        dbname = settings.MONGO_DB['name']
+        collection_links = settings.MONGO_DB['link_collection']
+        collection_outlinks = settings.MONGO_DB['outlink_collection']
+        self.rich_files = [x.type for x in RichFile.objects.all()]
 
-    client = MongoClient()
-    db = client[dbname]
-    links = db[collection_links][collection_name]
-    if links.name not in db.collection_names():
-        raise ValueError('no data found for collection %s' % collection_name)
-    outlinks = db[collection_outlinks][collection_name]
+        client = MongoClient()
+        db = client[dbname]
+        self.links = db[collection_links][collection_name]
+        if self.links.name not in db.collection_names():
+            raise ValueError('no data found for collection %s' % collection_name)
+        self.outlinks = db[collection_outlinks][collection_name]
+        self.project_domain = project_domain
 
-    stats = DomainStats()
-    stats.projectdomain = project_domain
-    stats.page_count = links.find({'status': 200}).count()
-    stats.pages_not_found = links.find({'status': 404}).count()
-    stats.richfiles = links.find({'type': {'$in': rich_files}, 'status': 200}).count()
-    stats.outlinks = len(outlinks.distinct('page'))
-    stats.save()
+    def webometric(self):
+        stats = DomainStats()
+        stats.projectdomain = self.project_domain
+        stats.page_count = self.links.find({'status': 200}).count()
+        stats.pages_not_found = self.links.find({'status': 404}).count()
+        stats.richfiles = self.links.find({'type': {'$in': self.rich_files}, 'status': 200}).count()
+        stats.outlinks = len(self.outlinks.distinct('page'))
+        stats.save()
+        #TODO Add G-factor
+        return stats
 
-    return stats
+    def pagerank(self):
+        g = DiGraph()
+        valid_links = self.links.find({'status': 200})
+        outlinks = self.outlinks
+        for i in valid_links:
+            g.add_edge(i['parent'], i['page'])
+        for i in outlinks.find(): #TODO remove stupid hack
+            g.add_edge(i['parent'], i['page'])
+        return pr(g)
 
-
-def history_miner(academic_domain, owner):
-    project_domains = ProjectDomain.objects.filter(domain=academic_domain, project__owner=owner)
-    domain_stats = DomainStats.objects.filter(projectdomain__in=project_domains).order_by('created')
-
-    return domain_stats
+    def history_miner(self):
+        pass
 

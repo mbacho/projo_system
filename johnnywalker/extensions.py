@@ -28,7 +28,7 @@ project : webometrics
 """
 from django.utils.timezone import now
 from scrapy.signals import ( spider_closed, spider_error)
-from stats.miner import mine_data
+from stats.tasks import MinerTask
 from webui.models import ProjectDomain
 
 
@@ -58,7 +58,8 @@ class SignalProcessor(object):
                 pass
 
         if reason == 'finished':
-            mine_data(spider.collection_name, pd)
+            mine_task = MinerTask()
+            mine_task.delay(collection_name=spider.collection_name, project_domain=pd)
         elif reason == 'cancelled':
             pass
         elif reason == 'shutdown':

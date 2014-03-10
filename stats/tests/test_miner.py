@@ -34,7 +34,8 @@ from django.conf import settings
 
 from core.tests import TestCase
 from johnnywalker.models import RichFile
-from ..miner import mine_data
+from ..miner import Miner
+from ..tasks import MinerTask
 from webui.models import ProjectDomain
 
 
@@ -64,15 +65,17 @@ class TestMiner(TestCase):
         for i in fyl:
             self.outlinks.insert(loads(i))
         fyl.close()
+        self.miner = Miner(self.project_domain.domain.domain, self.project_domain)
 
     def test_setup(self):
         self.assertEqual(self.links.count(), 10)
         self.assertEqual(self.outlinks.count(), 7)
+        self.assertIsNotNone(self.miner)
 
-    def test_mine_data(self):
+    def test_webometric(self):
         with self.assertRaises(ValueError):
-            mine_data('somedomain.co.ke', 'somedomain.co.ke')
-        stats = mine_data(self.project_domain.domain.domain, self.project_domain)
+            miner = Miner('somedomain.co.ke', 'somedomain.co.ke')
+        stats = self.miner.webometric()
         self.assertIsNotNone(stats.projectdomain)
         self.assertEqual(stats.outlinks, 3)
         self.assertEqual(stats.projectdomain, self.project_domain)
@@ -80,8 +83,17 @@ class TestMiner(TestCase):
         self.assertEqual(stats.pages_not_found, 3)
         self.assertEqual(stats.richfiles, 2)
 
+    def test_pagerank(self):
+        pr = self.miner.pagerank()
+        self.assertIsNotNone(pr)
+
     def test_history_miner(self):
         pass
+
+    def test_miner_task(self):
+        miner_task = MinerTask()
+        async = miner_task.delay(self.project_domain.domain.domain, self.project_domain)
+        self.assertTrue(async.successful())
 
     def tearDown(self):
         self.db.drop_collection(self.links.name)
