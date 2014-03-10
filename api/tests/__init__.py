@@ -38,7 +38,7 @@ class TestAPI(APITestCase):
             None, 'testuser', 'testmail@mail.com', 'pass'
         try:
             user = User.objects.get(username=username, email=email, password=password)
-        except User.DoesNotExist, dne:
+        except User.DoesNotExist as dne:
             user = User.objects.create_user(username, email, password)
             user.save()
         self.user = user
