@@ -31,7 +31,6 @@ from pymongo import MongoClient
 from django.conf import settings
 from networkx import DiGraph
 from networkx.algorithms.link_analysis import pagerank as pr
-from pymongo.collection import Collection
 
 from johnnywalker.models import RichFile
 from .models import DomainStats
