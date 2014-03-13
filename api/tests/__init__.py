@@ -36,12 +36,8 @@ class TestAPI(APITestCase):
         self.url_name = ''
         user, username, email, password = \
             None, 'testuser', 'testmail@mail.com', 'pass'
-        try:
-            user = User.objects.get(username=username, email=email, password=password)
-        except User.DoesNotExist as dne:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        self.user = user
+        user = User.objects.get_or_create(username=username, email=email, password=password)
+        self.user = user[0]
 
     def auth_client(self):
         self.client.force_authenticate(user=self.user)

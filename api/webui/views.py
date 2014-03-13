@@ -34,6 +34,7 @@ from rest_framework.decorators import action
 from crawler_server.tasks import RunSpider
 from ..mixins import SecurityMixin
 from .serializers import ProjectSerializer, ProjectDomainSerializer, UserSerializer
+from stats.miner import Miner
 from webui.models import Project, ProjectDomain
 
 
@@ -67,6 +68,13 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
 
     def pre_delete(self, obj):
         pass
+
+    @action(methods=['POST'])
+    def pagerank(self, request, pk):
+        pd = ProjectDomain.objects.get(id=pk)
+        miner = Miner(pd.jobid, pk)
+        pr = miner.pagerank()
+        return Response(pr)
 
     @action()
     def canceljob(self, request, pk):
