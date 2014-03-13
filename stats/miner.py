@@ -34,6 +34,7 @@ from networkx.algorithms.link_analysis import pagerank as pr
 
 from johnnywalker.models import RichFile
 from .models import DomainStats
+from webui.models import ProjectDomain
 
 
 class Miner(object):
@@ -72,6 +73,12 @@ class Miner(object):
             g.add_edge(i['parent'], i['page'])
         return pr(g)
 
-    def history_miner(self):
-        pass
 
+class HistoryMiner(object):
+    def __init__(self, project_domain):
+        self.project_domain = project_domain
+
+    def get_history(self):
+        pd = ProjectDomain.objects.filter(domain=self.project_domain,
+                                          project__owner=self.project_domain.project.owner_id)
+        return pd

@@ -34,8 +34,8 @@ from django.conf import settings
 
 from core.tests import TestCase
 from johnnywalker.models import RichFile
-from ..miner import Miner
-from ..tasks import MinerTask
+from ..miner import Miner, HistoryMiner
+from ..tasks import MinerTask, HistoryMinerTask
 from webui.models import ProjectDomain
 
 
@@ -87,9 +87,6 @@ class TestMiner(TestCase):
         pr = self.miner.pagerank()
         self.assertIsNotNone(pr)
 
-    def test_history_miner(self):
-        pass
-
     def test_miner_task(self):
         miner_task = MinerTask()
         async = miner_task.delay(self.project_domain.domain.domain, self.project_domain)
@@ -100,3 +97,22 @@ class TestMiner(TestCase):
         self.db.drop_collection(self.outlinks.name)
         self.client.close()
 
+
+class TestHistory(TestCase):
+    fixtures = [
+        'johnnywalker/fixtures/initial_data.json',
+        'tests/domainstats.json'
+    ]
+
+    def setUp(self):
+        self.project_domain = ProjectDomain.objects.get(id=1)
+        self.hist_miner = HistoryMiner(self.project_domain)
+
+    def test_history_miner(self):
+        ans = self.hist_miner.get_history()
+        self.assertGreaterEqual(len(ans), 1)
+
+    def test_task(self):
+        miner_task = HistoryMinerTask()
+        async = miner_task.delay(self.project_domain)
+        self.assertTrue(async.successful())

@@ -43,3 +43,4 @@ NOSE_ARGS = [
 #celery settings
 BROKER_BACKEND = 'memory'
 CELERY_ALWAYS_EAGER = True  # skip daemonizing process
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True

@@ -27,12 +27,17 @@ project : webometrics
 
 """
 from celery import Task
-from stats.miner import Miner
+from stats.miner import Miner, HistoryMiner
 
 
 class MinerTask(Task):
     def run(self, collection_name, project_domain, *args, **kwargs):
         miner = Miner(collection_name, project_domain)
         miner.webometric()
-        miner.pagerank()
+        pagerank = miner.pagerank()
+
+class HistoryMinerTask(Task):
+    def run(self, project_domain, *args, **kwargs):
+        miner = HistoryMiner(project_domain)
+        hist = miner.get_history()
 
