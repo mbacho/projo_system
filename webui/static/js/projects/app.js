@@ -3,7 +3,7 @@
  */
 
 var projectApp = angular.module('projectApp',
-    [ 'ngRoute', 'projectServices', 'projectControllers']
+    [ 'ngRoute', 'projectServices', 'projectControllers', 'commonControllers',]
 );
 
 projectApp.config(['$routeProvider', '$locationProvider',
@@ -20,10 +20,6 @@ projectApp.config(['$routeProvider', '$locationProvider',
             when('/project_detail/:proj_id', {
                 templateUrl: '/static/partials/project/project-detail.html',
                 controller: 'ProjectDetailCtrl'
-            }).
-            when('/project_detail/:proj_id/add', {
-                templateUrl: '/static/partials/project/project-domain-new.html',
-                controller: 'ProjectDomainNewCtrl'
             }).
             otherwise({
                 redirectTo: '/'

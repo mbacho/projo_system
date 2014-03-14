@@ -1,20 +1,11 @@
-<ul id="dashboard-menu">
-    <li ng-model="dashboardTab" class="{{dashboardTab}}">
-        <a href>
-            <i class="icon-desktop"></i>
-            <span>Projects</span>
-        </a>
-    </li>
-    <li ng-model="encounterTab" class="{{encounterTab}}">
-        <a href>
-            <i class="icon icon-list-alt"></i>
-            <span>Results</span>
-        </a>
-    </li>
-    <li ng-model="eligibilityTab" class="{{eligibilityTab}}">
-        <a href>
-            <i class="icon icon-share"></i>
-            <span>User</span>
-        </a>
-    </li>
-</ul>
+<div>
+    <p>Projects</p>
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat="proj in projects | orderBy:'-created'">
+            <a href="#!/project_detail/{{ proj.id }}">
+                <strong>{{ proj.name }}</strong>
+                <p style="text-align: right"><small>{{ proj.created | date }}</small></p>
+            </a>
+        </li>
+    </ul>
+</div>

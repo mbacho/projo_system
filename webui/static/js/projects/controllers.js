@@ -27,32 +27,6 @@ projectControllers.controller('ProjectCtrl',
     ]
 );
 
-projectControllers.controller('ProjectNewCtrl',
-    ['$scope', 'Project',
-        function ($scope, Project) {
-            $scope.project_name = '';
-            $scope.current_project = null;
-            $scope.createProject = function () {
-                Project.save(
-                    {name: $scope.project_name, owner: 1},
-                    function (data) {
-                        $scope.current_project = data;
-                        var al = new Alert();
-                        al.showAlert("project created successfully", "", "success");
-                    },
-                    function (data) {
-                        var msg = '';
-                        var keys = _.keys(data.data);
-                        for (var i = 0; i < keys.length; i++)
-                            msg += (keys[i] + " : " + data.data[keys[i]].join(', ') + '\n')
-                        var al = new Alert();
-                        al.showAlert(msg, '', 'warning');
-                    });
-            };
-        }
-    ]
-);
-
 projectControllers.controller('ProjectDetailCtrl',
     ['$scope', 'Project', 'ProjectDomain', '$routeParams', '$http', '$location',
         function ($scope, Project, ProjectDomain, $routeParams, $http, $location) {
@@ -107,6 +81,9 @@ projectControllers.controller('ProjectDomainNewCtrl',
                 pd_starturl: '',
                 pd_domain: '',
                 pd_subdomain: ''
+            };
+            $scope.cancelAdd = function(){
+                history.back();
             };
             $scope.addPD = function () {
                 ProjectDomain.save(
