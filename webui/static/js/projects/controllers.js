@@ -65,7 +65,7 @@ projectControllers.controller('ProjectDomainNewCtrl',
                 pd_domain: '',
                 pd_subdomain: ''
             };
-            $scope.cancelAdd = function(){
+            $scope.cancelAdd = function () {
                 history.back();
             };
             $scope.addPD = function () {
@@ -88,3 +88,37 @@ projectControllers.controller('ProjectDomainNewCtrl',
         }
     ]
 );
+
+projectControllers.controller('LeftNavCtrl', ['$scope', '$location', 'Project',
+    function ($scope, $location, Project) {
+        $scope.projects = Project.all();
+        $scope.newproject = '';
+        $scope.createProject = function () {
+            Project.save(
+                {name: $scope.newproject, owner: 1},
+                function (data) {
+                    var al = new Alert();
+                    al.showAlert("project created successfully", "", "success");
+                    $scope.projects.push(data);
+                    $scope.newproject = '';
+                },
+                function (data) {
+                    var msg = '';
+                    var keys = _.keys(data.data);
+                    for (var i = 0; i < keys.length; i++)
+                        msg += (keys[i] + " : " + data.data[keys[i]].join(', ') + '\n');
+                    var al = new Alert();
+                    al.showAlert(msg, '', 'warning');
+                });
+        };
+        $scope.openProject = function (proj) {
+            $location.path('/project_detail/' + proj.id).replace();
+        };
+        $scope.delProject = function (proj) {
+            Project.delete({id: proj.id}, function (data) {
+                $scope.projects = _.without($scope.projects, proj);
+                new Alert().showAlert('project deleted', '', 'success');
+            })
+        };
+    }
+]);
