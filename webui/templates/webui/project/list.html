@@ -1,22 +1,7 @@
 {% extends 'webui/angular_base.html' %}
-{% load humanize %}
-{% load static %}
+
 {% block ng_app %}projectApp{% endblock %}
+
 {% block angular_body %}
     <div ng-view></div>
-{% endblock %}
-{% block scriptfiles %}
-    {{ block.super }}
-    <script src="{% static 'js/lib/angular.js' %}"></script>
-    <script src="{% static 'js/lib/angular-route.js' %}"></script>
-    <script src="{% static 'js/lib/angular-resource.js' %}"></script>
-    <script src="{% static 'js/lib/angular-cookies.js' %}"></script>
-
-    <script src="{% static 'js/lib/underscore.js' %}"></script>
-
-    <script src="{% static 'js/projects/app.js' %}"></script>
-    <script src="{% static 'js/projects/controllers.js' %}"></script>
-    <script src="{% static 'js/projects/services.js' %}"></script>
-{% endblock %}
-{% block scripts %}
 {% endblock %}

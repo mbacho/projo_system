@@ -12,7 +12,7 @@
 {% endblock %}
 {% block body %}
     <div ng-app="{% block ng_app %}{% endblock %}">
-        <div ng-include="'{% static 'partials/common/alertbox.html' %}'"></div>
+        <div ng-include="'{% static 'partials/project/alertbox.html' %}'"></div>
         <div id="leftbar" class="col-md-2" ng-controller="LeftNavCtrl">
             <div>
                 <input class="form-control" ng-model="newproject" placeholder="new project name"/>
@@ -20,7 +20,7 @@
                     Add
                 </button>
             </div>
-            <div ng-include="'{% static 'partials/common/leftnav.html' %}'"></div>
+            <div ng-include="'{% static 'partials/project/leftnav.html' %}'"></div>
         </div>
     </div>
     <div id="usr_content" class="col-md-9">
@@ -34,16 +34,13 @@
     <script src="{% static 'js/lib/angular-route.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/lib/angular-resource.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/lib/angular-cookies.js' %}" type="text/javascript"></script>
-    <script src="{% static 'js/lib/angular-ui.js' %}" type="text/javascript"></script>
 
     <script src="{% static 'js/lib/underscore.js' %}" type="text/javascript"></script>
 
     <script src="{% static 'js/projects/app.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/projects/controllers.js' %}" type="text/javascript"></script>
-    <script src="{% static 'js/common/controllers.js' %}"></script>
     <script src="{% static 'js/projects/services.js' %}" type="text/javascript"></script>
-
-    <script src="{% static 'js/common/utils.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/projects/utils.js' %}" type="text/javascript"></script>
 {% endblock %}
 {% block scripts %}
 {% endblock %}

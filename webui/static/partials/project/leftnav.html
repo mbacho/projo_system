@@ -1,0 +1,12 @@
+<div>
+    <p>Projects</p>
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat="proj in projects | orderBy:'-created'">
+            <a href ng-click="openProject(proj)" class="col-md-10">
+                <strong>{{ proj.name }}</strong>
+                <p><small>{{ proj.created | date }}</small></p>
+            </a>
+            <a class="col-md-2" href ng-click="delProject(proj)"><i class="glyphicon glyphicon-trash"></i></a>
+        </li>
+    </ul>
+</div>
