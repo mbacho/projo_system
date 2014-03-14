@@ -2,7 +2,7 @@
     <p>Projects</p>
     <ul class="nav nav-pills nav-stacked">
         <li ng-repeat="proj in projects | orderBy:'-created'">
-            <a href="#!/project_detail/{{ proj.id }}">
+            <a href ng-click="openProject(proj)">
                 <strong>{{ proj.name }}</strong>
                 <p style="text-align: right"><small>{{ proj.created | date }}</small></p>
             </a>

@@ -1,7 +1,7 @@
 var commonControllers = angular.module('commonControllers', []);
 
-commonControllers.controller('LeftNavCtrl', ['$scope', 'Project',
-    function ($scope, Project) {
+commonControllers.controller('LeftNavCtrl', ['$scope', '$location','Project',
+    function ($scope, $location, Project) {
         $scope.projects = Project.all();
         $scope.newproject = '';
         $scope.createProject = function () {
@@ -17,10 +17,13 @@ commonControllers.controller('LeftNavCtrl', ['$scope', 'Project',
                     var msg = '';
                     var keys = _.keys(data.data);
                     for (var i = 0; i < keys.length; i++)
-                        msg += (keys[i] + " : " + data.data[keys[i]].join(', ') + '\n')
+                        msg += (keys[i] + " : " + data.data[keys[i]].join(', ') + '\n');
                     var al = new Alert();
                     al.showAlert(msg, '', 'warning');
                 });
+        };
+        $scope.openProject = function (proj) {
+            $location.path('/project_detail/' + proj.id).replace();
         };
     }
 ]);

@@ -4,13 +4,15 @@
 
 var projectControllers = angular.module('projectControllers', []);
 
-projectControllers.controller('ProjectCtrl',
-    ['$scope', 'Project', '$location',
-        function ($scope, Project, $location) {
-            $scope.projects = Project.all();
-            $scope.displayOrder = 'created';
-            $scope.project_name = '';
-            $scope.delProject = function (proj) {
+projectControllers.controller('ProjectDetailCtrl',
+    ['$scope', 'Project', 'ProjectDomain', '$routeParams', '$http', '$location',
+        function ($scope, Project, ProjectDomain, $routeParams, $http, $location) {
+            $scope.project = Project.get(
+                {id: $routeParams.proj_id}
+            );
+            //$scope.project_domains = ProjectDomain.getProject($routeParams.proj_id);
+            $scope.delProject = function () {
+                $proj = $scope.proj;
                 Project.delete({id: proj.id}, function (data) {
                     var al = new Alert();
                     al.showAlert(proj.name + ' deleted', '', 'success');
@@ -20,25 +22,6 @@ projectControllers.controller('ProjectCtrl',
                     al.showAlert(data, 'deletion failed', 'warning');
                 });
             };
-            $scope.openProject = function (proj) {
-                $location.path('/project_detail/' + proj.id).replace();
-            };
-        }
-    ]
-);
-
-projectControllers.controller('ProjectDetailCtrl',
-    ['$scope', 'Project', 'ProjectDomain', '$routeParams', '$http', '$location',
-        function ($scope, Project, ProjectDomain, $routeParams, $http, $location) {
-            $scope.project = Project.get(
-                {id: $routeParams.proj_id},
-                function (data) {
-                    var pd = data.projectdomain_project;
-                    for (var i = 0; i < pd.length; i++) {
-                        pd[i] = ProjectDomain.get({id: pd[i]});
-                    }
-                }
-            );
             $scope.addPD = function () {
                 $location.path('/project_detail/' + $scope.project.id + '/add').replace();
             };
