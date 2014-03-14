@@ -1,7 +1,15 @@
 {% extends 'webui/angular_base.html' %}
-
+{% load static %}
 {% block ng_app %}projectApp{% endblock %}
 
 {% block angular_body %}
     <div ng-view></div>
+{% endblock %}
+
+{% block scriptfiles %}
+    {{ block.super }}
+    <script src="{% static 'js/projects/app.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/projects/controllers.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/projects/services.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/projects/utils.js' %}" type="text/javascript"></script>
 {% endblock %}
