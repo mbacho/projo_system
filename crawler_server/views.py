@@ -38,7 +38,7 @@ from kombu.five import monotonic
 from celery.task.control import inspect
 
 
-@login_required
+@login_required(login_url='signin')
 def home(request):
     # {u'celery@blackpearl': [
     #     {
