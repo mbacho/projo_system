@@ -1,5 +1,5 @@
 from django.conf.urls import (patterns, url )
-from .views import (home, signin, signout, signup)
+from .views import (home, signin, signout, signup, user)
 
 urlpatterns = patterns('',
                        # Examples:
@@ -13,5 +13,5 @@ urlpatterns = patterns('',
 
                        url(r'^results/', home, name='results'),
 
-                       url(r'^user/', home, name='user'),
+                       url(r'^user/', user, name='user'),
 )

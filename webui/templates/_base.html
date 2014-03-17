@@ -8,7 +8,7 @@
     {# <link rel="shortcut icon" href=""> #}
     <title>Kenya Webometrics {% block title %}{% endblock %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    {# <link href="{% static 'css/bootstrap-theme.min.css' %}" rel="stylesheet"> #}
+    <link href="{% static 'css/bootstrap-theme.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -50,18 +50,18 @@
 
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
-                    <li>
+                    <li {% if active == 'user' %}class="active"{% endif %}>
                         <a href="{% url 'user' %}">{{ user.username }}</a>
                     </li>
                     <li>
                         <a href="{% url 'signout' %}">Sign out</a>
                     </li>
                 {% else %}
-                    <li>
+                    <li {% if active == 'signup' %}class="active"{% endif %}>
                         <a href="{% url 'signup' %}">Sign up</a>
                     </li>
-                    <li>
-                        <a href="{% url 'signin' %}">Signin</a>
+                    <li {% if active == 'signin' %}class="active"{% endif %}>
+                        <a href="{% url 'signin' %}">Sign in</a>
                     </li>
                 {% endif %}
             </ul>

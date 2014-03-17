@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block body %}
+    <div>
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            First name : {{ user.first_name }}<br/>
+            Last name : {{ user.last_name }}<br/>
+            Username : {{ user.username }}<br/>
+            Last login : {{ user.last_login | naturalday }} ({{ user.last_login }})<br/>
+            Joined : {{ user.date_joined | naturalday }}<br/>
+        </div>
+    </div>
+{% endblock %}

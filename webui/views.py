@@ -14,10 +14,10 @@ from webui.models import Project
 
 @login_required(login_url='signin')
 def home(request):
-    # return render_to_response('webui/index.html', {'user': request.user})
     projos = Project.objects.filter(owner=request.user)
     return render_to_response('webui/project/list.html',
-                              {'projects': projos, 'user': request.user, 'active': 'projects'})
+                              {'projects': projos, 'active': 'projects'},
+                              context_instance=RequestContext(request))
 
 
 def signin(request):
@@ -38,7 +38,7 @@ def signin(request):
                 frm.errors['account_error'] = 'account not activated'
 
     nextpage = request.GET['next'] if 'next' in request.GET else ''
-    return render_to_response('webui/signin.html', {'frm': frm, 'nextpage': nextpage},
+    return render_to_response('webui/signin.html', {'frm': frm, 'nextpage': nextpage, 'active': 'signin'},
                               context_instance=RequestContext(request))
 
 
@@ -64,6 +64,9 @@ def signup(request):
         #email_confirm_link(request, u)
         return HttpResponseRedirect(reverse('signin'))
 
-    return render_to_response('webui/signin.html', {'frm': frm, 'signup': True, },
+    return render_to_response('webui/signin.html', {'frm': frm, 'signup': True, 'active': 'signup'},
                               context_instance=RequestContext(request))
 
+
+def user(request):
+    return render_to_response('webui/user.html', {'active': 'user'}, context_instance=RequestContext(request))

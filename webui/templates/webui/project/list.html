@@ -1,12 +1,93 @@
-{% extends 'webui/angular_base.html' %}
+{% extends '_base.html' %}
 {% load humanize %}
-{% load static %}
-{% block ng_app %}projectApp{% endblock %}
-{% block angular_body %}
-    <div ng-view></div>
+{% block pagestyle %}
+
 {% endblock %}
-{% block scriptfiles %}
-    {{ block.super }}
-{% endblock %}
-{% block scripts %}
+{% block body %}
+    <div class="col-lg-2" style="background-color: #ffff00">
+        <div>
+            <h4>Create project</h4>
+
+            <form role="form">
+                <input class="form-control" required placeholder="project name"/>
+                <input type="submit" class="btn btn-primary"/>
+            </form>
+        </div>
+        {% if projects %}
+            <ul class="nav nav-pills nav-stacked">
+                {% for p in projects %}
+                    <li>
+                        <a href="">
+                            <p>{{ p.name }}</p>
+                            <small>{{ p.created|naturaltime }}</small>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div><span>No projects available</span></div>
+        {% endif %}
+    </div>
+    <div class="col-lg-10">
+        Select a project to view its details
+
+        <button class="btn btn-primary{% if not user.is_active %} disabled{% endif %}">Create project</button>
+        {% if not user.is_active %}
+            <span class="alert-warning">Authenticate your account to create projects</span>
+        {% endif %}
+        {% if projects %}
+            <table class="table table-responsive table-bordered table-striped table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Owner</th>
+                </tr>
+                {% for i in projects %}
+                    <tr>
+                        <td></td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.created|naturaltime }}</td>
+                        <td>{{ i.owner }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div>
+                <span>No projects available. <a>Create</a> one</span>
+            </div>
+        {% endif %}
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Created</th>
+                <th>Owner</th>
+            </tr>
+            {% for i in projects %}
+                <tr>
+                    <td></td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.created|naturaltime }}</td>
+                    <td>{{ i.owner }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Created</th>
+                <th>Owner</th>
+            </tr>
+            {% for i in projects %}
+                <tr>
+                    <td></td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.created|naturaltime }}</td>
+                    <td>{{ i.owner }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
