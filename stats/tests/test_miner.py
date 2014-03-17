@@ -65,7 +65,7 @@ class TestMiner(TestCase):
         for i in fyl:
             self.outlinks.insert(loads(i))
         fyl.close()
-        self.miner = Miner(self.project_domain.domain.domain, self.project_domain)
+        self.miner = Miner(self.project_domain.domain.domain, self.project_domain.id)
 
     def test_setup(self):
         self.assertEqual(self.links.count(), 10)
@@ -89,7 +89,7 @@ class TestMiner(TestCase):
 
     def test_miner_task(self):
         miner_task = MinerTask()
-        async = miner_task.delay(self.project_domain.domain.domain, self.project_domain)
+        async = miner_task.delay(self.project_domain.domain.domain, self.project_domain.id)
         self.assertTrue(async.successful())
 
     def tearDown(self):

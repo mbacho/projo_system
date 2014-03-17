@@ -1,15 +1,19 @@
 # Create your views here.
 
+from json import dumps
+
 from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.db import IntegrityError
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from webui.forms import (SigninForm, SignupForm)
-from webui.models import Project
+from webui.forms import (SigninForm, SignupForm, ProjectForm)
+from webui.models import Project, ProjectDomain
+from webui.tasks import DeleteProject
 
 
 @login_required(login_url='signin')
@@ -68,5 +72,49 @@ def signup(request):
                               context_instance=RequestContext(request))
 
 
+@login_required(login_url='signin')
 def user(request):
     return render_to_response('webui/user.html', {'active': 'user'}, context_instance=RequestContext(request))
+
+
+@login_required(login_url='signin')
+def project(request, pk=None):
+    projos = Project.objects.filter(owner=request.user)
+    data = {'projects': projos, 'active': 'projects'}
+    if pk is not None:
+        pr = Project.objects.get(id=pk, owner=request.user)
+        pd = ProjectDomain.objects.filter(project=pr)
+        data['projectdomains'] = pd
+        data['active_project'] = pr
+    return render_to_response('webui/project/list.html', data, context_instance=RequestContext(request))
+
+
+@login_required(login_url='signin')
+def project_edit(request, pk=None):
+    frm = ProjectForm(request.POST or None)
+    if frm.is_valid():
+        proj_name = frm.cleaned_data['project_name']
+        proj = None
+        if pk is None:
+            proj, created = Project.objects.get_or_create(name=proj_name, owner=request.user)
+            if not created:
+                raise IntegrityError('project %s already exists' % proj_name)
+        else:
+            proj = Project.objects.get(id=pk)
+            proj.name = proj_name
+            proj.save()
+
+        return HttpResponseRedirect(reverse('project_det', args=[proj.id]))
+
+    else:
+        #TODO Catch this
+        pass
+
+
+@login_required(login_url='signin')
+def project_del(request, pk):
+    projdel = DeleteProject()
+    async = projdel.delay(project_id=pk)
+    return HttpResponse(content=dumps({'task': async.task_id, 'status': 'deletion scheduled'}),
+                        mimetype='application/json')
+

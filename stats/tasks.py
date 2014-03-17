@@ -31,8 +31,8 @@ from stats.miner import Miner, HistoryMiner
 
 
 class MinerTask(Task):
-    def run(self, collection_name, project_domain, *args, **kwargs):
-        miner = Miner(collection_name, project_domain)
+    def run(self, collection_name, project_domain_id, *args, **kwargs):
+        miner = Miner(collection_name, project_domain_id)
         miner.webometric()
         pagerank = miner.pagerank()
 

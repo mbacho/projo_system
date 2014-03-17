@@ -1,26 +1,36 @@
 {% extends '_base.html' %}
 {% load humanize %}
 {% block pagestyle %}
-
 {% endblock %}
 {% block body %}
-    <div class="col-lg-2" style="background-color: #ffff00">
+    <div class="col-lg-3">
         <div>
             <h4>Create project</h4>
 
-            <form role="form">
-                <input class="form-control" required placeholder="project name"/>
-                <input type="submit" class="btn btn-primary"/>
+            <form role="form" class="form-horizontal" action="{% url 'project_new' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input name="project_name" class="form-control" required placeholder="project name"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                </div>
             </form>
         </div>
         {% if projects %}
             <ul class="nav nav-pills nav-stacked">
                 {% for p in projects %}
-                    <li>
-                        <a href="">
-                            <p>{{ p.name }}</p>
-                            <small>{{ p.created|naturaltime }}</small>
+                    <li class="{% if active_project == p %}active{% endif %}">
+                        <a href="{% url 'project_det' p.id %}" class="col-md-10">
+                            <strong>{{ p.name }}</strong>
+
+                            <p>
+                                Created
+                                <small>{{ p.created | naturaltime }}</small>
+                            </p>
                         </a>
+                        <a class="col-md-2" href="{% url 'project_delete' p.id %}" title="delete project">
+                            <i class="glyphicon glyphicon-trash"></i></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -28,66 +38,65 @@
             <div><span>No projects available</span></div>
         {% endif %}
     </div>
-    <div class="col-lg-10">
-        Select a project to view its details
-
-        <button class="btn btn-primary{% if not user.is_active %} disabled{% endif %}">Create project</button>
-        {% if not user.is_active %}
-            <span class="alert-warning">Authenticate your account to create projects</span>
-        {% endif %}
-        {% if projects %}
-            <table class="table table-responsive table-bordered table-striped table-hover">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Created</th>
-                    <th>Owner</th>
-                </tr>
-                {% for i in projects %}
-                    <tr>
-                        <td></td>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.created|naturaltime }}</td>
-                        <td>{{ i.owner }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% else %}
+    <div class="col-lg-9">
+        {% if active_project %}
             <div>
-                <span>No projects available. <a>Create</a> one</span>
+                <form method="post" action="{% url 'project_edit' active_project.id %}" class="form-inline" role="form">
+                    {% csrf_token %}
+                    <h3 class="project_title" contenteditable="true">
+                        {{ active_project.name }}
+                    </h3>
+
+                    <div class="form-group">
+                        <input type="text" contenteditable="true" placeholder="project name"
+                               value="{{ active_project.name }}" class="form-control"/>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="change"/>
+                </form>
+                <p>{{ active_project.created | naturalday }}</p>
+                <a class="btn btn-primary">Add Domain</a>
+                <table class="table table-responsive table-bordered table-striped table-hover">
+                    <caption><h4>Domains</h4></caption>
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Domain</td>
+                        <td>Subdomain</td>
+                        <td>Start URL</td>
+                        <td>Start time</td>
+                        <td>Stop time</td>
+                        <td>Status</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in projectdomains %}
+                        <tr>
+                            <td></td>
+                            <td><a href="{{ i.domain.link }}">{{ i.domain.domain }}</a></td>
+                            <td>{{ i.subdomain }}</td>
+                            <td><a href="{{ i.starturl }}">{{ i.starturl }}</a></td>
+                            <td>{{ i.starttime | naturalday }}</td>
+                            <td>{{ i.stoptime | naturalday }}</td>
+                            <td>
+                                <label class="label label-{% if i.status == 'finished' %}success{% elif i.status == 'running' %}info{% else %}danger{% endif %}">
+                                    {{ i.status }}</label>
+                            </td>
+                            <td>
+                                {% if i.status == 'running' %}
+                                    <a href class="btn btn-warning">cancel</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-danger">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        {% else %}
+            Select a project to view its details
         {% endif %}
-        <table class="table table-responsive table-bordered table-striped table-hover">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Owner</th>
-            </tr>
-            {% for i in projects %}
-                <tr>
-                    <td></td>
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.created|naturaltime }}</td>
-                    <td>{{ i.owner }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table class="table table-responsive table-bordered table-striped table-hover">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Owner</th>
-            </tr>
-            {% for i in projects %}
-                <tr>
-                    <td></td>
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.created|naturaltime }}</td>
-                    <td>{{ i.owner }}</td>
-                </tr>
-            {% endfor %}
-        </table>
     </div>
 {% endblock %}

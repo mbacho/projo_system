@@ -1,11 +1,5 @@
 from django import forms
 
-
-class ProjectEditForm(forms.Form):
-    name = forms.CharField(max_length=50)
-    domain = forms.URLField(max_length=100)
-
-
 class SigninForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
@@ -28,6 +22,5 @@ class SignupForm(forms.Form):
         pass
 
 
-class StartCrawlForm(forms.Form):
-    startpage = forms.URLField()
-    domain = forms.CharField(max_length=100)
+class ProjectForm(forms.Form):
+    project_name = forms.CharField(max_length=100)

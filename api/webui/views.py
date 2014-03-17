@@ -61,7 +61,7 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
 
         if obj.jobid == '':
             rs = RunSpider()
-            result = rs.delay(domain=obj.get_crawl_domain(), starturl=obj.starturl)
+            result = rs.delay(domain=obj.get_crawl_domain, starturl=obj.starturl)
             obj.jobid = result.task_id
             if result.status == 'PENDING':
                 obj.status = 'running'

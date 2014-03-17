@@ -38,7 +38,7 @@ from webui.models import ProjectDomain
 
 
 class Miner(object):
-    def __init__(self, collection_name, project_domain):
+    def __init__(self, collection_name, project_domain_id):
         dbname = settings.MONGO_DB['name']
         collection_links = settings.MONGO_DB['link_collection']
         collection_outlinks = settings.MONGO_DB['outlink_collection']
@@ -50,7 +50,7 @@ class Miner(object):
         if self.links.name not in db.collection_names():
             raise ValueError('no data found for collection %s' % collection_name)
         self.outlinks = db[collection_outlinks][collection_name]
-        self.project_domain = project_domain
+        self.project_domain = ProjectDomain.objects.get(id=project_domain_id)
 
     def webometric(self):
         stats = DomainStats()

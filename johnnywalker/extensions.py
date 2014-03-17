@@ -59,7 +59,7 @@ class SignalProcessor(object):
 
         if reason == 'finished':
             mine_task = MinerTask()
-            mine_task.delay(collection_name=spider.collection_name, project_domain=pd)
+            mine_task.delay(collection_name=spider.collection_name, project_domain_id=pd.id)
         elif reason == 'cancelled':
             pass
         elif reason == 'shutdown':

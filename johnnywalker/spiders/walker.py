@@ -141,10 +141,9 @@ class Walker(CrawlSpider):
     @property
     def user_agent(self):
         agents = [
-            "chrome",
-            "firefox",
-            "opera",
-            "safari",
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36",
+            "Mozilla/5.0 (X11; Linux x86_64; rv:27.0) Gecko/20100101 Firefox/27.0",
+            "Opera/9.80 (X11; Linux x86_64) Presto/2.12.388 Version/12.16",
         ]
         rand = randrange(0, len(agents))
         return agents[rand]
@@ -152,7 +151,4 @@ class Walker(CrawlSpider):
     @property
     def collection_name(self):
         """Name to be used to save collection of scraped data"""
-        if self.jobid not in [None, '']:
-            return self.jobid
-        else:
-            return self.allowed_domains[0]
+        return self.jobid or self.allowed_domains[0]
