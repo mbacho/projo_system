@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -28,7 +27,9 @@ class ProjectDomain(models.Model):
         ('finished', 'finished'),
         ('cancelled', 'cancelled'),
         ('shutdown', 'shutdown'),
-        ('unknown', 'unknown')
+        ('unknown', 'unknown'),
+        ('error', 'error'),
+        ('paused', 'paused'),
     )
     project = models.ForeignKey(Project, related_name='projectdomain_project')
     domain = models.ForeignKey(AcademicDomain, related_name='projectdomain_domain')

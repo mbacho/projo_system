@@ -47,6 +47,13 @@ class SignalProcessor(object):
         cancelled: spider was manually closed
         shutdown: engine was shutdown (for example, by hitting Ctrl-C to stop it)
         """
+        stats = spider.crawler.stats.get_stats()
+
+        for i in stats.keys():
+            if 'dnslookuperror' in i.lower() or \
+                            'proxy' in i.lower():
+                reason = 'error'
+
         pd = None
         if spider.jobid not in [None, '']:
             try:

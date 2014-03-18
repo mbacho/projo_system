@@ -6,8 +6,9 @@ from scrapy.cmdline import execute
 
 class Command(BaseCommand):
     help = """Some scrapy action shortcuts
-Usage : python manage.py scrapy [deploy | shell | start=<start page> domain=<domain url>] [other stuff]
-    """
+Usage : python manage.py crawl start=<start page> domain=<domain url> [jobid=<job id>]
+For other stuff use python manage.py scrapy
+"""
 
     def run_from_argv(self, argv):
         self._argv = argv
@@ -16,13 +17,7 @@ Usage : python manage.py scrapy [deploy | shell | start=<start page> domain=<dom
     def handle(self, *args, **options):
         default_args = ['scrapy']
         argc = len(self._argv)
-        if argc == 3:
-            if self._argv[2] == 'deploy':
-                default_args.append('deploy')
-                default_args.append('webometrics')
-            elif self._argv[2] == 'shell':
-                default_args.append('shell')
-        elif argc >= 4:
+        if argc >= 4:
             default_args.extend(['crawl', 'walker'])
             default_args.extend(['-a', self._argv[2]])
             default_args.extend(['-a', self._argv[3]])

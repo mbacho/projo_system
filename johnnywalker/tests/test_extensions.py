@@ -60,6 +60,7 @@ class TestSignalProcessor(TestCase):
         projectdomain.domain = domain
         projectdomain.project = project
         projectdomain.save()
+        self.spider.set_crawler(self.crawler)
 
     def test_setUp(self):
         self.assertIsNotNone(self.extension)
