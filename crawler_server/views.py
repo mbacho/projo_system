@@ -27,15 +27,38 @@ project : webometrics
 
 """
 
-
 from time import time
 from datetime import datetime
+from os import listdir,stat
+from os.path import join
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from kombu.five import monotonic
 
 from celery.task.control import inspect
+from webui.models import ProjectDomain
+
+def get_logfilesize(jobid):
+    logdir = settings.CRAWLER_DIRS['logdir']
+    return stat(join(logdir, (jobid + '.log'))).st_size / 1024.0
+
+def get_finished():
+    logdir = settings.CRAWLER_DIRS['logdir']
+    logs = listdir(logdir)
+    jobids = [x[:x.index('.log')] for x in logs]
+    pd = ProjectDomain.objects.filter(jobid__in=jobids)
+    data = [{
+                'jobid': x.jobid,
+                'starttime': x.starttime,
+                'stoptime': x.stoptime,
+                'runtime': x.get_runtime,
+                'status': x.status,
+                'logurl': '/static/logs/' + x.jobid + '.log',
+                'size': get_logfilesize(x.jobid)
+            }  for x in pd]
+    return data
 
 
 @login_required(login_url='signin')
@@ -67,7 +90,8 @@ def home(request):
                   'start_time': datetime.fromtimestamp(time() - (monotonic() - act['time_start'])),
                   'domain': act['kwargs'],
                   'runtime': datetime.now() - (datetime.fromtimestamp(time() - (monotonic() - act['time_start']))),
-                  'logurl': '/static/logs/'+act['id']+'.log'
+                  'logurl': '/static/logs/' + act['id'] + '.log',
+                  'size':get_logfilesize(act['id'])
               } for act in raw_active]
     # act = raw_active[0]
     # active = {}
@@ -78,5 +102,7 @@ def home(request):
     # active['runtime'] = datetime.now() - active['start_time']
     # active['logurl'] = '/static/logs/'+act['id']+'.log'
 
-    data = {'scheduled': [], 'active': active}
+    scheduled = []
+    finished = get_finished()
+    data = {'scheduled': scheduled, 'active': active, 'finished': finished}
     return render_to_response('johnnywalker/home.html', data)

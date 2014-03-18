@@ -5,8 +5,8 @@
 var projectControllers = angular.module('projectControllers', []);
 
 projectControllers.controller('ProjectCtrl',
-    ['$scope', 'Project', '$location',
-        function ($scope, Project, $location) {
+    ['$scope', 'Project',
+        function ($scope, Project) {
             $scope.projects = Project.all();
             $scope.displayOrder = 'created';
             $scope.project_name = '';
@@ -19,9 +19,6 @@ projectControllers.controller('ProjectCtrl',
                     var al = new Alert();
                     al.showAlert(data, 'deletion failed', 'warning');
                 });
-            };
-            $scope.openProject = function (proj) {
-                $location.path('/project_detail/' + proj.id).replace();
             };
         }
     ]
@@ -54,8 +51,8 @@ projectControllers.controller('ProjectNewCtrl',
 );
 
 projectControllers.controller('ProjectDetailCtrl',
-    ['$scope', 'Project', 'ProjectDomain', '$routeParams', '$http', '$location',
-        function ($scope, Project, ProjectDomain, $routeParams, $http, $location) {
+    ['$scope', 'Project', 'ProjectDomain', '$http',
+        function ($scope, Project, ProjectDomain, $http) {
             $scope.project = Project.get(
                 {id: $routeParams.proj_id},
                 function (data) {
@@ -65,9 +62,6 @@ projectControllers.controller('ProjectDetailCtrl',
                     }
                 }
             );
-            $scope.addPD = function () {
-                $location.path('/project_detail/' + $scope.project.id + '/add').replace();
-            };
             $scope.delPD = function (pd) {
                 ProjectDomain.delete(
                     {id: pd.id},
@@ -99,29 +93,31 @@ projectControllers.controller('ProjectDetailCtrl',
 );
 
 projectControllers.controller('ProjectDomainNewCtrl',
-    ['$scope', 'ProjectDomain', 'AcademicDomain', '$routeParams', '$location',
-        function ($scope, ProjectDomain, AcademicDomain, $routeParams, $location) {
-            $scope.project_id = $routeParams.proj_id;
-            $scope.academicdomains = AcademicDomain.all();
+    ['$scope', 'ProjectDomain', 'AcademicDomain',
+        function ($scope, ProjectDomain) {
             $scope.form = {
                 pd_starturl: '',
                 pd_domain: '',
                 pd_subdomain: ''
             };
-            $scope.addPD = function () {
+            $scope.creating = false;
+            $scope.addPD = function (project_id) {
+                $scope.creating = true;
                 ProjectDomain.save(
                     {
-                        project: $scope.project_id,
+                        project: project_id,
                         starturl: $scope.form.pd_starturl,
                         domain: parseInt($scope.form.pd_domain),
                         subdomain: $scope.form.pd_subdomain
                     },
                     function (data) {
-                        $location.path('/project_detail/' + $scope.project_id).replace();
+                        alert('pd created');
+                        //window.location.reload();
+                        $scope.creating = false;
                     },
                     function (data) {
-                        var al = new Alert();
-                        al.showAlert('pd creation failed', '', 'danger');
+                        alert('pd creation failed');
+                        $scope.creating = false;
                     }
                 );
             };

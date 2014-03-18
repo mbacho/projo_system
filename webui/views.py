@@ -10,6 +10,7 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from johnnywalker.models import AcademicDomain
 
 from webui.forms import (SigninForm, SignupForm, ProjectForm)
 from webui.models import Project, ProjectDomain
@@ -84,8 +85,10 @@ def project(request, pk=None):
     if pk is not None:
         pr = Project.objects.get(id=pk, owner=request.user)
         pd = ProjectDomain.objects.filter(project=pr)
+        ad = AcademicDomain.objects.all()
         data['projectdomains'] = pd
         data['active_project'] = pr
+        data['academicdomains'] = ad
     return render_to_response('webui/project/list.html', data, context_instance=RequestContext(request))
 
 

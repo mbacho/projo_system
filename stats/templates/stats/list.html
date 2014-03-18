@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+{% load humanize %}
+{% block pagestyle %}
+{% endblock %}
+{% block body %}
+    <div class="col-lg-3">
+        <div>
+            <h4>Create project</h4>
+
+            <form role="form" class="form-horizontal" action="{% url 'project_new' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input name="project_name" class="form-control" required placeholder="project name"/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                </div>
+            </form>
+        </div>
+        {% if projects %}
+            <ul class="nav nav-pills nav-stacked">
+                {% for p in projects %}
+                    <li class="{% if active_project == p %}active{% endif %}">
+                        <a href="{% url 'results_det' p.id %}" class="col-md-10">
+                            <strong>{{ p.name }}</strong>
+
+                            <p>
+                                Created
+                                <small>{{ p.created | naturaltime }}</small>
+                            </p>
+                        </a>
+                        <a class="col-md-2" href="{% url 'project_delete' p.id %}" title="delete project">
+                            <i class="glyphicon glyphicon-trash"></i></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div><span>No projects available</span></div>
+        {% endif %}
+    </div>
+    <div class="col-lg-9">
+        {% if active_project %}
+            pagerank<br/>
+            history<br/>
+            network graph<br/>
+            webometrics (richfiles, )<br/>
+
+        {% else %}
+            Select a project to view its details
+        {% endif %}
+    </div>
+{% endblock %}

@@ -21,7 +21,5 @@ urlpatterns = patterns('',
                        url(r'^projectdomain/edit/([0-9]+)', home, name='projectdomain_edit'),
                        url(r'^projectdomain/delete/([0-9]+)', home, name='projectdomain_delete'),
 
-                       url(r'^results/', home, name='results'),
-
                        url(r'^user/', user, name='user'),
 )

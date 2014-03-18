@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
     Monitor
@@ -35,6 +36,7 @@
             <th>Start time</th>
             <th>Runtime</th>
             <th>Log</th>
+            <th>Size (KB)</th>
         </tr>
         </thead>
         <tbody>
@@ -44,7 +46,8 @@
                 <td>{{ p.pid }}</td>
                 <td>{{ p.start_time }}</td>
                 <td>{{ p.runtime }}</td>
-                <td><a href="{{ p.logurl }}">Log</a></td>
+                <td><a target="_blank" href="{{ p.logurl }}">Log</a></td>
+                <td>{{ p.size }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -55,16 +58,26 @@
         <thead>
         <tr>
             <th>Job</th>
+            <th>Start time</th>
+            <th>Stop time</th>
             <th>Runtime</th>
+            <th>Status</th>
             <th>Log</th>
+            <th>Size (KB)</th>
         </tr>
         </thead>
         <tbody>
         {% for p in finished %}
             <tr>
-                <td>{{ p.id }}</td>
+                <td>{{ p.jobid }}</td>
+                <td>{{ p.starttime }}</td>
+                <td>{{ p.stoptime }}</td>
                 <td>{{ p.runtime }}</td>
-                <td><a href="{{ STATIC_URL }}{{ p.log_url }}">Log</a></td>
+                <td><label class="label label-{% if p.status == 'finished' %}success{% else %}danger{% endif %}">
+                    {{ p.status }}</label>
+                </td>
+                <td><a target="_blank" href="{{ STATIC_URL }}{{ p.logurl }}">Log</a></td>
+                <td>{{ p.size }}</td>
             </tr>
         {% endfor %}
         </tbody>
