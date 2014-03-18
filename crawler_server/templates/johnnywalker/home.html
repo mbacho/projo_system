@@ -1,4 +1,4 @@
-{% extends 'webui/angular_base.html' %}
+{% extends '_base.html' %}
 {% load static %}
 
 {% block title %}
@@ -10,7 +10,7 @@
 
 {% block body %}
     <h1>Monitor</h1>
-    <table style="table table-responsive table-bordered table-striped table-hover">
+    <table class="table table-responsive table-bordered table-striped table-hover">
         <caption>Pending</caption>
         <thead>
         <tr>
@@ -26,7 +26,7 @@
         </tbody>
     </table>
 
-    <table style="table table-responsive table-bordered table-striped table-hover">
+    <table class="table table-responsive table-bordered table-striped table-hover">
         <caption>Active</caption>
         <thead>
         <tr>
@@ -50,7 +50,7 @@
         </tbody>
     </table>
 
-    <table style="table table-responsive table-bordered table-striped table-hover">
+    <table class="table table-responsive table-bordered table-striped table-hover">
         <caption>Finished</caption>
         <thead>
         <tr>
