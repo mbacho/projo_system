@@ -28,6 +28,7 @@ project : webometrics
 """
 from django.utils.timezone import now
 from scrapy.signals import ( spider_closed, spider_error)
+from core import mail_user
 from stats.tasks import MinerTask
 from webui.models import ProjectDomain
 
@@ -64,6 +65,10 @@ class SignalProcessor(object):
             pass
         elif reason == 'shutdown':
             pass
+
+        message = 'Crawl for the website {0} in project {1} has been {2}. ' \
+                  'You can now view the results or download the data'
+        mail_user(pd.project.owner.email, message.format(pd.get_crawl_domain, pd.project.name, reason), )
 
     def spider_error(self, failure, response, spider):
         pass

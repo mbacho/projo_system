@@ -11,6 +11,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='projects')
+    desc = models.TextField(blank=True, null=True)
 
     class Meta:
         unique_together = ('name', 'owner')
@@ -37,6 +38,7 @@ class ProjectDomain(models.Model):
     stoptime = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, default='unknown', blank=True, choices=JOB_STATUS)
 
+    @property
     def get_crawl_domain(self):
         return self.domain.domain if self.subdomain == '' else self.subdomain + "." + self.domain.domain
 

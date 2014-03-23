@@ -27,7 +27,9 @@ project : webometrics
 
 """
 from celery import Task
+from core import mail_user
 from stats.miner import Miner, HistoryMiner
+from webui.models import ProjectDomain
 
 
 class MinerTask(Task):
@@ -35,9 +37,17 @@ class MinerTask(Task):
         miner = Miner(collection_name, project_domain)
         miner.webometric()
         pagerank = miner.pagerank()
+        msg = 'preliminary statistics for the domain {0} have been done'
+        mail_user(project_domain.project.owner.email, msg.format(project_domain.domain.domain), )
+
 
 class HistoryMinerTask(Task):
     def run(self, project_domain, *args, **kwargs):
         miner = HistoryMiner(project_domain)
         hist = miner.get_history()
 
+
+class DownloadTask(Task):
+    def run(self, collection_name, project_domain, *args, **kwargs):
+        # download stats as csv
+        pass
