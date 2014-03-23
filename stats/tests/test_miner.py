@@ -78,7 +78,7 @@ class TestMiner(TestCase):
         stats = self.miner.webometric()
         self.assertIsNotNone(stats.projectdomain)
         self.assertEqual(stats.outlinks, 3)
-        self.assertEqual(stats.projectdomain, self.project_domain)
+        self.assertEqual(stats.projectdomain, self.project_domain.id)
         self.assertEqual(stats.page_count, 7)
         self.assertEqual(stats.pages_not_found, 3)
         self.assertEqual(stats.richfiles, 2)

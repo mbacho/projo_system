@@ -33,17 +33,19 @@ from webui.models import ProjectDomain
 
 
 class MinerTask(Task):
-    def run(self, collection_name, project_domain, *args, **kwargs):
-        miner = Miner(collection_name, project_domain)
+    def run(self, collection_name, project_domain_id, *args, **kwargs):
+        pd = ProjectDomain.objects.get(id=project_domain_id)
+        miner = Miner(collection_name, pd)
         miner.webometric()
         pagerank = miner.pagerank()
         msg = 'preliminary statistics for the domain {0} have been done'
-        mail_user(project_domain.project.owner.email, msg.format(project_domain.domain.domain), )
+        mail_user(pd.project.owner.email, msg.format(pd.domain.domain), )
 
 
 class HistoryMinerTask(Task):
-    def run(self, project_domain, *args, **kwargs):
-        miner = HistoryMiner(project_domain)
+    def run(self, project_domain_id, *args, **kwargs):
+        pd = ProjectDomain.objects.get(id=project_domain_id)
+        miner = HistoryMiner(pd)
         hist = miner.get_history()
 
 

@@ -48,19 +48,20 @@ class SignalProcessor(object):
         cancelled: spider was manually closed
         shutdown: engine was shutdown (for example, by hitting Ctrl-C to stop it)
         """
+        if spider.jobid in [None, '']:
+            return
         pd = None
-        if spider.jobid not in [None, '']:
-            try:
-                pd = ProjectDomain.objects.get(jobid=spider.jobid)
-                pd.stoptime = now()
-                pd.status = reason
-                pd.save()
-            except:
-                pass
+        try:
+            pd = ProjectDomain.objects.get(jobid=spider.jobid)
+            pd.stoptime = now()
+            pd.status = reason
+            pd.save()
+        except:
+            pass
 
         if reason == 'finished':
             mine_task = MinerTask()
-            mine_task.delay(collection_name=spider.collection_name, project_domain=pd)
+            mine_task.delay(collection_name=spider.collection_name, project_domain=pd.id)
         elif reason == 'cancelled':
             pass
         elif reason == 'shutdown':
