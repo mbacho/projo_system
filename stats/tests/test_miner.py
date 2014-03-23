@@ -65,7 +65,7 @@ class TestMiner(TestCase):
         for i in fyl:
             self.outlinks.insert(loads(i))
         fyl.close()
-        self.miner = Miner(self.project_domain.domain.domain, self.project_domain.id)
+        self.miner = Miner(self.project_domain.domain.domain, self.project_domain)
 
     def test_setup(self):
         self.assertEqual(self.links.count(), 10)
@@ -74,7 +74,7 @@ class TestMiner(TestCase):
 
     def test_webometric(self):
         with self.assertRaises(ValueError):
-            miner = Miner('somedomain.co.ke', 'somedomain.co.ke')
+            miner = Miner('somedomain.co.ke', self.project_domain)
         stats = self.miner.webometric()
         self.assertIsNotNone(stats.projectdomain)
         self.assertEqual(stats.outlinks, 3)
@@ -114,5 +114,5 @@ class TestHistory(TestCase):
 
     def test_task(self):
         miner_task = HistoryMinerTask()
-        async = miner_task.delay(self.project_domain)
+        async = miner_task.delay(self.project_domain.id)
         self.assertTrue(async.successful())

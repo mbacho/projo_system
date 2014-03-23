@@ -72,7 +72,7 @@ class ProjectDomainViewSet(SecurityMixin, ModelViewSet):
     @action(methods=['POST'])
     def pagerank(self, request, pk):
         pd = ProjectDomain.objects.get(id=pk)
-        miner = Miner(pd.jobid, pk)
+        miner = Miner(pd.jobid, pd)
         pr = miner.pagerank()
         return Response(pr)
 

@@ -203,3 +203,5 @@ BROKER_PORT = 5672
 BROKER_VHOST = "/"
 BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
+
+NOTIFY_EMAIL_FROM = 'tasks@webometrics.com'

@@ -12,6 +12,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='projects')
+    desc = models.TextField(blank=True, null=True)
 
     class Meta:
         unique_together = ('name', 'owner')

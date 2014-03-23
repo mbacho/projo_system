@@ -26,3 +26,11 @@ file : __init__.py.py
 project : webometrics
 
 """
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+
+def mail_user(to, message, subject='Webometrics Notification'):
+    data = {'message': message, 'subject': subject}
+    send_mail(subject, render_to_string('email.html', data), settings.NOTIFY_EMAIL_FROM, [to], fail_silently=True)
