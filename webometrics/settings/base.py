@@ -181,8 +181,8 @@ MONGO_DB = {
     'name': 'webometrics',
     'link_collection': 'links',
     'outlink_collection': 'outlinks',
+    'mongohq_url': 'mongodb://webometrics:pass@oceanic.mongohq.com:10095/webometrics'
 }
-
 #Crawler directories
 CRAWLER_DIRS = {
     'projdir': dirname(abspath(manage.__file__))

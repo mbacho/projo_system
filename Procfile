@@ -1,2 +1,2 @@
-web: gunicorn webometrics.wsgi
-worker: ./manage.py celeryd
+web: python manage.py runserver
+worker: python manage.py celeryd
