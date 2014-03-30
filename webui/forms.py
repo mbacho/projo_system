@@ -1,5 +1,6 @@
 from django import forms
 
+
 class SigninForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
@@ -24,3 +25,5 @@ class SignupForm(forms.Form):
 
 class ProjectForm(forms.Form):
     project_name = forms.CharField(max_length=100)
+    project_desc = forms.CharField(max_length=1000)
+    project_freq = forms.CharField(max_length=10)

@@ -49,8 +49,12 @@
                     </h3>
 
                     <div class="form-group">
-                        <input type="text" contenteditable="true" placeholder="project name"
+                        <input type="text" placeholder="project name" name="project_name"
                                value="{{ active_project.name }}" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Project description"
+                                  name="project_desc"></textarea>
                     </div>
                     <input type="submit" class="btn btn-primary" value="change"/>
                 </form>

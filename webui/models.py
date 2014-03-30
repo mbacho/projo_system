@@ -9,10 +9,17 @@ from johnnywalker.models import AcademicDomain
 
 class Project(models.Model):
     """Project details"""
+    RUN_FREQ = (
+        ('none', 'none'),
+        ('weekly', 'weekly'),
+        ('monthly', 'monthly'),
+    )
+
     name = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='projects')
     desc = models.TextField(blank=True, null=True)
+    freq = models.CharField(max_length=10, choices=RUN_FREQ, default='none')
 
     class Meta:
         unique_together = ('name', 'owner')
